@@ -1,0 +1,171 @@
+//-
+  @Author: Jet.Chan
+  @Date:   2016-12-29T14:48:27+08:00
+  @Email:  guanjie.chen@talebase.com
+  @Last modified by:   Jet.Chan
+  @Last modified time: 2017-03-06T16:18:53+08:00
+
+
+
+extends ../share/layout.base.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('examList.list'))
+
+block content
+  .ex-content-right
+    - var adviserCreatedOrUpdatePermission = 'c99_3'
+    - var adviserDeletePermission = 'c99_4'
+    - var createdOrUpdatePermission = 'c3_0'
+    - var copyOrPreviewPermission = 'c3_1'
+    - var exportPermission = 'c3_2'
+    - var deletePermission = 'c3_3'
+    - var tabType=3,tabActive = 0
+    include ../share/component.commonTab.jade
+    .wrap
+      p.nav
+        a(href='###') 考试库&nbsp;
+        i.cpf-icon.cpf-icon-ic_arrowright &nbsp;
+        span 试卷管理
+      .search-filter
+          .search-detail
+            .search-ent
+              span 搜索：&nbsp;
+              .dateFind.inline
+                .cui-textBoxContainer.inline.st
+                  script.
+                    function minDate(){
+                      WdatePicker({
+                        dateFmt:'yyyy-MM-dd HH:mm:ss',
+                        maxDate:'#F{$dp.$D(\'endDate\')}'
+                      })
+                    }
+                    function maxDate(){
+                      WdatePicker({
+                        dateFmt:'yyyy-MM-dd HH:mm:ss',
+                        minDate:'#F{$dp.$D(\'startDate\')}'
+                      })
+                    }
+                  span.addonLeft 创建时间
+                  input.addonRightInput.startDate(type="text",id='startDate',placeholder='请输入开始时间',name='beginDate',value=request.query.key1Begin,onfocus="minDate()", readonly='true')
+                  span.addonRight
+                    i.cpf-icon.cpf-icon-ic_calendar
+                span --
+                .cui-textBoxContainer.inline.en
+                  input.addonRightInput.endDate(type="text",id='endDate',placeholder='请输入结束时间',name='endDate',value=request.query.key1End ,onfocus="maxDate()", readonly='true')
+                  span.addonRight
+                    i.cpf-icon.cpf-icon-ic_calendar
+              input.searchType2(type='hidden',value=request.query.searchType2 ? request.query.searchType2 : 'name')
+              .cui-selectBoxContainer(data-options=[{value:"name",text:'试卷名称'},{value:"totalNum",text:'题量'},{value:"totalScore",text:'总分'},{value:"duration",text:'试卷参考时长'},{value:"usage",text:'使用次数'},{value:"creator",text:'创建人'}])
+                -if(request.query.searchType2=='name' || !request.query.searchType2)
+                  span.placeholder 试卷名称
+                -if(request.query.searchType2=='totalNum')
+                  span.placeholder 题量
+                -if(request.query.searchType2=='totalScore')
+                  span.placeholder 总分
+                -if(request.query.searchType2=='duration')
+                  span.placeholder 试卷参考时长
+                -if(request.query.searchType2=='usage')
+                  span.placeholder 使用次数
+                -if(request.query.searchType2=='creator')
+                  span.placeholder 创建人
+              input.txt.key2(type='text',placeholder='请输入关键字',name="key2",value=request.query.key2 || '')
+              button.btn 搜索
+            .search-status.common-status
+              a 状态：&nbsp;
+              .status
+                - var status= [{value:'',text:'全部'},{value:'1',text:'启用'},{value:'0',text:'禁用'}]
+                -if(!request.query.status) request.query.status=''
+                  each v in status
+                    a(href="javascript:void(0)",class=request.query.status == v.value ? 'cur' : '',data-value=v.value)=v.text
+      .main
+          .main-action
+            div.inline-div
+              -if(globalCustomer.permission.includes(createdOrUpdatePermission) || globalCustomer.permission.includes(adviserCreatedOrUpdatePermission))
+                a.btn.seta(href='/customer/examList/createPaper?mode=1')
+                  span.set-account 创建试卷
+          .mainInfo
+              ul.list
+                li.title
+                  div
+                    span 试卷名称
+                  div
+                    span 题量
+                  div
+                    span 总分
+                  div
+                    span 试卷参考时长<br>(分钟)
+                  div
+                    span 使用次数
+                  div
+                    span 创建人
+                  div
+                    span 创建时间
+                  div
+                    span 状态
+                  div
+                    span 操作
+                -if(queryList.results)
+                  each q in queryList.results
+                    input.unicode(type='hidden',value=q.unicode)
+                    li.item(id=q.id,data-unicode=q.unicode)
+                      div.proname
+                        span=q.name
+                          - if(q.mode==1||q.mode==2)
+                            i.cpf-icon.cpf-icon-pen
+                      div
+                        span=q.totalNum
+                      div
+                        span=q.totalScore
+                      div
+                        span=q.duration
+                      div
+                        span=q.usage
+                      div
+                        span=q.creator
+                      div
+                        span=pageHelper.date.format(q.createdDate,'YYYY-MM-DD HH:mm:ss')
+                      div
+                        -if(q.creator != globalCustomer.account && !globalCustomer.permission.includes(adviserCreatedOrUpdatePermission) && !globalCustomer.permission.includes(adviserDeletePermission))
+                            - if(q.status == 1)
+                              p 启用
+                            - else
+                              p 禁用
+                        -else
+                          -if(q.mode==3&&q.status==1)
+                            span
+                              i(class='slideBtn active',data-mode=q.mode)
+                          -else if(q.mode==3&&q.status==0)
+                            span
+                              i(class='slideBtn',data-mode=q.mode)
+                          -else
+                            p 禁用
+                      div
+                        -if((globalCustomer.permission.includes(createdOrUpdatePermission) && q.creator == globalCustomer.account) || globalCustomer.permission.includes(adviserCreatedOrUpdatePermission))
+                          a.btn.edit(href=`/customer/examList/editPaper/${q.unicode}?mode=`+(q.mode==1?1:2)+'&paperId=' + q.id)
+                            span 修改
+                        -if(globalCustomer.permission.includes(copyOrPreviewPermission))
+                          -if(q.mode == 3)
+                            a.btn.pre(href=`/customer/examList/list/preview/${q.unicode}?viewSrc=0`,target='view_window')
+                              span 预览
+                            a.btn.copy
+                              span 复制
+                          -else
+                            a.btn.pre(href=`/customer/examList/list/preview/${q.unicode}`,target='view_window')
+                              span 预览
+                            a.btn.copy
+                              span 复制
+                        -if(globalCustomer.permission.includes(exportPermission))
+                          a.btn.export
+                            span 导出
+                        -if((globalCustomer.permission.includes(deletePermission) && q.creator == globalCustomer.account) || globalCustomer.permission.includes(adviserDeletePermission))
+                          a.btn.del
+                            span 删除
+       -totalCount= queryList.total
+       -pagesize= queryList.limit
+      include ../share/component.pagination.jade
+    include ../share/common.footer.default.jade
+
+block scriptSection
+  script(type="text/javascript", src= '/my97datePicker/WdatePicker.js')
+  script(type="text/javascript", src= pageHelper.setScript('examList.list'))

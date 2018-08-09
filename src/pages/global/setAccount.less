@@ -1,0 +1,289 @@
+/**
+* @Author: Jet.Chan
+* @Date:   2016-12-13T15:24:52+08:00
+* @Email:  guanjie.chen@talebase.com
+* @Last modified by:   Jet.Chan
+* @Last modified time: 2017-03-09T15:15:05+08:00
+*/
+@import '../../components/commonStyle/common';
+@cell-width: 10%;
+
+.dis {
+    display: none;
+}
+
+.wrap {
+    box-sizing: border-box;
+    min-width: 1028px;
+    padding: 28px 58px;
+    background: @c-gray-a;
+    font-size: @fs16;
+    .nav {
+        margin-bottom: 25px;
+        color: @fc-b;
+        span {
+            &:last-of-type {
+                color: @c-standard-a;
+            }
+        }
+
+        i {
+            font-size: @fs;
+        }
+
+        a,i {
+            color: #888;
+        }
+    }
+    // 主体
+    .main {
+        background: #fff;
+        padding: 28px 26px;
+
+        .setAccountInfo {
+            .title {
+                text-align: left;
+                height: 56px;
+                line-height: 32px;
+                border-bottom: 1px solid #d7d7d7;
+                padding-left: 2.5%;
+            }
+
+            .list {
+                width: 100%;
+                display: table;
+                .tc;
+
+                .item {
+                    display: table-row;
+                    border-bottom: 1px solod #d7d7d7;
+
+                    > div {
+                        display: table-cell;
+                        .fs14;
+                        padding: 15px 0 8px;
+                        vertical-align: middle;
+                        color: #888;
+                        border-bottom: 1px solid #d7d7d7;
+
+                        &:nth-of-type(1) {
+                            font-weight: bold;
+                            border-right: 1px solid #d7d7d7;
+                            text-align: left;
+                            padding-left: 5%;
+                            width: 20%;
+                        }
+
+                        &:nth-of-type(2) {
+                            text-align: left;
+                            padding: 20px 20px 10px;
+
+                            .cui-checkboxContainer {
+                                width: 140px;
+                                padding-bottom: 10px;
+                                //margin-top: 8px;
+                                &:nth-of-type(1) {
+                                    label {
+                                        cursor: not-allowed;
+                                    }
+
+                                    input[type=checkbox]:checked+label {
+                                        i {
+                                            background-color: #888;
+                                            border-color: #888;
+                                            opacity: 0.8;
+                                        }
+                                    }
+                                }
+
+                                > label {
+                                    > span {
+                                        padding-left: 5px;
+                                        color: #888;
+                                        text-overflow: ellipsis;
+                                        white-space: nowrap;
+                                        overflow: hidden;
+                                        display: block;
+                                        width: 90px;
+                                    }
+                                }
+
+                                .delField {
+                                    display: none;
+                                    margin-right: 6px;
+                                }
+
+                                &:hover {
+                                    .delField {
+                                        display: block;
+                                        width: 15px;
+                                        border: 1px solid #c54545;
+                                        text-align: center;
+                                        line-height: 15px;
+                                        border-radius: 2px;
+                                        float: right;
+                                        z-index: 50;
+                                        cursor: pointer;
+                                        color: #ffffff;
+                                        background-color: #c54545;
+                                    }
+                                }
+                            }
+
+                            .cui-textBoxContainer {
+                                margin: 0;
+
+                                input {
+                                    height: 15px;
+                                    width: 91px;
+                                }
+
+                                .addonRight {
+                                    background-color: #fff;
+                                    display: inline-block;
+                                    position: relative;
+                                    left: -4px;
+                                    height: 21px;
+                                    line-height: 21px;
+
+                                    &:hover {
+                                        cursor: pointer;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    &:nth-of-type(2) {
+                        > div {
+                            &:nth-of-type(2) {
+                                padding-bottom: 20px;
+
+                                .btn {
+                                    padding: 8px 20px;
+                                    background: #fff;
+                                    border: 1px solid #6CBB57;
+                                    border-radius: 2px;
+                                    color: #6CBB57;
+                                    margin-right: 20px;
+
+                                    &:hover {
+                                        background: #6CBB57;
+                                        color: #fff;
+                                        cursor: pointer;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    &.unique {
+                        div:nth-of-type(2) {
+                            .cui-checkboxContainer:nth-of-type(3) {
+                                label {
+                                    cursor: not-allowed;
+                                }
+
+                                input[type=checkbox]:checked+label {
+                                    i {
+                                        background-color: #888;
+                                        border-color: #888;
+                                        opacity: 0.8;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .button {
+                text-align: center;
+                margin: 58px auto;
+
+                .cui-button {
+                    width: 180px;
+                    padding: 6px 0;
+
+                    &.mr-10 {
+                        margin-right: 20px;
+
+                        span {
+                            font-size: @fs16;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.oporation {
+    .tc;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    .pr10 {
+        margin-right: 10px;
+    }
+
+    .cui-button {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+}
+
+.cui-panel-content {
+    padding: 20px 10px;
+
+    .add_selector {
+        .handleData {
+            text-align: center;
+            max-height: 410px;
+            overflow-y: auto;
+            padding-bottom: 30px;
+            .cui-radioContainer.inline {
+                width: 20px;
+            }
+            .option-tag-mgl-30{
+              margin-left: 30px;
+            }
+
+            .addAttr {
+                input {
+                    width: 224px;
+                    text-align: left;
+                    position: relative;
+                    left: -18px;
+                }
+            }
+
+            .cui-textBoxContainer {
+                input {
+                    height: 28px;
+                }
+
+                &:nth-of-type(1) {
+                    .valid-tips {
+                        left: 143px;
+                    }
+                }
+            }
+
+            .block {
+                .cui-textBoxContainer {
+                    span > i {
+                        font-size: 16px;
+                        vertical-align: middle;
+                        margin-left: 10px;
+                        color: #888;
+
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

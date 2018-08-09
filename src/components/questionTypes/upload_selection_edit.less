@@ -1,0 +1,59 @@
+/**
+* @Author: Jet.Chan
+* @Date:   2016-12-22T17:54:26+08:00
+* @Email:  guanjie.chen@talebase.com
+* @Last modified by:   Jet.Chan
+* @Last modified time: 2016-12-22T17:54:26+08:00
+*/
+
+@import '../commonStyle/common.less';
+
+.set-question.set-upload-question{
+    .upload-content{
+        border:1px solid #888;
+    }
+    .ques-subject,
+    .upload-content{
+        &.upload-content{
+            .tc;
+            border:none;
+            color:#bbb;
+            font-size: 26px;
+            font-style: italic;
+            line-height: 128px;
+            background: url('/images/upload_bg.png') 0 0;
+        }
+    }
+    .ques-setting{
+        .setting{
+            .title{
+                line-height: 20px;
+                padding:5px 0 0;
+                &+.row{
+                    margin-top: 8px;
+                    .cui-checkboxContainer{
+                        width: 65px;
+                        margin-bottom: 3px;
+                    }
+                }
+            }
+            & > .title{
+                padding:5px 0 5px 10px;
+                background: #d2d2d2;
+                color:#212121;
+            }
+            .row{
+                margin-bottom: 10px;
+            }
+            .color_b{
+                color:#8cc3e2;
+            }
+            .layout{
+                &:nth-of-type(1){
+                    padding:10px 0 0;
+                }
+
+            }
+        }
+    }
+}

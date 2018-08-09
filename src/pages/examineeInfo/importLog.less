@@ -1,0 +1,119 @@
+/**
+* @Author: Jet.Chan
+* @Date:   2016-12-29T14:48:28+08:00
+* @Email:  guanjie.chen@talebase.com
+* @Last modified by:   Jet.Chan
+* @Last modified time: 2017-03-09T11:24:44+08:00
+*/
+
+@import '../../components/commonStyle/common';
+@cell-width: 10%;
+.dis {
+    display: none;
+}
+
+.wrap {
+    box-sizing: border-box;
+    min-width: 1028px;
+    padding: 28px 50px;
+    background: @c-gray-a;
+    font-size: @fs16;
+    .nav {
+        margin-bottom: 25px;
+        color: @fc-b;
+        span {
+            a {
+                color: #888;
+            }
+            &:last-of-type {
+                color: @c-standard-a;
+            }
+        }
+        i {
+            font-size: @fs14;
+        }
+        a,i {
+            color: #888;
+        }
+    }
+    .type {
+        a {
+            .fs16;
+            padding: 0 57px;
+            height: 40px;
+            line-height: 40px;
+            &:first-child {
+                margin-right: 10px;
+            }
+        }
+    }
+    .main {
+        background: #fff;
+        padding: 28px 26px;
+        margin-top: 28px;
+        .main-action {
+            background: @c-gray-c;
+            padding: 16px 2.5%;
+            .inline-div {
+                display: inline-block;
+                .btn {
+                    display: inline-block;
+                    line-height: 28px;
+                    border: 1px solid @c-standard-b;
+                    border-radius: 2px;
+                    .tc;
+                    margin: 0 10px 0 0;
+                    width: 108px;
+                    background: #fff;
+                    color: @c-standard-b;
+                    font-size: @fs14;
+                    &.cur,
+                    &:hover {
+                        cursor: pointer;
+                        background: @c-standard-b;
+                        color: #fff;
+                    }
+                    &:nth-of-type(1) {
+                        margin-right: 20px;
+                    }
+                }
+            }
+        }
+        .mainInfo {
+            .list {
+                display: table;
+                width: 100%;
+                .title {
+                    display: table-row;
+                    line-height: 60px;
+                    .tc;
+                    >div {
+                        display: table-cell;
+                        vertical-align: middle;
+                        border-bottom: 1px solid #888;
+                    }
+                }
+                .item {
+                    display: table-row;
+                    .tc;
+                    >div {
+                        width: 10.5%;
+                        display: table-cell;
+                        vertical-align: middle;
+                        border-bottom: 1px dashed #d7d7d7;
+                        word-break: break-all;
+                        word-wrap: break-word;
+                        line-height: 30px;
+                        padding: 10px 0.5% 10px 0;
+                        &:nth-of-type(4) {
+                            width: 5%;
+                        }
+                    }
+                }
+                .remark {
+                    width: 60%;
+                }
+            }
+        }
+    }
+}

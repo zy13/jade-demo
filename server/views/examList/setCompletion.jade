@@ -1,0 +1,55 @@
+extends ../share/layout.base.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('examList.setCompletion'))
+
+
+block content
+  .ex-content-right
+    - var tabType=3,tabActive = 0
+    include ../share/component.commonTab.jade
+    .common-wrap
+      p.common-nav
+        a(href='/customer/examList/list') 考试库
+        i.cpf-icon-ic_arrowright.fs &nbsp;
+        span 试卷管理
+        i.cpf-icon-ic_arrowright.fs &nbsp;
+        - if(mode==1)
+          span 创建试卷
+        - else
+          span 修改试卷
+      //- 创建试卷（第一步
+      .common-main
+        //- 步骤显示
+        .cp-step
+          a(href='###')
+            strong 1
+            | 设置试卷信息
+          a(href='###')
+            strong 2
+            | 设置题目
+          a(href='###')
+            strong 3
+            | 设置分数
+          a(href='###')
+            strong 4
+            | 设置结束语
+          a(href='###').active
+            strong 5
+            | 设置完成
+        .setting-completion
+          p.good-job
+            i.cpf-icon.cpf-icon-ic_like
+          p.say-sth 您已完成考试试卷的设置，可以继续编辑或者返回试卷列表查看。
+        .setting-action.tc
+          a(href='/customer/examList/setPaperRemark/' + paperUnicode +'?mode=' + mode + '&paperId=' + paperId).cui-button
+            span 上一步
+          a(href='/customer/examList/list').cui-button.preset-blue
+            span 返回试卷列表
+    include ../share/common.footer.default.jade
+
+block scriptSection
+  include ../share/common.script.ueditor.jade
+  script(type="text/javascript", src= '/my97datePicker/WdatePicker.js')
+  script(type="text/javascript", src= pageHelper.setScript('examList.setCompletion'))
+

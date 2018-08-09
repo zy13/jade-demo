@@ -1,0 +1,25 @@
+extends ../share/layout.baseM.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href=pageHelper.setStyle('examM.warnTip'))
+
+block content
+  .exam-content
+    .div-group
+      .div-body
+        .p-group
+          p 请在没有外界干扰的环境下进行考试，考试期间关闭下载工具和通讯软件，以确保网络连接畅通。
+          p 如遇到网速较慢，文字、图片不能显示时，请关闭作答窗口，稍后或更换网络环境后重新登录，继续作答。
+          p 开始答题后，请认真阅读答题说明，按要求答题。
+          p 试卷有计时时间，请把握好答题速度。
+          .p
+            .cui-checkboxContainer.inline
+              input(type="checkbox")
+              label
+                i
+                span 我已阅读温馨提示
+        .a-button
+          a.cui-button.preset-blue(href='javascript:void(0);')
+            span 确&nbsp;&nbsp;定
+block scriptSection
+   script(type="text/javascript", src=pageHelper.setScript('examM.warnTip'))

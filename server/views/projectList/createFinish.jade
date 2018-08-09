@@ -1,0 +1,49 @@
+extends ../share/layout.base.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('projectList.createFinish'))
+
+
+block content
+  .ex-content-right
+      - var tabActive = 0
+      include ../share/component.commonTab.jade
+      .m-wrap
+        .m-nav
+          a(href='/customer/projectList/index') 项目管理&nbsp;
+          i.cpf-icon.cpf-icon-ic_arrowright &nbsp;
+          a(href='/customer/projectList/index') 项目列表&nbsp;
+          i.cpf-icon.cpf-icon-ic_arrowright &nbsp;
+          - if(createOredit=='create')
+            span 创建成功
+          - else
+            span 修改成功
+        .m-main
+          .m-content
+            .nav.img
+              img(src=pageHelper.setPageImgPath('/images/createProStep3.png'))
+              div.a-group
+                //a(href= projectId ? '/customer/projectList/editProject/' + projectId + (createOredit == 'create' ? '?createOredit=create' : '' ): '###')
+                a(href='###')
+                  strong 1
+                  span 设置项目信息
+                //a(href= projectId ? '/customer/projectList/selectPaper/' + projectId + (createOredit == 'create' ? '?createOredit=create' : '' ): '###')
+                a(href='###')
+                  strong 2
+                  span 选择试卷
+                a.active(href='###')
+                  strong 3
+                  span 设置完成
+            .cont
+              p.good-job
+                i.cpf-icon.cpf-icon-ic_like
+              p.say-sth 您已完成考试项目的创建，可以继续编辑或者返回项目列表查看
+            .do
+              p
+                a.cui-button(href='/customer/projectList/selectPaper/' + projectId + (createOredit=='create' ? '?createOredit=create' : ''))
+                  span.mr-10 上一步
+                a.cui-button.preset-blue(href='/customer/projectList/index')
+                  span.mr-10 返回项目列表
+    include ../share/common.footer.default.jade
+block scriptSection
+  script(type="text/javascript", src= pageHelper.setScript('projectList.createFinish'))

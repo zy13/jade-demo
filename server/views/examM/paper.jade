@@ -1,0 +1,263 @@
+extends ../share/layout.baseM.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href=pageHelper.setStyle('examM.paper'))
+block content
+  .loading(style='width:100%;height:100%;position:absolute;top:0;left:0')
+    img(src=pageHelper.setPageImgPath('/images/loadingM.gif'))(style='width:100%;height:100%')
+  .exam-content(style='opacity:0')
+    .div-group
+      input(type='hidden',data-code=code,id='code')
+      -if(code==0)
+        .div-body
+            input(type='hidden',value=request.query.taskId,id='taskId')
+            input(type='hidden',value=request.query.paperId,id='paperId')
+            input(type='hidden',value=request.query.seqNo?request.query.seqNo:1,id='seqNo')
+            input(type='hidden',id='exspecial',data-value=r.item.id)
+            input(type='hidden',id='userId',data-value=userId)
+            -if(r.item.type==4) //单选题
+              .div.div-sgle
+                -if(r.item.instructionPre && r.item.instructionPre.length)
+                  .tip
+                    each j in r.item.instructionPre
+                      .p!= j
+                .choice-body
+                  .type 【单选题】
+                  .stem
+                    .p(id='type',data-type=r.item.type)
+                      span.seqNo!=r.item.seqNo
+                        | 、
+                      span.question!= r.item.question
+                  .item.sgl-item
+                    .cui-radioGroupContainer
+                      each j,k in r.item.dOptionItems
+                        -var code = k+65
+                        -var answerClass = j.answer ? 'cur':''
+                        div(class='sel cui-radioContainer #{answerClass}')
+                          .div
+                            span.inline.exam-fl
+                              span.inline.exam-radio
+                                i
+                              span.inline.exam-maskcode(data-maskcode=j.maskCode)=String.fromCharCode(code)
+                              | 、
+                            span.ct!=j.label
+                -if(r.item.instructionPos && r.item.instructionPos.length)
+                  .tip
+                    each j in r.item.instructionPre
+                      p!= j
+            -if(r.item.type==5) //多选题
+              .div.div-muti
+                -if(r.item.instructionPre && r.item.instructionPre.length)
+                  .tip
+                    each j in r.item.instructionPre
+                      p!= j
+                .choice-body
+                  .type 【多选题】
+                  .stem
+                    .p(id='type',data-type=r.item.type)
+                      span.seqNo!=r.item.seqNo
+                        | 、
+                      span.question!= r.item.question
+                  .item.muti-item
+                    each j,k in r.item.dOptionItems
+                      -var code = k+65
+                      -var answerClass = j.answer ? 'cur':''
+                      div(class='sel cui-checkboxContainer #{answerClass}')
+                        .div
+                          span.inline.exam-fl
+                            span.inline.exam-check
+                              i
+                            span.inline.exam-maskcode(data-maskcode=j.maskCode)=String.fromCharCode(code)
+                                | 、
+                          span.ct!=j.label
+                -if(r.item.instructionPos && r.item.instructionPos.length)
+                  .tip
+                    each j in r.item.instructionPre
+                      p!= j
+            -if(r.item.type==6 && r.item.blankType==0)//主观填空
+              .div.div-blank1
+                -if(r.item.instructionPre && r.item.instructionPre.length)
+                  .tip
+                    each j in r.item.instructionPre
+                      p!= j
+                .choice-body
+                  .type 【主观填空题】
+                  .stem
+                    span.seqNo!=r.item.seqNo
+                      | 、
+                    .p.question(id='type',data-type=r.item.type)!= r.item.question
+                  -if(r.item.answers.length==1)
+                    .item.blank-item1
+                      .cui-textBoxContainer.swer
+                        textarea!=r.item.answers[0]
+                        -if(r.item.blankLimit)
+                          input.wordLengthLimit(type='hidden',value=r.item.blankLimit)
+                          div.blankLimit
+                            | 还可以输入
+                            p!=r.item.blankLimit-r.item.answers[0].length
+                            | 字
+                  -if(r.item.answers.length>1)
+                    .item.blank-item
+                      -for(var i=0;i<r.item.answers.length;i++)
+                        .cui-textBoxContainer.swer
+                          span.addonLeft #{i+1}
+                          textarea.addonLeftInput(name='blank')!=r.item.answers[i]
+                          -if(r.item.blankLimit)
+                            input.wordLengthLimit(type='hidden',value=r.item.blankLimit)
+                            div.blankLimit
+                              | 还可以输入
+                              p!=r.item.blankLimit-r.item.answers[i].length
+                              | 字
+                -if(r.item.instructionPos && r.item.instructionPos.length)
+                  .tip
+                    each j in r.item.instructionPre
+                      p!= j
+            -if(r.item.type==6 && r.item.blankType==1) //客观填空
+              .div.div-blank
+                -if(r.item.instructionPre && r.item.instructionPre.length)
+                  .tip
+                    each j in r.item.instructionPre
+                      p!= j
+                .choice-body
+                  .type 【客观填空题】
+                  .stem
+                    .p(id='type',data-type=r.item.type)
+                      span.seqNo!=r.item.seqNo
+                       | 、
+                      span.question!= r.item.question
+                  -if(r.item.answers.length==1)
+                    .item.blank-item1
+                      .cui-textBoxContainer.swer
+                        textarea!=r.item.answers[0]
+                        -if(r.item.blankLimit)
+                          input.wordLengthLimit(type='hidden',value=r.item.blankLimit)
+                          div.blankLimit
+                            | 还可以输入
+                            p!=r.item.blankLimit-r.item.answers[0].length
+                            | 字
+                  -if(r.item.answers.length>1)
+                    .item.blank-item
+                      -for(var i=0;i<r.item.answers.length;i++)
+                        .cui-textBoxContainer.swer
+                          span.addonLeft #{i+1}
+                          textarea.addonLeftInput(name='blank')!=r.item.answers[i]
+                          -if(r.item.blankLimit)
+                            input.wordLengthLimit(type='hidden',value=r.item.blankLimit)
+                            div.blankLimit
+                              | 还可以输入
+                              p!=r.item.blankLimit-r.item.answers[i].length
+                              | 字
+                -if(r.item.instructionPos && r.item.instructionPos.length)
+                  .tip
+                    each j in r.item.instructionPre
+                      p!= j
+            -if(r.item.type==7)//上传题
+              .div.div-upload
+                -if(r.item.instructionPre && r.item.instructionPre.length)
+                  .tip
+                    each j in r.item.instructionPre
+                      p!= j
+                .choice-body
+                  .type 【上传题】
+                  .stem
+                    .p(id='type',data-type=r.item.type)
+                      span.seqNo!=r.item.seqNo
+                        | 、
+                      span.question!= r.item.question
+                  .item.upload-item
+                    -if(r.item.aTypes && r.item.aTypes.length)
+                        -var aTypes = r.item.aTypes.split(',')
+                        -var remember = false
+                        each v in aTypes
+                          -if(v==1)
+                            .cui-textBoxContainer.imgs
+                              a(href='javascript:void(0)')
+                                span + 选择文件（5M以内）
+                                input.addonRightInput.togetpath(type='file',id='uploadFileId',name='file')
+                          -if(v==2 || v==3) remember= true
+                        -if(remember)
+                          .cui-textBoxContainer.imgs
+                              a(href='javascript:void(0)')
+                                span 该题可上传word和excel,如有需要请转到PC上作答。
+                    .imgs-group#uploadFile
+                      -if(r.item.answers && r.item.answers.length)
+                        each j in r.item.answers
+                          -var arr = j.split(';')
+                          -if(j)
+                            a(href='javascript:void(0)')
+                              img(src=arr[0],data-src=j,data-name=arr[2].split('.')[0],data-suffix=arr[2].split('.')[1])
+                              span.close
+                                i.cpf-icon.cpf-icon-thin-close
+                -if(r.item.instructionPos && r.item.instructionPos.length)
+                  .tip
+                    each j in r.item.instructionPre
+                      p!= j
+            .a-button
+              -if(request.query.seqNo!=1)
+                a.cui-button.preset-normal.prev(href='javascript:void(0);')
+                  span 上一题
+              -if(request.query.seqNo==r.total)
+                a.cui-button.preset-blue.submit(href='javascript:void(0);')
+                  span 提交
+              -else
+                a.cui-button.preset-blue.next(href='javascript:void(0);')
+                  span 下一题
+        .div-footer.f-shrink
+          .div-detail
+            .div-jump-detail.dis
+              .p 答题情况如下，可点击题号跳转
+              .a.extend(href='javascript:void(0)')
+                span
+                 i.cpf-icon.cpf-icon-extend
+              .div-jump
+                .a-groups(id='qLeft',data-left=r.total-r.answered.length)
+                  -for(var i=0;i<r.total;i++)
+                    -var isDone = false
+                    -for(var j=0;j<r.answered.length;j++)
+                      -if(r.answered[j]==i+1)
+                        -isDone=true
+                    -if(isDone)
+                        a.done(href='javascript:void(0)',data-seqno=i+1)
+                          span=i+1
+                            img(src=pageHelper.setPageImgPath('/images/done.png'))
+                    -else
+                      a(href='javascript:void(0)',data-seqno=i+1)
+                        span=i+1
+                    -if((i+1)%5==0)
+                        br
+            .div-u-like
+              .div-1
+                .div-left=r.name
+                .div-right
+                  a(href='javascript:void(0)')
+                    i.cpf-icon.cpf-icon-shrink
+              .div-2
+                -var wid=isNaN(parseInt(100*(r.finished/r.total))) ? 0: parseInt(100*(r.finished/r.total))
+                span(style='width:#{wid}%')
+              .div-3
+                .span
+                  span 已完成&nbsp;
+                  span.must-color=r.answered.length
+                  span &nbsp;题，  共&nbsp;
+                  span.must-color=r.total
+                  span &nbsp;题
+                .span
+                  span 剩余时间：&nbsp;
+                  span.must-color.leftTime(data-javaSystemTime=r.systemTime,data-paperEndTime=r.endTime,data-timeLeft=r.timeLeft,data-browserRequestTime=request.query.browserRequestTime)
+      -else
+        .div-body
+          .message!=message
+  .finishedPage(style = 'display:none')
+    .exam-content-finish
+      .div-group-finish
+        .div-body-finish
+          .p-group-finish
+            p
+              i.cpf-icon.cpf-icon-ic_like
+            .p
+              p
+          .a-button-finish
+            a.cui-button.preset-blue(href='/exam/taskList')
+              span 返回任务列表
+block scriptSection
+   script(type="text/javascript", src=pageHelper.setScript('examM.paper'))

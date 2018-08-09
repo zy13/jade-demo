@@ -1,0 +1,60 @@
+@import '../commonStyle/common';
+
+
+.detailWrap{
+    padding:28px 60px;
+    &>p{
+        color:@fc-a;
+    }
+    .back{
+        .tr;
+        a{
+            .fs16;
+            color:@c-standard-a;
+            text-decoration: underline;
+        }
+    }
+    .weight{
+        .fs14;
+        .fw;
+        margin:15px 0;
+    }
+    .light{
+        .fs14;
+        color:@fc-b;
+        margin:15px 0;
+    }
+    .line{
+        width:100%;
+        height: 0;
+        border:1px dashed #ccc;
+    }
+    .detailContent{
+        padding: 12px 10px;
+        margin:20px 0 30px;
+        overflow: auto;
+        &.long{
+            min-height: 350px;
+        }
+        &>div{
+            &>ul,&>ol{
+                padding-left: 40px;
+            }
+            .list-paddingleft-2{
+                li{
+                    list-style-type: inherit !important;
+                }
+            }
+        }
+    }
+    .btns{
+        .tc;
+        a{
+            padding: 5px 65px;
+            .fs16;
+            &:first-child{
+                margin-right: 10px;
+            }
+        }
+    }
+}

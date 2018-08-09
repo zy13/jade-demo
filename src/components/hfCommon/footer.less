@@ -1,0 +1,24 @@
+@import '../commonStyle/common.less';
+
+@c-font-a: #9E9E9E;
+
+#ex-footer{
+    width: 100%;
+    display: none;
+    min-width: 1026px;
+    background: @c-gray-f;
+    &.fixed{
+        position: fixed;
+        bottom: 0;
+        left: 0px;
+    }
+    .footer-content{
+        height: 70px;
+        line-height: 70px;
+        p{
+            text-align: center;
+            color: @c-font-a;
+            font-size: @fs;
+        }
+    }
+}

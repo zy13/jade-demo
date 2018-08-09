@@ -1,0 +1,31 @@
+#ex-sidebar
+  div.ex-content-detail
+    ul
+      - if(canShowProjectView)
+        li(class=leftToLink==1?'cur':'')
+          a(href='javascript:void(0)',data-href=goToUrl)
+            i.cpf-icon.cpf-icon-project
+            span 项目管理
+      - if (canShowPaperView)
+        li(class=leftToLink==2?'cur':'')
+          a(href='javascript:void(0)',data-href='/customer/examList/list')
+            i.cpf-icon.cpf-icon-exam_lib
+            span
+              | 考
+              i
+              | 试
+              i
+              | 库
+
+    div.ex-more
+      div.online-detail.displayn
+        .a-group
+          .p
+            div 咨询服务热线
+            div 400-012-5066
+          .a.active
+            script(charset="utf-8",type="text/javascript",src="http://wpa.b.qq.com/cgi/wpa.php?key=XzkzODE5MDA0OV80MDUwOTFfNDAwMDEyNTA2Nl8")
+      div.ex-online
+        a.re-online(href='javascript:void()') 在线客服
+      div.ex-inter
+        a(href='http://www.talebase.com/')(target='_blank') 互动交流

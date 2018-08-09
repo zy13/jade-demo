@@ -1,0 +1,46 @@
+<div class="select-win">
+    <!-- main -->
+    <div class="select-win-main">
+        <!-- 可选列表 -->
+        <div class="win-select left">
+            <p>可选</p>
+            <div class="win-scroll scroll1">
+                <ul class="">
+                    {@each select as v}
+                        <li class="item" data-id="${v.account}">${v.name}</li>
+                    {@/each}
+                </ul>
+            </div>
+        </div>
+        <!-- 已选列表 -->
+        <div class="win-select right">
+            <p>已选</p>
+            <div class="win-scroll scroll2">
+                <ul class="">
+                    {@each selected as v}
+                        <li class="item" data-id="${v.account}">${v.name}</li>
+                    {@/each}
+                </ul>
+            </div>
+        </div>
+        <div class="middle">
+            <p>
+                <a class="toright">
+                    <i class="cpf-icon cpf-icon-arrow-right"></i>
+                </a>
+                <a class="toleft">
+                    <i class="cpf-icon cpf-icon-arrow-left"></i>
+                </a>
+            </p>
+        </div>
+    </div>
+    <!-- 按钮组 -->
+    <div class="select-win-action">
+        <a class="cui-button preset-blue sure">
+            <span>确定</span>
+        </a>
+        <a class="cui-button cancle">
+            <span>取消</span>
+        </a>
+    </div>
+</div>

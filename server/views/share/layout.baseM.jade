@@ -1,0 +1,53 @@
+//-
+  @Author: Jet.Chan
+  @Date:   2017-01-06T14:14:54+08:00
+  @Email:  guanjie.chen@talebase.com
+  @Last modified by:   Jet.Chan
+  @Last modified time: 2017-03-03T16:52:28+08:00
+
+
+
+doctype html
+html(lang="zh-cn")
+  head
+    title= pageTitle
+    meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0')
+    //- 优先使用 IE 最新版本和 Chrome
+    meta(http-equiv="X-UA-Compatible" content="IE=edge,chrome=1")
+    //-启用360浏览器的极速模式(webkit)
+    meta(name="renderer" content="webkit")
+    //-忽略UC浏览器自带的字体样式
+    meta(name="wap-font-scale" content="no")
+    //-忽略iphone页面中的数字识别为电话，忽略email识别
+    meta(name="format-detection" content="telphone=no, email=no")
+    link(rel="stylesheet",type="text/css",href= pageHelper.setStyle('vendors'))
+    block styleSection
+  body
+    block header
+      -if(!noReturn)
+        // (style=`opacity:${isLoadingM!=undefined && isLoadingM ? 0:1}`)
+        .exam-header(style=`opacity:${isLoadingM!=undefined && isLoadingM ? 0:1}`)
+          .h-span-group
+            .span.exam-back(onclick=request.query.isEditUserInfo!=undefined && request.query.isEditUserInfo=='false'?'history.back()':((!isInitUserInfo || isInitUserInfo==undefined)?(sourceBack?`window.location.href='${sourceBack}'`:`window.location.href='/exam/taskList'`):'history.back()'))
+              i(class='cpf-icon cpf-icon-ic_arrowleft')
+              | 返回
+            .span=pageTitle.length>11?pageHelper.formatter.strCut(pageTitle,10):pageTitle
+            -if(!isInitUserInfo || isInitUserInfo==undefined)
+              .span.exam-hellip(onclick=`handleSideBar()`)
+                span &bull;&bull;&bull;
+    block content
+    block footer
+      -if(noFooter==undefined || !noFooter)
+        .exam-footer.rel
+          .p-groups.font-style
+            p &copy;2003-2017 TaleBase. All Rights Reserved.
+            p 倍智版权所有
+    script(src= pageHelper.setScript('vendors'))
+    script.
+      var handleSideBar = function(){
+        //空事件-用于处理iphone兼容性问题
+      }
+    //- if(!pageHelper.isPro())
+      script(src= pageHelper.getWeinre())
+    block scriptSection

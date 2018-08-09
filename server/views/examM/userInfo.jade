@@ -1,0 +1,193 @@
+extends ../share/layout.baseM.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href=pageHelper.setStyle('examM.userInfo'))
+
+block content
+  .exam-content
+    .div-group
+      -if(r.fields)
+        .div-body
+          .warn-tips.must-color 温馨提示：请认真填写您的个人信息，请勿代替或仿冒他人进行考试。
+          .from-group
+            each i in r.fields
+              //-输入框
+              -if(i.type==1)
+                //-必填
+                -if(i.ismandatory==1)
+                  //-邮箱
+                  -if(i.fieldKey=='email')
+                    .div.cui-textBoxContainer(data-rule='required;email',data-tips='请输入正确的#{i.fieldName}',data-isunique=i.isunique,data-ismandatory)
+                      .span-group.inline
+                        span.must-color *
+                        span.inline.name
+                          -var spanV = '<span class="wth1"></span>'
+                          span!= i.fieldName.split('').join(spanV)
+                        span &#58;
+                      input(type='text',value=i.fieldValue ||'',name=i.fieldKey)
+                  //-手机
+                  -else if(i.fieldKey=='mobile')
+                    .div.cui-textBoxContainer(data-rule='required;tel',data-tips='请输入正确的#{i.fieldName}',data-isunique=i.isunique)
+                      .span-group.inline
+                        span.must-color *
+                        span.inline.name
+                          -var spanV = '<span class="wth1"></span>'
+                          span!= i.fieldName.split('').join(spanV)
+                        span &#58;
+                      input(type='text',value=i.fieldValue ||'',name=i.fieldKey)
+                  //-身份证号
+                  -else if(i.fieldKey=='identity_num')
+                    .div.cui-textBoxContainer(data-rule='required;isIdCardNo',data-tips='请输入正确的#{i.fieldName}',data-isunique=i.isunique)
+                      .span-group.inline
+                        span.must-color *
+                        span.inline.name
+                          span!= i.fieldName
+                        span &#58;
+                      input(type='text',value=i.fieldValue ||'',name=i.fieldKey)
+                  -else
+                    -if(i.fieldKey!='password')
+                      .div.cui-textBoxContainer(data-rule='required;',data-tips='#{i.fieldName}不能为空',data-isunique=i.isunique)
+                        .span-group.inline
+                          span.must-color *
+                          span.inline.name
+                            -if(i.fieldName.length==2)
+                              -var spanV = '<span class="wth1"></span>'
+                              span!= i.fieldName.split('').join(spanV)
+                            -if(i.fieldName.length==3)
+                              -var spanV = '<span class="wth2"></span>'
+                              span!= i.fieldName.split('').join(spanV)
+                            -if(i.fieldName.length>3)
+                              span= i.fieldName
+                          span &#58;
+                        -if(i.fieldKey=='account' || i.fieldKey=='password')
+                          input(type='text',value=i.fieldValue,readonly='true',name=i.fieldKey)
+                        -else
+                          input(type='text',value=i.fieldValue||'',name=i.fieldKey)
+                //-非必填
+                -if(i.ismandatory==0)
+                  //-邮箱
+                  -if(i.fieldKey=='email')
+                    .div.cui-textBoxContainer(data-rule='email',data-tips='请输入正确的#{i.fieldName}',data-isunique=i.isunique,data-ismandatory)
+                      .span-group.inline
+                        span.inline.name
+                          -var spanV = '<span class="wth1"></span>'
+                          span!= i.fieldName.split('').join(spanV)
+                        span &#58;
+                      input(type='text',value=i.fieldValue ||'',name=i.fieldKey)
+                  //-手机
+                  -else if(i.fieldKey=='mobile')
+                    .div.cui-textBoxContainer(data-rule='tel',data-tips='请输入正确的#{i.fieldName}',data-isunique=i.isunique)
+                      .span-group.inline
+                        span.inline.name
+                          -var spanV = '<span class="wth1"></span>'
+                          span!= i.fieldName.split('').join(spanV)
+                        span &#58;
+                      input(type='text',value=i.fieldValue ||'',name=i.fieldKey)
+                  //-身份证号码
+                  -else if(i.fieldKey=='identity_num')
+                    .div.cui-textBoxContainer(data-rule='isIdCardNo',data-tips='请输入正确的#{i.fieldName}',data-isunique=i.isunique)
+                      .span-group.inline
+                        span.inline.name
+                          span!= i.fieldName
+                        span &#58;
+                      input(type='text',value=i.fieldValue ||'',name=i.fieldKey)
+                  -else
+                    -if(i.fieldKey!='password')
+                     .div.cui-textBoxContainer(data-rule='',data-tips='',data-isunique=i.isunique)
+                       .span-group.inline
+                         span.inline.name
+                          -if(i.fieldName.length==2)
+                              -var spanV = '<span class="wth1"></span>'
+                              span!= i.fieldName.split('').join(spanV)
+                          -if(i.fieldName.length==3)
+                              -var spanV = '<span class="wth2"></span>'
+                              span!= i.fieldName.split('').join(spanV)
+                          -if(i.fieldName.length>3)
+                              span= i.fieldName
+                         span &#58;
+                       -if(i.fieldKey=='account' || i.fieldKey=='password')
+                         input(type='text',value=i.fieldValue,readonly='true',name=i.fieldKey)
+                       -else
+                         input(type='text',value=i.fieldValue||'',name=i.fieldKey)
+              //-日历框
+              -if(i.type==2)
+                  .div.cui-date
+                    .span-group.inline
+                      -if(i.ismandatory==1)
+                        span.must-color *
+                      span.inline.name
+                        -if(i.fieldName.length==2)
+                          -var spanV = '<span class="wth1"></span>'
+                          span!= i.fieldName.split('').join(spanV)
+                        -if(i.fieldName.length==3)
+                          -var spanV = '<span class="wth2"></span>'
+                          span!= i.fieldName.split('').join(spanV)
+                        -if(i.fieldName.length>3)
+                          span= i.fieldName
+                      span &#58;
+                    //- input.date(type='date',value=i.fieldValue || '')
+                    .cui-datePickerContainer.inline(name=i.fieldKey,data-fieldName=i.fieldName,data-ismandatory=i.ismandatory,data-language='zh',data-value=i.fieldValue)
+                      span.result= i.fieldValue || ''
+                      i.icon-component.cpf-icon-ic_calendar.calendar
+              //-下拉框
+              -if(i.type==3)
+                //-性别
+                -if(i.fieldKey=='gender')
+                  .div.cui-radioGroup(data-isunique=i.isunique)
+                    .span-group.inline
+                      -if(i.ismandatory==1)
+                        span.must-color *
+                      -var spanV = '<span class="wth1"></span>'
+                      span!= i.fieldName.split('').join(spanV)
+                      span &#58;
+                    .radio-group.inline
+                      .cui-radioGroupContainer(data-ismandatory=i.ismandatory,name=i.fieldKey)
+                        .cui-radioContainer.inline
+                          -if(i.fieldValue=='男')
+                            input(type='radio',name='gender',checked='true',value='男')
+                          -else
+                            input(type='radio',name='gender',value='男')
+                          label
+                            i
+                            span 男
+                        .cui-radioContainer.inline
+                          -if(i.fieldValue=='女')
+                            input(type='radio',name='gender',checked='true',value='女')
+                          -else
+                            input(type='radio',name='gender',value='女')
+                          label
+                            i
+                            span 女
+                -else
+                  .div.cui-sel(data-isunique=i.isunique,data-ismandatory=i.ismandatory)
+                    .span-group.inline
+                      -if(i.ismandatory==1)
+                        span.must-color *
+                      span.inline.name
+                          -if(i.fieldName.length==2)
+                            -var spanV = '<span class="wth1"></span>'
+                            span!= i.fieldName.split('').join(spanV)
+                          -if(i.fieldName.length==3)
+                            -var spanV = '<span class="wth2"></span>'
+                            span!= i.fieldName.split('').join(spanV)
+                          -if(i.fieldName.length>3)
+                            span= i.fieldName
+                      span &#58;
+                    .cui-selectBoxContainer.inline(data-value=i.fieldValue)
+                      -var nv = i.fieldValue ? i.fieldValue: ''
+                      span.select-value(name=i.fieldKey,data-value=nv)=nv && nv.length>10 ?pageHelper.formatter.strCut(nv,13):nv
+                      select
+                        option --请选择--
+                        each k in i.select
+                          option= k.name
+          .a-button
+            a.cui-button.preset-blue(href='javascript:void(0);')
+              -if(request.query.isEditUserInfo=='true')
+                span 确定
+              -else
+                span 进入考场
+      -else
+        .div-body
+          p 服务器繁忙！
+block scriptSection
+   script(type="text/javascript", src=pageHelper.setScript('examM.userInfo'))

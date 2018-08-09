@@ -1,0 +1,58 @@
+@import '../commonStyle/common';
+
+
+.detailWrap.message{
+    padding:28px 60px;
+    &.pdlr0{
+        padding:28px 0;
+    }
+    &>p{
+        color:@fc-a;
+    }
+    .back{
+        .tr;
+        a{
+            .fs16;
+            color:@c-standard-a;
+            text-decoration: underline;
+        }
+    }
+    .weight{
+        .fs14;
+        .fw;
+        margin:15px 0;
+    }
+    .light{
+        .fs14;
+        color:@fc-b;
+        margin:15px 0;
+
+    }
+    .line{
+        width:100%;
+        height: 0;
+        border:1px dashed #ccc;
+    }
+    .detailContent{
+        padding: 15px 0px;
+        margin:20px 0 30px;
+        overflow: auto;
+        &.long{
+            min-height: 350px;
+        }
+        >div{
+            .fs14;
+            line-height: 30px;
+        }
+    }
+    .btns{
+        .tc;
+        a{
+            padding: 5px 65px;
+            .fs16;
+            &:first-child{
+                margin-right: 10px;
+            }
+        }
+    }
+}

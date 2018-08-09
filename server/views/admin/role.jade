@@ -1,0 +1,74 @@
+//-
+  @Author: Jet.Chan
+  @Date:   2016-12-29T14:48:27+08:00
+  @Email:  guanjie.chen@talebase.com
+  @Last modified by:   Jet.Chan
+  @Last modified time: 2017-03-09T17:27:52+08:00
+
+
+
+extends ../share/layout.base.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('admin.role'))
+
+block content
+      .ex-content-right
+        - var tabActive = 2
+        -var rolePermissionCode = 'c2_2'
+        -var permissionManagerCode = 'c2_3'
+        include ../share/component.managementTab.jade
+        .m-wrap
+          //- 导航
+          p.m-nav
+            a(href='###') 管理员设置&nbsp;
+            i.cpf-icon.cpf-icon-ic_arrowright &nbsp;
+            span 角色管理
+          //- 主体
+          .m-main
+            //-删除
+            .m-main-action
+              -if(globalCustomer.permission.includes(rolePermissionCode))
+                a.create.cur(href='javascript:void(0)') 创建角色
+                a.del(href='javascript:void(0)') 删除
+            //-列表
+            ul.m-list
+              li.m-title
+                -if(globalCustomer.permission.includes(rolePermissionCode))
+                  p.cui-checkboxContainer.inline
+                    input.input-title(type='checkbox')
+                    label
+                      i
+                      span
+                p 角色名称
+                p 管理员数量
+                p 操作
+              - each i in queryList.results
+                li.m-item(id='#{i.id}')
+                  -if(globalCustomer.permission.includes(rolePermissionCode))
+                    -if (i.name == '超级管理员'|| i.name=='评卷人')
+                      p
+                    -else
+                      p.cui-checkboxContainer.inline
+                        input.input-item(type='checkbox')
+                        label
+                          i
+                          span
+                  p
+                    a.role-name= pageHelper.formatter.strCut(i.name,50,'')
+                  p
+                    a.count(href='adminList'+'?roleId='+i.id) #{i.memberNum}
+                  p
+                    -if(globalCustomer.permission.includes(permissionManagerCode) && i.name !='评卷人')
+                      a.manage(href='javascript:void(0)') 权限管理
+                    -if(globalCustomer.permission.includes(rolePermissionCode))
+                      -if(i.roleType != 1 && i.roleType !=2)
+                        a.edit(href='javascript:void(0)') 修改
+                        a.del(href='javascript:void(0)') 删除
+          -totalCount=queryList.total
+          -pagesize=queryList.limit
+          include ../share/component.pagination.jade
+        include ../share/common.footer.default.jade
+
+block scriptSection
+  script(type="text/javascript", src= pageHelper.setScript('admin.role'))

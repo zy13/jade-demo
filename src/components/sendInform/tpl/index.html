@@ -1,0 +1,222 @@
+﻿<div id="sendInform">
+    <!-- 发送邮件 -->
+    <div class="editEmail ${emailCount>0?'active':smsCount>0?'':'active'}">
+        <div class="win-main">
+            <!-- 收件人 -->
+            {@if type != 'examinee'}
+                <div class="win-item">
+                    <span class="win-left">收件人：</span>
+                    <div class="win-right">
+                        <div class="examiner">
+                        {@each dReceiverInfos as item}
+                            {@if item.email}
+                            <a class="account cui-button" data-email="${item.email}" data-mobile="${item.mobile}" data-account="${item.account}" data-id="${item.id}">
+                                <span>${item.name}</span>
+                                <i class="cpf-icon cpf-icon-ic_close"></i>
+                            </a>
+                            {@/if}
+                        {@/each}
+                        </div>
+                    </div>
+                </div>
+            {@else}
+                <div class="win-item note">
+                    <p>
+                        您已选择
+                        <span>${totalCount}</span>
+                        个帐号，其中
+                        <span>${emailCount}</span>
+                        个有邮箱，
+                        <span>${smsCount}</span>
+                        个有手机，请选择发送方式
+                    </p>
+                </div>
+            {@/if}
+            <!-- 发送方式 -->
+            <div class="win-item">
+                <span class="win-left">发送方式：</span>
+                <div class="win-right">
+                    <div class="cui-radioGroupContainer">
+                        <div class="cui-radioContainer inline">
+                            <input type="radio" name="email" value="email" checked="checked"/>
+                            <label>
+                                <i></i>
+                                <span>发送邮件</span>
+                            </label>
+                        </div>
+                        <div class="cui-radioContainer inline">
+                        {@if smsCount == 0}
+                            <input type="radio" name="email" value="mess" disabled="disabled"/>
+                        {@else}
+                            <input type="radio" name="email" value="mess"/>
+                        {@/if}
+                            <label class="${smsCount==0?'readOnly':''}">
+                                <i></i>
+                                <span>发送短信</span>
+                            </label>
+                        </div>
+                        <div class="cui-radioContainer inline">
+                            <input type="radio" name="email" value="both"/>
+                            <label>
+                                <i></i>
+                                <span>发送邮件和短信</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 发送短信 -->
+    <div class="editMess ${smsCount>0 && emailCount==0?'active':''}">
+        <div class="win-main">
+            <!-- 收件人 -->
+            {@if type != 'examinee'}
+                <div class="win-item">
+                    <span class="win-left">收件人：</span>
+                    <div class="win-right">
+                        <div class="examiner">
+                        {@each dReceiverInfos as item}
+                            {@if item.mobile}
+                            <a class="account cui-button" data-email="${item.email}" data-mobile="${item.mobile}" data-account="${item.account}" data-id="${item.id}">
+                                <span>${item.name}</span>
+                                <i class="cpf-icon cpf-icon-ic_close"></i>
+                            </a>
+                            {@/if}
+                        {@/each}
+                        </div>
+                    </div>
+                </div>
+            {@else}
+                <div class="win-item note">
+                    <p>
+                        您已选择
+                        <span>${totalCount}</span>
+                        个帐号，其中
+                        <span>${emailCount}</span>
+                        个有邮箱，
+                        <span>${smsCount}</span>
+                        个有手机，请选择发送方式
+                    </p>
+                </div>
+            {@/if}
+            <!-- 发送方式 -->
+            <div class="win-item">
+                <span class="win-left">发送方式：</span>
+                <div class="win-right">
+                    <div class="cui-radioGroupContainer">
+                        <div class="cui-radioContainer inline">
+                        {@if emailCount==0}
+                            <input type="radio" name="mess" value="email" disabled="disabled"/>
+                        {@else}
+                            <input type="radio" name="mess" value="email"/>
+                        {@/if}
+                            <label class="${emailCount==0?'readOnly':''}">
+                                <i></i>
+                                <span>发送邮件</span>
+                            </label>
+                        </div>
+                        <div class="cui-radioContainer inline">
+                            <input type="radio" name="mess" value="mess" checked="checked"/>
+                            <label>
+                                <i></i>
+                                <span>发送短信</span>
+                            </label>
+                        </div>
+                        <div class="cui-radioContainer inline">
+                            <input type="radio" name="mess" value="both"/>
+                            <label>
+                                <i></i>
+                                <span>发送邮件和短信</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 发送邮件和短信 -->
+    <div class="editBoth">
+        <div class="win-main">
+            <!-- 收件人 -->
+            {@if type != 'examinee'}
+                <div class="win-item">
+                    <span class="win-left">收件人：</span>
+                    <div class="win-right">
+                        <div class="examiner">
+                        {@each dReceiverInfos as item}
+                            <a class="account cui-button" data-email="${item.email}" data-mobile="${item.mobile}" data-account="${item.account}" data-id="${item.id}">
+                                <span>${item.name}</span>
+                                <i class="cpf-icon cpf-icon-ic_close"></i>
+                            </a>
+                        {@/each}
+                        </div>
+                    </div>
+                </div>
+            {@else}
+                <div class="win-item note">
+                    <p>
+                        您已选择
+                        <span>${totalCount}</span>
+                        个帐号，其中
+                        <span>${emailCount}</span>
+                        个有邮箱，
+                        <span>${smsCount}</span>
+                        个有手机，请选择发送方式
+                    </p>
+                </div>
+            {@/if}
+            <!-- 发送方式 -->
+            <div class="win-item">
+                <span class="win-left">发送方式：</span>
+                <div class="win-right">
+                    <div class="cui-radioGroupContainer">
+                        <div class="cui-radioContainer inline">
+                            {@if emailCount==0}
+                                <input type="radio" name="both" value="email" disabled="disabled"/>
+                            {@else}
+                                <input type="radio" name="both" value="email"/>
+                            {@/if}
+                            <label class="${emailCount==0?'readOnly':''}">
+                                <i></i>
+                                <span>发送邮件</span>
+                            </label>
+                        </div>
+                        <div class="cui-radioContainer inline">
+                        {@if smsCount == 0}
+                            <input type="radio" name="both" value="mess" disabled="disabled"/>
+                        {@else}
+                            <input type="radio" name="both" value="mess"/>
+                        {@/if}
+                            <label class="${smsCount==0?'readOnly':''}">
+                                <i></i>
+                                <span>发送短信</span>
+                            </label>
+                        </div>
+                        <div class="cui-radioContainer inline">
+                            <input type="radio" name="both" value="both" checked="checked"/>
+                            <label>
+                                <i></i>
+                                <span>发送邮件和短信</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 操作按钮 -->
+    <div class="win-main win-action">
+        <div class="win-item">
+            <a class="cui-button preset-blue preview" >预览</a>
+            <a class="cui-button send">发送</a>
+            <a class="cui-button cancel">取消</a>
+        </div>
+    </div>
+    <!-- 预览邮件 -->
+    <div class="previewEmail"></div>
+    <!-- 预览短信 -->
+    <div class="previewMess"></div>
+    <!-- 预览邮件和短信 -->
+    <div class="previewBoth"></div>
+</div>

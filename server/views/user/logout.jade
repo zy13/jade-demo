@@ -1,0 +1,18 @@
+extends ../share/layout.base
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('user.logout'))
+
+block content
+  .wrap
+    .content
+      p.note 您的登录已超时，系统将会自动返回登录页，您需重新登录，请稍等 ...
+      p.count 倒数
+        span 3
+        | 秒
+      a.login(href=path?path:"/customer/login") 如果您的浏览器没有自动跳转，请点击这里返回登录页
+    input#path(type="hidden",value=path)
+
+
+block scriptSection
+  script(type="text/javascript", src= pageHelper.setScript('user.logout'))

@@ -1,0 +1,24 @@
+extends ../share/layout.baseM.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href=pageHelper.setStyle('examM.logout'))
+
+block content
+  .div-content
+    .div-body
+      .img
+        img(src=pageHelper.setPageImgPath('/images/logout.png'))
+      .p-group
+          p 您的登录已超时，
+          p 系统将会自动返回登录页，
+          p 您需重新登录，请稍等 ...
+          p.daoshu
+            | 倒数
+            span.must-color 3
+            | 秒
+          a(href='/exam/login')
+            span 如果您的浏览器没有自动跳转
+            br
+            span 请点击这里返回登录页
+block scriptSection
+   script(type="text/javascript", src=pageHelper.setScript('examM.logout'))

@@ -1,0 +1,35 @@
+//- 分页
+- var currPage = request.query.p||request.query.pageIndex||1;
+- var currQuery= request.query;
+- pagesize = pagesize || request.query.pagesize || 10;
+- var currPath = request.path;
+- totalCount = totalCount || 0
+- var totalPage = parseInt(Math.ceil(totalCount/pagesize)) || 1;
+- if(totalCount)
+  div.pagination
+    p.in-block.mglr05
+      span 共
+        b= totalCount
+      span 条记录
+    p.in-block.mglr05
+      b= currPage
+      b /
+      b.totalPage= totalPage
+    a(href=currPage>1?(currPath + pageHelper.querySet({p:1},currQuery)):'javascript:void(0)',class=currPage<=1?'locked':'',data-p=1).nor-button.mglr05 首页
+    a(href=currPage>1?(currPath + pageHelper.querySet({p:parseInt(currPage)-1},currQuery)):'javascript:void(0)',class=currPage<=1?'locked':'',data-p=(parseInt(currPage)<=1?1:parseInt(currPage))).nor-button.mglr05 上一页
+    a(href=currPage<totalPage?(currPath + pageHelper.querySet({p:parseInt(currPage)+1},currQuery)):'javascript:void(0)',class=currPage>=totalPage?'locked':'',data-p=(parseInt(currPage)+1)).nor-button.mglr05 下一页
+    a(href=currPage<totalPage?(currPath + pageHelper.querySet({p:parseInt(totalPage)},currQuery)):'javascript:void(0)',class=currPage>=totalPage?'locked':'',data-p=totalPage).nor-button.mglr05 末页
+    .in-block.mglr05
+    span 每页显示
+    div.cui-selectBoxContainer(data-options=[{value:1, text:"10"}, {value:2, text:"20"}, {value:3, text:"30"}, {value:4, text:"50"}, {value:5, text:"100"}])
+      span.result= pagesize || 10
+      span 条
+    .in-block.mglr05
+      span 跳转到
+      .cui-textBoxContainer.inline
+        - if(totalPage>0)
+          input(type='tel', placeholder='',onpaste="return false;").newpage
+        -else
+          input(type='tel', placeholder='',onpaste="return false;",disabled="disabled").newpage
+      span 页
+    a.nor-button.mglr05.search(href="javascript:void(0)") 确定

@@ -1,0 +1,192 @@
+//-
+  @Author: Jet.Chan
+  @Date:   2016-12-29T14:48:27+08:00
+  @Email:  guanjie.chen@talebase.com
+  @Last modified by:   Jet.Chan
+  @Last modified time: 2017-03-09T13:53:38+08:00
+
+
+
+extends ../share/layout.base.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('projectList.index'))
+
+
+block content
+    .ex-content-right
+      - var tabActive = 0
+      -var createOrModifyPermissionCode = 'c1_0';
+      -var copyProjectPermissionCode = 'c1_13';
+      -var updateStatusPermissionCode = 'c1_1';
+      -var deleteProjectPermissionCode = 'c1_2';
+      -var notifyRecordPermissionCode = 'c1_3';
+      -var accountManagePermissionCode = 'c1_4';
+      -var dataManagePermissionCode = 'c1_11';
+      -var sendNotifyPermissionCode = 'c1_7';
+      include ../share/component.commonTab.jade
+      .m-wrap
+        .m-nav
+          a(href='###') 项目管理&nbsp;
+          i.cpf-icon.cpf-icon-ic_arrowright &nbsp;
+          span 项目列表
+        .m-main
+          .m-main-action
+            -if(globalCustomer.permission.includes(createOrModifyPermissionCode))
+              .create-pro
+                a(href='/customer/projectList/createProject/')
+                  i.cpf-icon.cpf-icon-ic_add
+                  span 创建项目
+            .search-filter
+              .cui-selectBoxContainer(data-options=[{value:"projectNameLike",text:'项目名称'},{value:"taskNameLike",text:'试卷名称'}])
+                -var selectOption = (param.taskNameLike == null || param.taskNameLike == '') ? '项目名称' : '试卷名称'
+                span.placeholder #{selectOption}
+              -var key = (param.taskNameLike == null || param.taskNameLike == '') ? param.projectNameLike : param.taskNameLike
+              input(type='hidden',name='searchType',value=param.taskNameLike?'taskNameLike':'projectNameLike')
+              input.txt(type='text',placeholder='请输入关键字',name="key",value='#{key}',autocomplete="off")
+              button.btn 搜索
+          ul.m-list
+            -for(var i=0; i<pros.results.length;i++)
+              - var startDate=pros.results[i].startDateL ? pageHelper.date.format(pros.results[i].startDateL,'YYYY-MM-DD HH:mm:ss') : ''
+              - var endDate=pros.results[i].endDateL ? pageHelper.date.format(pros.results[i].endDateL,'YYYY-MM-DD HH:mm:ss') : ''
+              li.m-detail(id='#{pros.results[i].id}')
+                .m-title.project
+                  .inline-div.img
+                    img(src=pageHelper.setPageImgPath('/images/exam.png'))
+                  .inline-div.info
+                    -if(!pros.results[i].startDateL)
+                      p
+                    -else
+                      p #{pros.results[i].startDateL ? pageHelper.date.format(pros.results[i].startDateL,'YYYY-MM-DD HH:mm:ss') : ''}&nbsp;—&nbsp;#{pros.results[i].endDateL ? pageHelper.date.format(pros.results[i].endDateL,'YYYY-MM-DD HH:mm:ss') : (pros.results[i].startDateL ? '不限' : '')}
+                    p
+                      -if(globalCustomer.permission.includes(createOrModifyPermissionCode))
+                        a(href='/customer/projectList/editProject/#{pros.results[i].id}') #{pros.results[i].name}
+                      -else
+                        a=pros.results[i].name
+                  .inline-div.do-sth
+                    -if(globalCustomer.permission.includes(updateStatusPermissionCode))
+                      a(href='javascript:void(0);')
+                        -if(pros.results[i].status==1)
+                          i.slideBtn.active
+                        -else
+                          i.slideBtn
+                    - else
+                      - if(pros.results[i].status==1)
+                        a.nop(href='javascript:void(0);')
+                          span.status 启用
+                      - else
+                        a.nop(href='javascript:void(0);')
+                          span.status 禁用
+                    -if(globalCustomer.permission.includes(notifyRecordPermissionCode))
+                      a.log(href='/customer/projectList/notifyRecords?sendType=0&projectId=#{pros.results[i].id}&projectName=#{encodeURIComponent(pros.results[i].name)}')
+                        i.cpf-icon.cpf-icon-center_ic_resume
+                        span 通知日志
+                    -if(globalCustomer.permission.includes(copyProjectPermissionCode))
+                      a.copy(data-projectid= pros.results[i].id)
+                        i.cpf-icon.cpf-icon-ic_copy
+                        span 复制
+                    -if(globalCustomer.permission.includes(deleteProjectPermissionCode))
+                      a.del
+                        i.cpf-icon.cpf-icon-ic_delete
+                        span 删除
+                  .inline-div.qr-code
+                    - if(pros.results[i].scanEnable == '1')
+                      img(src=pageHelper.setPageImgPath('/images/qrcode.png'))
+                -var tasks = pros.results[i].tasks
+                -var st = pros.param.sysTimeL
+                -for(var j=0;j<tasks.length;j++)
+                  .m-item.task(id='#{tasks[j].id}')
+                    .inline-div.left
+                      -if(st<tasks[j].startDateL)
+                        div.img
+                          img(src=pageHelper.setPageImgPath('/images/board_bg.png'))
+                          div 未开始
+                        -if(globalCustomer.permission.includes(sendNotifyPermissionCode))
+                          div
+                            -if(tasks[j].needMarkingNum > 0)
+                              a.notice(href='javascript:void(0)',data-projectid= pros.results[i].id,data-taskid=tasks[j].id,data-taskname= tasks[j].name,data-projectname= pros.results[i].name)  通知评卷
+                            -else
+                              a.cant(href='javascript:void(0)')  无需评卷
+                      -if(st>tasks[j].startDateL && tasks[j].endDateL>st)
+                        div.img
+                          img(src=pageHelper.setPageImgPath('/images/board_bg.png'))
+                          div 进行中
+                        -if(globalCustomer.permission.includes(sendNotifyPermissionCode))
+                          div
+                            -if(tasks[j].needMarkingNum > 0)
+                              a.notice(href='javascript:void(0)',data-projectid= pros.results[i].id,data-taskid=tasks[j].id,data-taskname= tasks[j].name,data-projectname= pros.results[i].name)  通知评卷
+                            -else
+                              a.cant(href='javascript:void(0)')  无需评卷
+                      -if(tasks[j].endDateL<st)
+                        div.img
+                          img(src=pageHelper.setPageImgPath('/images/board_bg.png'))
+                          div 已结束
+                        -if(globalCustomer.permission.includes(sendNotifyPermissionCode))
+                          div
+                            -if(tasks[j].needMarkingNum > 0)
+                              a.notice(href='javascript:void(0)',data-projectid= pros.results[i].id,data-taskid=tasks[j].id,data-taskname= tasks[j].name,data-projectname= pros.results[i].name)  通知评卷
+                            -else
+                              a.cant(href='javascript:void(0)')  无需评卷
+                    .inline-div.right
+                      .div1
+                          .info
+                            p #{tasks[j].name}
+                            p #{pageHelper.date.format(tasks[j].startDateL,'YYYY-MM-DD HH:mm:ss')}&nbsp;—&nbsp;#{pageHelper.date.format(tasks[j].endDateL,'YYYY-MM-DD HH:mm:ss')}
+                      .div2
+                          .inline-div
+                            span 考试进度
+                            span.jindutiao
+                              -var wid = isNaN(parseInt(100*(tasks[j].inNum/tasks[j].preNum))) ? 0 : parseInt(100*(tasks[j].inNum/tasks[j].preNum))
+                              span(style='width:#{wid}%;')
+                              i(style='left:#{wid-7}%;padding-left:18px;') #{wid}%
+                                i.cpf-icon.cpf-icon-ic_arrowdown
+                            span #{tasks[j].inNum}/#{tasks[j].preNum}
+                          .inline-div
+                            span 评卷进度
+                            span.jindutiao
+                              -var widt = isNaN(parseInt(100*(tasks[j].markedNum/tasks[j].finishNum))) ? 0 : parseInt(100*(tasks[j].markedNum/tasks[j].finishNum))
+                              span(style='width:#{widt}%;')
+                              i(style='left:#{widt-7}%;padding-left:18px;') #{widt}%
+                                i.cpf-icon.cpf-icon-ic_arrowdown
+                            span #{tasks[j].markedNum}/#{tasks[j].finishNum}
+                      .div3
+                        -if(globalCustomer.permission.includes(accountManagePermissionCode))
+                          a.acount(href='/customer/examineeInfo/accountManagement?projectId=#{pros.results[i].id}&taskId=#{tasks[j].id}&projectName=#{encodeURIComponent(pros.results[i].name)}&taskName=#{encodeURIComponent(tasks[j].name)}') 帐号管理
+                        -else
+                          a.acount(style='visibility:hidden') 帐号管理
+                        -if(globalCustomer.permission.includes(dataManagePermissionCode))
+                          a.data(href='/customer/examineeInfo/dataManagement?projectId=#{pros.results[i].id}&taskId=#{tasks[j].id}&projectName=#{encodeURIComponent(pros.results[i].name)}&taskName=#{encodeURIComponent(tasks[j].name)}') 数据管理
+                        -else
+                          a.data(style='visibility:hidden') 数据管理
+                        .do-sth
+                            -if(globalCustomer.permission.includes(updateStatusPermissionCode))
+                              a(href='javascript:void(0)')
+                                span
+                                  -if(tasks[j].status==1)
+                                    i.slideBtn.active
+                                  -else
+                                    i.slideBtn
+                            - else
+                              - if(tasks[j].status==1)
+                                span.status 启用
+                              - else
+                                span.status 禁用
+                            -if(tasks[j].hasUpgradeVersion)
+                              a.update(href='javascript:void(0)', data-taskid= tasks[j].id)
+                               i.cpf-icon.cpf-icon-center_ic_setting
+                               span 有更新
+                            -if(globalCustomer.permission.includes(createOrModifyPermissionCode))
+                              a.del(href='javascript:void(0)')
+                                i.cpf-icon.cpf-icon-ic_delete
+                                span 删除
+                -if(globalCustomer.permission.includes(createOrModifyPermissionCode))
+                  .m-footer
+                    a.add-product(href='/customer/projectList/selectPaper/#{pros.results[i].id}?&startDate=#{startDate}&endDate=#{endDate}')
+                      span.span +&nbsp;
+                      span 添加试卷
+        include ../share/component.pagination.jade
+      include ../share/common.footer.default.jade
+
+block scriptSection
+  include ../share/common.script.ueditor.jade
+  script(type="text/javascript", src= pageHelper.setScript('projectList.index'))

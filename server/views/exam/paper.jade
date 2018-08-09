@@ -1,0 +1,218 @@
+//-
+  @Author: Jet.Chan
+  @Date:   2017-02-10T15:44:27+08:00
+  @Email:  guanjie.chen@talebase.com
+  @Last modified by:   Jet.Chan
+  @Last modified time: 2017-02-17T11:02:25+08:00
+
+
+
+extends ../share/layout.base
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('exam.paper'))
+
+block content
+  .special-wrap
+    include ../share/component.header.out.jade
+    .special-content(data-code=code)
+      -if(code==0)
+        .wrap
+          input(type='hidden',value=request.query.taskId,id='taskId')
+          input(type='hidden',value=request.query.paperId,id='paperId')
+          input(type='hidden',value=r.curCount,id='curCount')
+          input(type='hidden',value=request.query.pageNo,id='pageNo')
+          input(type='hidden',value=r.limitCount,id='limitCount')
+          input(type='hidden',id='pagesNum',data-value=r.pagesNum)
+          .title= r.name
+          .header
+            .progress-wrap
+              p 已完成
+                span.done= r.finished
+                | 题，共
+                span.total= r.total
+                | 题
+              .progress
+                -var progress = parseInt(r.finished/r.total*100)+'%'
+                .block(style="width:#{progress}")
+                span(style="width:#{progress}")= progress
+            .time
+              p 剩余时间
+              //- p.urgent 剩下一分钟时变为红色
+              p.remainTime
+                span
+                input(type="hidden",data-javaSystemTime=r.systemTime,data-paperEndTime=r.endTime,data-timeLeft=r.timeLeft,data-browserRequestTime=request.query.browserRequestTime)#times
+                //- input(type="hidden",data-start='2017-2-10 10:00:00',data-end='2017-2-10 16:00:00')#times
+                i.cpf-icon.cpf-icon-shrink.slide
+          .select-ques-wrap
+            p 答题情况如下，可点击题号跳转
+            .select-ques
+              - var cname,total=r.total>30?30:r.total;
+              - for(var i=1;i<=r.total;i++)
+                - cname=''
+                - for(var j=0;j<r.answered.length;j++)
+                  - if(i==r.answered[j])
+                  - cname='active'
+                a(href="javascript:void(0)",class=cname,data-value=i,data-demo=r.answered[j]).item= i
+                - if(i>0&&i%60==0)
+                  .mgb
+            - if(r.total>30)
+              .more
+                a(href="javascript:void(0)") 加载更多
+          .alertClock
+            img(src=pageHelper.setPageImgPath("/images/alert.png"))
+            p.alertTime
+          .questions
+            each v,i in r.items
+              - if(v.type==9)     //特殊说明题
+                - if(v.instructionPre && v.instructionPre.length)
+                  .explain
+                    each k in v.instructionPre
+                      div!= k
+              - if(v.type==4)     //单选题
+                - if(v.instructionPre && v.instructionPre.length)
+                  .explain
+                    each k in v.instructionPre
+                      div!= k
+                .single.question(id="quesNo"+v.seqNo,data-type= v.type,data-num= v.seqNo,data-id= v.id)
+                 .type 【单选题】
+                  .title-wrap
+                    p.seqNo= v.seqNo
+                      | 、
+                    .title!= v.question
+                  .options.cui-radioGroupContainer
+                    - var optionSetting = 'item'+v.optionSetting
+                    each k,j in v.dOptionItems
+                      .option-item(class=optionSetting)
+                        .option-wrap
+                          .cui-radioContainer
+                            - if(k.answer)
+                              input(type='radio', id=k.maskCode+j, name=v.id, value=k.maskCode,checked="checked")
+                            - else
+                              input(type='radio', id=k.maskCode+j, name=v.id, value=k.maskCode)
+                            label(for=k.maskCode+j)
+                              i
+                              span
+                          .option-content!=k.label
+              - if(v.type==5)              //-多选
+                - if(v.instructionPre && v.instructionPre.length)
+                  .explain
+                    each k,j in v.instructionPre
+                      div!= k
+                .multiple.question(id="quesNo"+v.seqNo,data-type=v.type,data-num=v.seqNo,data-id=v.id)
+                  .type 【多选题】
+                  .title-wrap
+                    p.seqNo= v.seqNo
+                      | 、
+                    .title!= v.question
+                  .options
+                    - var optionSetting = 'item'+v.optionSetting
+                    each k,j in v.dOptionItems
+                      .option-item(class=optionSetting)
+                        .option-wrap
+                          .cui-checkboxContainer
+                            - if(k.answer)
+                              input(type='checkbox',id=k.maskCode+j, name=v.id, value=k.maskCode,checked="checked")
+                            - else
+                              input(type='checkbox',id=k.maskCode+j, name=v.id, value=k.maskCode)
+                            label(for=id=k.maskCode+j)
+                              i
+                              span
+                          .option-content!=k.label
+              - if(v.type==6)            //-客观
+                - if(v.instructionPre && v.instructionPre.length)
+                  .explain
+                    each k,j in v.instructionPre
+                      div!= k
+                .question(id="quesNo"+v.seqNo,class=v.blankType==1?'obj-fill':'sub-fill',data-type=v.type,data-num=v.seqNo,data-id=v.id)
+                  .type=  v.blankType==0?'【主观填空题】':'【客观填空题】'
+                  .title-wrap
+                    p.seqNo= v.seqNo
+                      | 、
+                    .title!= v.question
+                  .options
+                    -var setHeight=v.blankHeight,setWidth=v.blankWidth
+                    - for(var j=0;j<v.answers.length;j++)
+                      .option-item(style='padding-left:'+(setHeight>70?70:setHeight)+'px')
+                        p.option-index(style='width:'+(setHeight>70?70:setHeight)+'px')= j+1
+                        .option-wrap(style='width:'+setWidth+'px')
+                          .option-content(style='height:'+setHeight+'px')
+                            textarea.blankInput(data-limit=v.blankLimit)!= v.answers[j]
+                            - var length = v.answers[j]?v.answers[j].length:0
+                            -if(v.blankLimit)
+                              div.limit
+                                | 还可以输入
+                                span!=v.blankLimit-length
+                                | 字
+              - if(v.type==7)            //-上传
+                - if(v.instructionPre && v.instructionPre.length)
+                  .explain
+                    each k,j in v.instructionPre
+                      div!= k
+                .upload.question(id='quesNo'+v.seqNo,data-type=v.type,data-num=v.seqNo,data-id=v.id)
+                  .type 【上传题】
+                  .title-wrap
+                    p.seqNo= v.seqNo
+                      | 、
+                    .title!= v.question
+                  .upload-file
+                    input(type="text",readonly,placeholder="选择文件（5M以内）").block
+                    input(type="file",id="file"+v.id,name="file",data-type=v.aTypes).file
+                    a(href="javascript:void(0)",data-id=v.id).cui-button.selectFile 选择文件
+                    a(href="javascript:void(0)",data-id=v.id,data-seqno=v.seqNo).cui-button.preset-blue.uploadBtn 上传
+                    - if(v.aTypes)
+                      - var arr = v.aTypes.split(',')
+                      .rightTips
+                        p 支持文件类型：
+                          - for(var j=0;j<arr.length;j++)
+                            -if(arr[j]==1)
+                              span 图片（jpg，jpeg，png，gif，bmp）
+                                | &nbsp;&nbsp;
+                            -if(arr[j]==2)
+                              span word文档（doc，docx）
+                                | &nbsp;&nbsp;
+                            -if(arr[j]==3)
+                              span excel表格（xls，xlsx）
+                  ul.uploaded-files.img-group
+                    -if(v.answers && v.answers.length)
+                      each k,j in v.answers
+                        - var arr = k.split(';')
+                        - var nameArr = arr[1].split('.')
+                        - var suffix = nameArr[nameArr.length-1]
+                        - var name = arr[1].substr(0,arr[1].length - suffix.length - 1)
+                        li.file-item(data-src=arr[0],data-arr=arr,data-type=arr[2],data-name=arr[1],data-size=arr[3]).cui-textBoxContainer
+                          .item-content(class=arr[2]=='img'?'isImg':'',data-type=arr[2],data-href=arr[0],data-name=arr[1],data-suffix=suffix)
+                            .detail
+                              p= arr[1]
+                              p= arr[3]
+                            .icon
+                              img(src= arr[2]=='img'?arr[0]:arr[2]=='word'?pageHelper.setPageImgPath('/images/word.png'):pageHelper.setPageImgPath('/images/xls.png'))
+                          i.cpf-icon.cpf-icon-thin-close.delFile(data-name=name,data-suffix=suffix,data-seqNo= v.seqNo)
+          .confirm
+            - var pageNo=request.query.pageNo?request.query.pageNo:1
+            - if(pageNo!=1&&pageNo!='1')
+              a.cui-button.prev 上一页
+            - if(pageNo==r.totalPage)
+              a.cui-button.preset-blue.submit 提交
+            - else
+              a.cui-button.preset-blue.next 下一页
+            .jumpPage
+              | 共
+              span.total= r.totalPage
+              | 页转到
+              div.inline.page
+                input(type="text")
+              | 页
+      -else
+        .wrap
+          .message!=message
+      .finish-contain.dis
+        .content
+          i.cpf-icon.cpf-icon-ic_like
+          .word
+        .return
+          a.cui-button.preset-blue(href="/exam/taskList") 返回任务列表
+    include ../share/common.footer.default.jade
+
+block scriptSection
+  script(type="text/javascript", src= pageHelper.setScript('exam.paper'))

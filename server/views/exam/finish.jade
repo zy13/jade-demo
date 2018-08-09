@@ -1,0 +1,36 @@
+extends ../share/layout.base
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('exam.finish'))
+
+block content
+  .special-wrap
+    include ../share/component.header.out.jade
+    .wrap
+      .title 初级技术人员水平考试
+      .header
+        .progress-wrap
+          p 已完成
+            span.done 25
+            | 题，共
+            span.total 25
+            | 题
+          .progress
+            .block(style="width:100%")
+            span(style="width:100%") 100%
+        .time
+          p 剩余时间
+          p.urgent
+            span 000:00:00
+      .contain
+        .content
+          i.cpf-icon.cpf-icon-ic_like
+          .word 恭喜您！已完成试卷答题。您本次客观题答题得分为：
+            span 0
+        .return
+          a.cui-button.preset-blue(href="/exam/taskList") 返回任务列表
+
+    include ../share/common.footer.default.jade
+
+block scriptSection
+  script(type="text/javascript", src= pageHelper.setScript('exam.finish'))

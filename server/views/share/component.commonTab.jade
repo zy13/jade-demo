@@ -1,0 +1,29 @@
+- if(tabType == 2)
+  .commonTab
+    ul.tabs
+      -if(globalCustomer.permission.includes('c2_4'))
+        li(class=tabActive==0?'active':'')
+            a(href="/customer/admin/companyMessage") 企业信息
+      -if(globalCustomer.permission.includes('c2_5'))
+        li(class=tabActive==1?'active':'')
+          a(href="/customer/admin/resetPassword") 修改密码
+- else if(tabType == 3)
+  .commonTab
+    ul.tabs
+      li(class=tabActive==0?'active':'')
+          a(href="/customer/examList/list") 试卷管理
+- else
+  .commonTab
+    ul.tabs
+      -if(globalCustomer.permission.includes('c1_0') || globalCustomer.permission.includes('c1_1') || globalCustomer.permission.includes('c1_2') || globalCustomer.permission.includes('c1_3') || globalCustomer.permission.includes('c1_4') || globalCustomer.permission.includes('c1_5') || globalCustomer.permission.includes('c1_6') || globalCustomer.permission.includes('c1_7') || globalCustomer.permission.includes('c1_8')|| globalCustomer.permission.includes('c1_9')||globalCustomer.permission.includes('c1_10')||globalCustomer.permission.includes('c1_11')||globalCustomer.permission.includes('c1_12')||globalCustomer.permission.includes('c1_13'))
+        li(class=tabActive==0?'active':'')
+            a(href="/customer/projectList/index") 项目列表
+      -if(globalCustomer.permission.includes('c0_0'))
+        li(class=tabActive==1?'active':'')
+          a(href="/customer/global/setaccount") 帐号设定管理
+      -if(globalCustomer.permission.includes('c0_1'))
+        li(class=tabActive==2?'active':'')
+          a(href="/customer/template/email") 通知模板
+      -if(globalCustomer.permission.includes('c0_2'))
+        li(class=tabActive==3?'active':'')
+          a(href="/customer/statistics/index") 使用统计

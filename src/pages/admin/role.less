@@ -1,0 +1,389 @@
+/**
+* @Author: Jet.Chan
+* @Date:   2016-12-29T14:48:28+08:00
+* @Email:  guanjie.chen@talebase.com
+* @Last modified by:   Jet.Chan
+* @Last modified time: 2017-03-09T15:16:29+08:00
+*/
+
+@import '../../components/commonStyle/common';
+@cell-width: 10%;
+.wrap {
+    height: 100%;
+}
+
+.m-wrap {
+    box-sizing: border-box;
+    min-width: 1028px;
+    height: 100%;
+    padding: 28px 50px;
+    background: @c-gray-a;
+    font-size: @fs16;
+    // 导航
+    .m-nav {
+        margin-bottom: 25px;
+        color: @fc-b;
+        a {
+            color: @fc-b;
+        }
+        span {
+            color: @c-standard-a;
+        }
+        i {
+            font-size: @fs;
+        }
+    }
+    // 主体
+    .m-main {
+        background: #fff;
+        padding: 28px 26px;
+        // 删除
+        .m-main-action {
+            padding: 16px 30px;
+            background: @c-gray-c;
+            a {
+                width: 135px;
+                display: inline-block;
+                line-height: 28px;
+                border: 1px solid @c-standard-b;
+                border-radius: 2px;
+                .tc;
+                margin: 0 10px 0 0;
+                background: #fff;
+                color: @c-standard-b;
+                font-size: @fs14;
+                &:hover {
+                    background: @c-standard-b;
+                    color: #fff;
+                }
+            }
+        }
+        // 列表
+        .m-list {
+            width: 100%;
+            display: table;
+            .tc;
+            // title
+            .m-title {
+                display: table-row;
+                p {
+                    display: table-cell;
+                    line-height: 45px;
+                    padding: 15px 0 0 0;
+                    border-bottom: 1px solid @fc-a;
+                    vertical-align: middle;
+                    .fw;
+                    color: @fc-a;
+                    word-break: keep-all;
+                    &.cui-checkboxContainer {
+                        width: @cell-width;
+                        word-break: break-all;
+                        label {
+                            i {
+                                left: 50%;
+                                top: 30px;
+                            }
+                        }
+                    }
+                    &:nth-of-type(2),
+                    &:nth-of-type(3),
+                    &:nth-of-type(4) {
+                        width: 3*@cell-width;
+                        word-break: break-all;
+                    }
+                }
+            }
+            // body
+            .m-item {
+                display: table-row;
+                line-height: 25px;
+                height: 25px;
+                p {
+                    .fs14;
+                    display: table-cell;
+                    width: @cell-width;
+                    padding: 15px 0 8px;
+                    border-bottom: 1px dashed @c-gray-c;
+                    vertical-align: middle;
+                    color: @fc-b;
+                    &:nth-of-type(2),
+                    &:nth-of-type(3),
+                    &:nth-of-type(4) {
+                        width: 3*@cell-width;
+                        .tc;
+                        word-break: break-all;
+                    }
+                    &:nth-of-type(3),
+                    &:last-of-type {
+                        a {
+                            display: inline-block;
+                            padding: 0 8px;
+                        }
+                        .add,
+                        .manage,
+                        .edit,
+                        .count {
+                            color: #0084FF;
+                            text-decoration: underline;
+                        }
+                        .del {
+                            color: #ff4539;
+                            text-decoration: underline;
+                        }
+                        .none {
+                            width: 147px;
+                        }
+                    }
+                    &.cui-checkboxContainer {
+                        label {
+                            i {
+                                left: 50%;
+                                top: 41%;
+                            }
+                        }
+                    }
+                    >.count {
+                        color: #0084FF;
+                        text-decoration: underline;
+                    }
+                }
+            }
+            .super {
+                p {
+                    &.role-name {
+                        color: #7d7d7d;
+                    }
+                    &:last-of-type {
+                        a {
+                            color: #7d7d7d !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.create {
+    .cui-textBoxContainer {
+        width: 345px;
+        margin: 50px auto;
+        display: block;
+        input {
+            width: 250px;
+            border-color: #ccc;
+        }
+        span {
+            color: #888;
+            font-size: @fs14;
+        }
+        .ie-placeholder {
+            left: 70px !important;
+            top: 14px !important;
+        }
+        .valid-tips {
+            left: 59px;
+        }
+    }
+    .btn {
+        text-align: center;
+        .cui-button {
+            padding: 4px 54px;
+            &:nth-of-type(1) {
+                margin-right: 10px;
+            }
+        }
+    }
+}
+
+.add {
+    .select-acount {
+        margin: 53px auto;
+        width: 500px;
+        .can,
+        .arow,
+        .cant {
+            display: inline-block;
+            &.can,
+            &.cant {
+                width: 220px;
+                height: 355px;
+                border: 1px solid #288add;
+                overflow-y: auto;
+                background: #fff;
+                .title {
+                    position: fixed;
+                    width: 212px;
+                    z-index: 999;
+                    border-bottom: 1px solid #288add;
+                    background: #fff;
+                    height: 30px;
+                    font-size: @fs16;
+                    line-height: 30px;
+                    padding-left: 8px;
+                    color: #288add;
+                }
+                ul.ul {
+                    position: relative;
+                    top: 30px;
+                    li {
+                        padding-left: 8px;
+                        margin-top: 8px;
+                        font-size: @fs16;
+                        white-space: nowrap;
+                        line-height: 30px;
+                        vertical-align: middle;
+                        height: 30px;
+                    }
+                    li:hover {
+                        cursor: pointer;
+                        background: #288add;
+                        color: #fff;
+                    }
+                }
+            }
+            &.arow {
+                width: 50px;
+                position: relative;
+                bottom: 140px;
+                text-align: center;
+                p {
+                    i {
+                        font-size: 28px;
+                        &:nth-of-type(1) {
+                            padding-bottom: 20px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .btn {
+        text-align: center;
+        .cui-button {
+            padding: 4px 54px;
+            &:nth-of-type(1) {
+                margin-right: 10px;
+            }
+        }
+    }
+}
+
+.edit {
+    .cui-textBoxContainer {
+        width: 345px;
+        margin: 50px auto;
+        display: block;
+        input {
+            width: 70%;
+            border-color: #ccc;
+        }
+        span {
+            color: #888;
+            font-size: @fs14;
+        }
+        .ie-placeholder {
+            top: 14px !important;
+            left: 84px !important;
+            display: none;
+        }
+        .valid-tips {
+            left: 74px;
+        }
+    }
+    .btn {
+        text-align: center;
+        .cui-button {
+            padding: 4px 54px;
+            &:nth-of-type(1) {
+                margin-right: 10px;
+            }
+        }
+    }
+}
+
+.del {
+    p:nth-of-type(1) {
+        text-align: center;
+        padding: 62px;
+        font-size: 18px;
+    }
+    .btn {
+        text-align: center;
+        .cui-button {
+            padding: 4px 54px;
+            &:nth-of-type(1) {
+                margin-right: 10px;
+            }
+        }
+    }
+}
+
+.auth {
+    .checks-group {
+        margin: 10px;
+        margin-bottom: 40px;
+        ul {
+            li {
+                padding: 10px;
+                border-bottom: 1px solid #888;
+                .local,
+                .total {
+                    .cui-checkboxContainer {
+                        label {
+                            span {
+                                padding-top: 2px;
+                                padding-left: 6px;
+                            }
+                        }
+                    }
+                }
+                .local {
+                    .cui-checkboxContainer {
+                        label {
+                            span {
+                                font-size: @fs14;
+                                font-weight: bold;
+                                color: #666;
+                            }
+                        }
+                    }
+                }
+                .total {
+                    margin-top: 10px;
+                    .cui-checkboxContainer {
+                        width: 120px;
+                        label {
+                            span {
+                                color: #666;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .btn {
+        text-align: center;
+        margin-bottom: 50px;
+        .cui-button {
+            padding: 4px 54px;
+            &:nth-of-type(1) {
+                margin-right: 10px;
+            }
+        }
+    }
+}
+
+@media screen and (max-height: 325px) {
+    .ul {
+        overflow-y: scroll;
+    }
+}
+
+@media screen and (max-width: 220px) {
+    .can,
+    .cant {
+        overflow-x: scroll;
+    }
+}

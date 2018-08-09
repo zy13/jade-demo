@@ -1,0 +1,584 @@
+extends ../share/layout.base.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('examList.setPaper'))
+
+
+block content
+  .ex-content-right
+    - var tabType=3,tabActive = 0
+    include ../share/component.commonTab.jade
+    .setting-wrap
+      //-面包屑
+      p.common-nav
+        a(href='/customer/examList/list') 考试库&nbsp;
+        i.cpf-icon-ic_arrowright.fs &nbsp;
+        span 试卷管理&nbsp;
+        i.cpf-icon-ic_arrowright.fs &nbsp;
+        - if(mode==1)
+          span 创建试卷
+        - else
+          span 修改试卷
+      .setting-main.common-main
+        //- 步骤
+        .sp-step
+          a(href='###')
+            strong 1
+            | 设置试卷信息
+          a(href='###').active
+            strong 2
+            | 设置题目
+          a(href='###')
+            strong 3
+            | 设置分数
+          a(href='###')
+            strong 4
+            | 设置结束语
+          a(href='###')
+            strong 5
+            | 设置完成
+        //- 主体部分
+        .note 温馨提示：1.移动端答题固定为每页一题。2.在题干中不需要填写序号，系统会自动按顺序创建序号。
+
+        .sp-main
+          //- 左侧工具栏
+          .sp-sidebar-wrap
+            .sp-sidebar
+              .batch-add
+                a#importBtn(href="javascript:void(0)").cui-button.preset-blue
+                  i.cpf-icon.cpf-icon-plus
+                  span 批量添加题目
+              .preview-paper
+                a(href=`/customer/examList/list/preview/${paperUnicode}`,target="_blank").cui-button.preset-blue
+                  i.cpf-icon.cpf-icon-preview
+                  span 预览试卷
+              .ques-type
+                p.title 常用题型
+                p.item.single 单选题
+                p.item.multiple 多选题
+                p.item.obj-completion 客观填空题
+                p.item.sub-completion 主观填空题
+                p.item.upload 上传题
+              .assist
+                div.title
+                  span 辅助功能
+                  i.cpf-icon.cpf-icon-ic_help
+                  .content
+                    i.cpf-icon.cpf-icon-ic_triangle
+                    i.cpf-icon.cpf-icon-ic_triangle
+                    p 分页符：
+                    p(style="text-indent:2em;") 在题目上方插入，插入后可上下移动调整位置。操作如下：
+                    p(style="text-indent:2em;") 选择题目-&gt;点击【编辑】-&gt;点击【分页符】-&gt;系统自动插入分页到该题目上方。
+                    p 说明：
+                    p(style="text-indent:2em;") 在题目上方插入，插入后可上下移动调整位置。操作如下：
+                    p(style="text-indent:2em;") 选择题目-&gt;点击【编辑】-&gt;点击【说明】-&gt;系统自动插入说明到该题目上方。
+                p.item.paging 分页符
+                p.item.explain 说明
+
+          //- 右侧内容区
+          .sp-content
+            .sp-paper-name
+            .sp-question
+              //- //- 分页
+              //- .sp-paging.sortableitem
+              //-   .paging-num 分页符（
+              //-     span.num 1
+              //-     | ）
+              //-   .paging-sort
+              //-     span.mgr10 本页
+              //-     span 题目规则：
+              //-     .cui-selectBoxContainer.mgr10(data-options=[{value:1, text:"固定顺序"}, {value:2, text:"随机顺序"}])
+              //-       span.result 固定顺序
+              //-     span 选项排序：
+              //-     .cui-selectBoxContainer.mgr10(data-options=[{value:1, text:"固定顺序"}, {value:2, text:"随机顺序"}])
+              //-       span.result 固定顺序
+              //-     i.cpf-icon.cpf-icon-ic_close.del-paging
+              //- //- 单选题-编辑
+              //- .set-question.single.failure.demo.sortableitem
+              //-   .ques-content
+              //-     .operating
+              //-       p Q1
+              //-       a.moveup(href="###") 上移
+              //-       a.movedown(href="###") 下移
+              //-       a(href="###") 复制
+              //-       a(href="###") 删除
+              //-     .content
+              //-       .top
+              //-         p.ques-type 【单选题】
+              //-         a.cui-button.save
+              //-           span 保存
+              //-       .ques-subject
+              //-         script#singleSubject(type="text/plain")
+              //-       .options.cui-radioGroupContainer
+              //-         .options-item
+              //-           //-单选框
+              //-           .cui-radioContainer.inline
+              //-             input(type="radio" name="options1" value="" checked="checked")
+              //-             label
+              //-               i
+              //-           //-富文本
+              //-           .option-content
+              //-             script#optionContent1(type="text/plain")
+              //-           //-删除按钮
+              //-           i.cpf-icon.cpf-icon-thin-close.del-option
+              //-         .options-item
+              //-           .cui-radioContainer.inline
+              //-             input(type="radio" name="options1" value="")
+              //-             label
+              //-               i
+              //-           .option-content
+              //-             script#optionContent1(type="text/plain")
+              //-           i.cpf-icon.cpf-icon-thin-close.del-option
+              //-         .options-item
+              //-           .cui-radioContainer.inline
+              //-             input(type="radio" name="options1" value="")
+              //-             label
+              //-               i
+              //-           .option-content
+              //-             script#optionContent1(type="text/plain")
+              //-           i.cpf-icon.cpf-icon-thin-close.del-option
+              //-       .add-option
+              //-         a.cui-button 添加选项
+              //-   //-设置
+              //-   .ques-setting
+              //-     .title 题目设置
+              //-       i.cpf-icon.cpf-icon-thin-close.del-setting
+              //-     .change
+              //-       p.title 题型转换
+              //-       a(href="###").button 单选题
+              //-       a(href="###").button 多选题
+              //-       .cui-checkboxContainer
+              //-         input(type='checkbox')
+              //-         label
+              //-           i
+              //-           span 应用到同类型题目
+              //-     .layout
+              //-       p.title PC端布局转换
+              //-       .row-num
+              //-         span 每行
+              //-         .cui-selectBoxContainer(data-options=[{value:1, text:"1"}, {value:2, text:"2"}, {value:3, text:"3"}, {value:4, text:"4"}])
+              //-           span.result 1
+              //-         span 个
+              //-       .cui-checkboxContainer
+              //-         input(type='checkbox')
+              //-         label
+              //-           i
+              //-           span 应用到同类型题目
+              //-     .tc
+              //-       a.cui-button.preset-blue 保存
+              //- 多选题-编辑
+              //- .set-question.multiple.demo.sortableitem
+              //-   .ques-content
+              //-     .operating
+              //-       p Q1
+              //-       a.moveup(href="###") 上移
+              //-       a.movedown(href="###") 下移
+              //-       a(href="###") 复制
+              //-       a(href="###") 删除
+              //-     .content
+              //-       .top
+              //-         p.ques-type 【多选题】
+              //-         a.cui-button.save
+              //-           span 保存
+              //-       .ques-subject
+              //-         script#multipleSubject(type="text/plain")
+              //-       .options
+              //-         .options-item
+              //-           //-多选框
+              //-           .cui-checkboxContainer.inline
+              //-             input(type='checkbox',checked)
+              //-             label
+              //-               i
+              //-           //-富文本
+              //-           .option-content
+              //-             script#optionContent2(type="text/plain")
+              //-           //-删除按钮
+              //-           i.cpf-icon.cpf-icon-thin-close.del-option
+              //-         .options-item
+              //-           //-多选框
+              //-           .cui-checkboxContainer.inline
+              //-             input(type='checkbox')
+              //-             label
+              //-               i
+              //-           //-富文本
+              //-           .option-content
+              //-             script#optionContent2(type="text/plain")
+              //-           //-删除按钮
+              //-           i.cpf-icon.cpf-icon-thin-close.del-option
+              //-         .options-item
+              //-           //-多选框
+              //-           .cui-checkboxContainer.inline
+              //-             input(type='checkbox')
+              //-             label
+              //-               i
+              //-           //-富文本
+              //-           .option-content
+              //-             script#optionContent2(type="text/plain")
+              //-           //-删除按钮
+              //-           i.cpf-icon.cpf-icon-thin-close.del-option
+              //-       .add-option
+              //-         a.cui-button 添加选项
+              //-   //-设置
+              //-   .ques-setting
+              //-     .title 题目设置
+              //-       i.cpf-icon.cpf-icon-thin-close.del-setting
+              //-     .change
+              //-       p.title 题型转换
+              //-       a(href="###").button 单选题
+              //-       a(href="###").button 多选题
+              //-       .cui-checkboxContainer
+              //-         input(type='checkbox')
+              //-         label
+              //-           i
+              //-           span 应用到同类型题目
+              //-     .layout
+              //-       p.title PC端布局转换
+              //-       .row-num
+              //-         span 每行
+              //-         .cui-selectBoxContainer(data-options=[{value:1, text:"1"}, {value:2, text:"2"}, {value:3, text:"3"}, {value:4, text:"4"}])
+              //-           span.result 1
+              //-         span 个
+              //-       .cui-checkboxContainer
+              //-         input(type='checkbox')
+              //-         label
+              //-           i
+              //-           span 应用到同类型题目
+              //-     .tc
+              //-       a.cui-button.preset-blue 保存
+              //- //- 客观填空题-编辑
+              //- .set-question.obj-completion.demo.sortableitem
+              //-   .ques-content
+              //-     .operating
+              //-       p Q1
+              //-       a.moveup(href="###") 上移
+              //-       a.movedown(href="###") 下移
+              //-       a(href="###") 复制
+              //-       a(href="###") 删除
+              //-     .content
+              //-       .top
+              //-         p.ques-type 【客观填空题】
+              //-         a.cui-button.save
+              //-           span 保存
+              //-       .ques-subject
+              //-         script#objCompletionSubject(type="text/plain")
+              //-       p 填空题
+              //-       .options
+              //-         .options-item
+              //-           //-序号框
+              //-           p.option-index 1
+              //-           .option-wrap
+              //-             //-输入区
+              //-             .option-content
+              //-             //-删除按钮
+              //-             i.cpf-icon.cpf-icon-thin-close.del-option
+              //-         .options-item
+              //-           //-序号框
+              //-           p.option-index 1
+              //-           .option-wrap
+              //-             //-输入区
+              //-             .option-content
+              //-             //-删除按钮
+              //-             i.cpf-icon.cpf-icon-thin-close.del-option
+              //-         .options-item
+              //-           //-序号框
+              //-           p.option-index 1
+              //-           .option-wrap
+              //-             //-输入区
+              //-             .option-content
+              //-             //-删除按钮
+              //-             i.cpf-icon.cpf-icon-thin-close.del-option
+              //-       .add-option
+              //-         a.cui-button 添加选项
+              //-   //-设置
+              //-   .ques-setting
+              //-     .title 题目设置
+              //-       i.cpf-icon.cpf-icon-thin-close.del-setting
+              //-     .change
+              //-       p.title 题型转换
+              //-       a(href="###").button 客观填空题
+              //-       a(href="###").button 主观填空题
+              //-       .cui-checkboxContainer
+              //-         input(type='checkbox')
+              //-         label
+              //-           i
+              //-           span 应用到同类的题目
+              //-     .layout
+              //-       p.title PC端布局转换
+              //-       .row
+              //-         span 输入框高度
+              //-         .cui-textBoxContainer
+              //-           input(type="txt")
+              //-       .row
+              //-         span 输入框宽度
+              //-         .cui-textBoxContainer
+              //-           input(type="txt")
+              //-     .layout.strict
+              //-       .row
+              //-         span 字数上限
+              //-         .cui-textBoxContainer
+              //-           input(type="txt")
+              //-       .cui-checkboxContainer
+              //-         input(type='checkbox')
+              //-         label
+              //-           i
+              //-           span 应用到同类的题目
+              //-     .tc
+              //-       a.cui-button.preset-blue 保存
+              //- //- 主观填空题-编辑
+              //- .set-question.sub-completion.demo.sortableitem
+              //-   .ques-content
+              //-     .operating
+              //-       p Q1
+              //-       a.moveup(href="###") 上移
+              //-       a.movedown(href="###") 下移
+              //-       a(href="###") 复制
+              //-       a(href="###") 删除
+              //-     .content
+              //-       .top
+              //-         p.ques-type 【主观填空题】
+              //-         a.cui-button.save
+              //-           span 保存
+              //-       .ques-subject
+              //-         script#objCompletionSubject(type="text/plain")
+              //-       p 填空题
+              //-       .options
+              //-         .options-item
+              //-           //-序号框
+              //-           p.option-index 1
+              //-           .option-wrap
+              //-             //-输入区
+              //-             .option-content
+              //-             //-删除按钮
+              //-             i.cpf-icon.cpf-icon-thin-close.del-option
+              //-         .options-item
+              //-           //-序号框
+              //-           p.option-index 1
+              //-           .option-wrap
+              //-             //-输入区
+              //-             .option-content
+              //-             //-删除按钮
+              //-             i.cpf-icon.cpf-icon-thin-close.del-option
+              //-         .options-item
+              //-           //-序号框
+              //-           p.option-index 1
+              //-           .option-wrap
+              //-             //-输入区
+              //-             .option-content
+              //-             //-删除按钮
+              //-             i.cpf-icon.cpf-icon-thin-close.del-option
+              //-       .add-option
+              //-         a.cui-button 添加选项
+              //-   //-设置
+              //-   .ques-setting
+              //-     .title 题目设置
+              //-       i.cpf-icon.cpf-icon-thin-close.del-setting
+              //-     .change
+              //-       p.title 题型转换
+              //-       a(href="###").button 客观填空题
+              //-       a(href="###").button 主观填空题
+              //-       .cui-checkboxContainer
+              //-         input(type='checkbox')
+              //-         label
+              //-           i
+              //-           span 应用到同类的题目
+              //-     .layout
+              //-       p.title PC端布局转换
+              //-       .row
+              //-         span 输入框高度
+              //-         .cui-textBoxContainer
+              //-           input(type="txt")
+              //-       .row
+              //-         span 输入框宽度
+              //-         .cui-textBoxContainer
+              //-           input(type="txt")
+              //-     .layout.strict
+              //-       .row
+              //-         span 字数上限
+              //-         .cui-textBoxContainer
+              //-           input(type="txt")
+              //-       .cui-checkboxContainer
+              //-         input(type='checkbox')
+              //-         label
+              //-           i
+              //-           span 应用到同类的题目
+              //-     .tc
+              //-       a.cui-button.preset-blue 保存
+              //- //- 说明-编辑
+              //- .set-explain.demo.sortableitem
+              //-   .order-num.operating
+              //-     a.moveup(href="###") 上移
+              //-     a.movedown(href="###") 下移
+              //-     a(href="###") 复制
+              //-     a(href="###") 删除
+              //-   .content
+              //-     .top
+              //-       p.ques-type 【说明文字】
+              //-       a.cui-button.save
+              //-         span 保存
+              //-     .explain-subject
+              //-       script#explainSubject(type="text/plain")
+              //- //- 说明-预览
+              //- .preview-explain.sortableitem
+              //-   .order-num.operating
+              //-   .content
+              //-     .top
+              //-       p.ques-type 【说明文字】
+              //-       a.cui-button.edit
+              //-         span 编辑
+              //-     .explain-subject
+              //- //- 单选题-预览
+              //- .preview-question.single.sortableitem
+              //-   .order-num
+              //-     p Q1
+              //-   .content
+              //-     .top
+              //-       p.ques-type 【单选题】
+              //-       a.cui-button.edit
+              //-         span 编辑
+              //-     .ques-subject 这里显示已编辑好的题干文字这里显示已编辑好的题干文字这里显示已编辑好的题干文字这里显示已编辑好的题干
+              //-     .preview-options.cui-radioGroupContainer
+              //-       .preview-option
+              //-         //-单选框
+              //-         .cui-radioContainer.inline
+              //-           input(type="radio" name="options1" value="" checked="checked")
+              //-           label
+              //-             i
+              //-             span 选项一
+              //-       .preview-option
+              //-         .cui-radioContainer.inline
+              //-           input(type="radio" name="options1" value="")
+              //-           label
+              //-             i
+              //-             span 选项一
+              //-       .preview-option
+              //-         .cui-radioContainer.inline
+              //-           input(type="radio" name="options1" value="")
+              //-           label
+              //-             i
+              //-             span 选项一
+              //- //- 多选题-预览
+              //- .preview-question.single.sortableitem
+              //-   .order-num
+              //-     p Q1
+              //-   .content
+              //-     .top
+              //-       p.ques-type 【多选题】
+              //-       a.cui-button.edit
+              //-         span 编辑
+              //-     .ques-subject 这里显示已编辑好的题干文字这里显示已编辑好的题干文字这里显示已编辑好的题干文字这里显示已编辑好的题干
+              //-     .preview-options
+              //-       .preview-option
+              //-         //-多选框
+              //-         .cui-checkboxContainer.inline
+              //-           input(type='checkbox',checked)
+              //-           label
+              //-             i
+              //-             span 选项一
+              //-       .preview-option
+              //-         .cui-checkboxContainer.inline
+              //-           input(type='checkbox')
+              //-           label
+              //-             i
+              //-             span 选项一
+              //-       .preview-option
+              //-         .cui-checkboxContainer.inline
+              //-           input(type='checkbox')
+              //-           label
+              //-             i
+              //-             span 选项一
+              //- //- 客观填空题-预览
+              //- .preview-question.obj-completion.sortableitem
+              //-   .order-num
+              //-     p Q1
+              //-   .content
+              //-     .top
+              //-       p.ques-type 【客观填空题】
+              //-       a.cui-button.edit
+              //-         span 编辑
+              //-     .ques-subject
+              //-     p 填空题
+              //-     .preview-options
+              //-       .preview-option
+              //-         //-序号框
+              //-         p.option-index 1
+              //-         //-输入区
+              //-         .option-content
+              //-       .preview-option
+              //-         //-序号框
+              //-         p.option-index 1
+              //-         //-输入区
+              //-         .option-content
+              //-       .preview-option
+              //-         //-序号框
+              //-         p.option-index 1
+              //-         //-输入区
+              //-         .option-content
+              //- //- 主观填空题-预览
+              //- .preview-question.sub-completion.sortableitem
+              //-   .order-num
+              //-     p Q1
+              //-   .content
+              //-     .top
+              //-       p.ques-type 【主观填空题】
+              //-       a.cui-button.edit
+              //-         span 编辑
+              //-     .ques-subject
+              //-     p 填空题
+              //-     .preview-options
+              //-       .preview-option
+              //-         //-序号框
+              //-         p.option-index 1
+              //-         //-输入区
+              //-         .option-content
+              //-       .preview-option
+              //-         //-序号框
+              //-         p.option-index 1
+              //-         //-输入区
+              //-         .option-content
+              //-       .preview-option
+              //-         //-序号框
+              //-         p.option-index 1
+              //-         //-输入区
+              //-         .option-content
+              //- //- 上传题-编辑
+              //- .set-upload-question.failure.demo.sortableitem
+              //-   .order-num.operating
+              //-     p Q1
+              //-     a(href="###") 上移
+              //-     a(href="###") 下移
+              //-     a(href="###") 复制
+              //-     a(href="###") 删除
+              //-   .content
+              //-     .top
+              //-       p.ques-type 【上传题】
+              //-       a.cui-button.save
+              //-         span 保存
+              //-     .ques-subject
+              //-       script#uploadSubject(type="text/plain")
+              //-     .upload-content 上传题显示区
+              //- //- 上传题-预览
+              //- .preview-upload-question.sortableitem
+              //-   .order-num.operating
+              //-     p Q1
+              //-   .content
+              //-     .top
+              //-       p.ques-type 【上传题】
+              //-       a.cui-button.edit
+              //-         span 编辑
+              //-     .ques-subject
+              //-     .upload-content 上传题显示区
+
+      //- 下一步
+      .setting-action.tc
+        a(href=`/customer/examList/editPaper/${paperUnicode}?mode=${mode}&paperId=${paperId}`).cui-button.prev
+          span 上一步
+        a(href='javascript:void(0)').cui-button.preset-blue.next
+          span 下一步
+    input#mode(type="hidden",value= mode)
+    input#paperId(type="hidden",value= paperId)
+    input#paperUnicode(type="hidden",value= paperUnicode)
+    include ../share/common.footer.default.jade
+
+block scriptSection
+  include ../share/common.script.ueditor.jade
+  script(type="text/javascript", src= pageHelper.setScript('examList.setPaper'))

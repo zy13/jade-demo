@@ -1,0 +1,398 @@
+/**
+* @Author: Jet.Chan
+* @Date:   2016-12-29T14:48:28+08:00
+* @Email:  guanjie.chen@talebase.com
+* @Last modified by:   Jet.Chan
+* @Last modified time: 2017-01-20T17:29:45+08:00
+*/
+
+
+
+@import '../../components/commonStyle/common.less';
+@cellWidth: 8.33%;
+// @cellWidth: 6.25%; //行分16份
+.common-main {
+    padding: 28px 28px 50px;
+    background: #fff;
+}
+
+.cp2-title() {
+    line-height: 50px;
+    padding: 0 20px 0;
+    background: @c-gray-c;
+    font-size: @fs18;
+    color: #a2a2a2;
+}
+
+.create-wrap {
+    padding: 28px 50px 50px;
+    background: @c-gray-a;
+    font-size: @fs16;
+    // 导航部分
+    .common-nav {
+        margin: 0 8px 28px;
+        color: @fc-b;
+        a {
+            color: @fc-b;
+        }
+        span:last-child {
+            color: @c-standard-a;
+        }
+    }
+    .create-step {
+        text-align: center;
+        position: relative;
+        height: 56px;
+        .img {
+            position: relative;
+            img{
+                width: 100%;
+                height: 56px;
+            }
+            .a-group {
+                position: relative;
+                width: 100%;
+                margin: auto;
+                a {
+                    color: @c-standard-a;
+                    display: inline-block;
+                    .border-radius(5px);
+                    position: relative;
+                    top: -59px;
+                    width: 33%;
+                    text-align: center;
+                    vertical-align: middle;
+                    &.active {
+                        color: #fff;
+                    }
+                    strong {
+                        font-size: 30px;
+                        margin-right: 40px;
+                        vertical-align: middle;
+                    }
+                    span {
+                        vertical-align: middle;
+                    }
+                }
+            }
+        }
+    }
+    .chosen {
+        color: @fc-b;
+        margin: 28px 0 22px;
+        display: none;
+        &.active {
+            display: block;
+        }
+        .cp2-title {
+            .cp2-title();
+        }
+        //已选试卷-列表
+        .chosen-item {
+            padding: 28px 20px 0px;
+            &:nth-of-type(n+2) {
+                border-top: 1px dashed @fc-b;
+            }
+            //试题名字
+            .item-name {
+                position: relative;
+                color: #fff;
+                span {
+                    position: relative;
+                    display: inline-block;
+                    line-height: 30px;
+                    padding: 0 5px 0 10px;
+                    background: #6bc04b;
+                    margin-right: 100px;
+                    &:before {
+                        content: "";
+                        position: absolute;
+                        top: 0;
+                        right: -30px;
+                        border-width: 15px;
+                        border-style: solid;
+                        border-color: transparent;
+                        border-left-color: #6bc04b;
+                    }
+                    &:after {
+                        content: "";
+                        position: absolute;
+                        top: 12px;
+                        right: -6px;
+                        width: 6px;
+                        height: 6px;
+                        border-radius: 3px;
+                        background: #fff;
+                    }
+                }
+                .item-del {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    line-height: 30px;
+                    padding: 0 16px;
+                    background: #6bc04b;
+                    color: inherit;
+                    cursor: pointer;
+                    font-weight: normal;
+                    border-radius: 3px;
+                    -webkit-border-radius: 3px;
+                    &:hover {
+                        background: #67b253;
+                    }
+                    i {
+                        display: inline-block;
+                        width: 20px;
+                        margin: -3px 3px 0 0;
+                        vertical-align: middle;
+                    }
+                }
+            }
+            //考试规则-各个部分
+            .item-part {
+                margin: 22px 0;
+                &.hidden {
+                    display: none;
+                }
+                &:nth-of-type(1) {
+                    label {
+                        margin: 0 15px 0 0;
+                    }
+                }
+                &:nth-of-type(2),&:nth-of-type(4) {
+                    &.hidden{
+                        &+.item-part{
+                            display: none;
+                        }
+                    }
+                }
+                &:nth-of-type(3),
+                &:nth-of-type(4),
+                &:nth-of-type(5),
+                &:nth-of-type(6) {
+                    input {
+                        width: 85px;
+                        margin: 0 12px 0 0;
+                    }
+                }
+                .left {
+                    float: left;
+                    width: 168px;
+                    line-height: 35px;
+                    .tr();
+                    margin-right: 10px;
+                    &.must:before{
+                        content:'*';
+                        margin-right: 5px;
+                        color:#f00;
+                    }
+                }
+                .right {
+                    position: relative;
+                    line-height: 35px;
+                    margin-left: 178px;
+                    .cui-radioContainer {
+                        width: 140px;
+                        &:first-child {
+                            margin-right: 30px;
+                        }
+                        span {
+                            left:25px;
+                            color: @fc-b;
+                        }
+                        label>i {
+                            top: 7px;
+                        }
+                    }
+                    .cui-textBoxContainer {
+                        margin: 0;
+                        input {
+                            padding: 0 10px;
+                            height: 34px;
+                            line-height: 34px;
+                            &:disabled{
+                                background: #ebebe4;
+                            }
+                        }
+                    }
+                    .date {
+                        width: 192px;
+                        position: relative;
+                        display: inline-block;
+                        &>input {
+                            width: 180px;
+                            height: 32px;
+                            line-height: 32px;
+                            padding-left: 10px;
+                            border: 1px solid #e1e1e3;
+                            &[disabled='disabled']{
+                                cursor: no-drop;
+                                background: rgb(235, 235, 228);
+                            }
+                            &.failure{
+                                border-color:@c-standard-c;
+                                background: #ffebeb;
+                                &+i{
+                                    background: #ffebeb;
+                                }
+                            }
+                        }
+                        &>i {
+                            color: #999;
+                            position: absolute;
+                            width: 32px;
+                            height: 32px;
+                            .tc;
+                            line-height: 32px;
+                            background: #f5f5f5;
+                            border-left: 1px solid #e1e1e3;
+                            right: 1px;
+                            bottom: 1px;
+                        }
+                    }
+                    &>span{
+                        vertical-align: middle;
+                    }
+                    .cpf-icon-ic_help{
+                        .fs18;
+                        color:@c-standard-a;
+                        cursor: pointer;
+                        margin-left: 5px;
+                        vertical-align: middle;
+                        &:hover{
+                            &+.tip{
+                                display: block;
+                            }
+                        }
+                    }
+                    .tip{
+                        display: none;
+                        width: 420px;
+                        z-index: 1;
+                        text-align: left;
+                        left: 200px;
+                        top: 2px;
+                        font-size: 12px;
+                        line-height: 25px;
+                        color: #936818;
+                        padding: 10px;
+                        position: absolute;
+                        background: #ffff91;
+                        box-shadow: 0 0 5px #936818;
+                        -webkit-box-shadow: 0 0 5px #936818;
+                        border-radius: 3px;
+                        -webkit-border-radius: 3px;
+                        .cpf-icon{
+                            font-size: 14px;
+                            position: absolute;
+                            left: -11px;
+                            top: 12px;
+                            color: #ffff91;
+                            transform: rotate(180deg);
+                            -webkit-transform: rotate(180deg);
+                            -ms-transform: rotate(180deg);
+                            &:first-child{
+                                color: #936818;
+                                left: -12px;
+                            }
+                        }
+                    }
+                    // 考官部分 right
+                    &.master {
+                        .clearfix();
+                        .cui-button {
+                            margin-right: 10px;
+                            margin-top: 5px;
+                            &.c-preset-green {
+                                border-color: #6bc04b;
+                                color: #6bc04b;
+                                background: #dbf0d4;
+                                i {
+                                    .fs;
+                                    margin-left: 5px;
+                                    display: inline-block;
+                                    transition:0.2s;
+                                    &:hover{
+                                        transform:scale(1.2,1.2);
+                                        -webkit-transform:scale(1.2,1.2);
+                                        -ms-transform:scale(1.2,1.2);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    em {
+                        margin: 0 8px 0 6px;
+                    }
+                }
+            }
+        }
+    }
+    .storage {
+        margin-top: 28px;
+        .cp2-title {
+            .cp2-title();
+        }
+        //试卷库-列表
+        ul {
+            display: table;
+            width: 100%;
+            margin: 0px 0 8px 0;
+            .tc;
+            color: @fc-b;
+            li {
+                display: table-row;
+                &:nth-of-type(1) {
+                    &>div {
+                        color: @fc-a;
+                        border-bottom: none;
+                    }
+                }
+                &:nth-of-type(2) {
+                    &>div {
+                        border-top: 1px solid @fc-b;
+                    }
+                }
+                &:nth-last-of-type(1) {
+                    &>div {
+                        border-bottom: 1px solid @fc-b;
+                    }
+                }
+                &>div {
+                    display: table-cell;
+                    padding: 15px 0;
+                    border-bottom: 1px dashed @fc-b;
+                    vertical-align: middle;
+                    width: @cellWidth;
+                    word-break: break-word;
+                    &:nth-of-type(5){
+                        width:1.5*@cellWidth;
+                        word-break: break-all;
+                    }
+                    &:nth-of-type(2){
+                        width: 2*@cellWidth;
+                        word-break: break-all;
+                    }
+                    &:nth-last-of-type(2) {
+                        width: 2*@cellWidth;
+                        word-break: break-all;
+                    }
+                    .cui-checkboxContainer {
+                        width: 20px;
+                    }
+                }
+            }
+        }
+    }
+    .create-action {
+        .cui-button {
+            .fs16;
+            padding: 0 65px;
+            height: 44px;
+            line-height: 44px;
+            &:first-child{
+                margin-right: 26px;
+            }
+        }
+    }
+}

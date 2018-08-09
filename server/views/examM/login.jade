@@ -1,0 +1,47 @@
+extends ../share/layout.baseM.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href=pageHelper.setStyle('examM.login'))
+
+block content
+  .exam-content
+    .div-group
+      .div-top
+        img(src='/bzos/osadmin/company/downloadLogo')
+      .div-body
+        input#loginType(type='hidden',value=loginType)
+        -if(loginType==1)
+          .container-group
+            .cui-textBoxContainer(data-rule='required;' data-tips='请输入正确的用户名')
+              input(type='text',placeholder='请输入用户名',class='addonLeftInput').loginName
+              span.addonRight
+                i.cpf-icon.cpf-icon-person
+            .cui-textBoxContainer(data-rule='required;shortest=6' data-tips='请输入正确的密码')
+              input(type='password',placeholder='请输入密码',class='addonLeftInput').loginPassWord
+              span.addonRight
+                i.cpf-icon.cpf-icon-key
+            .cui-textBoxContainer.validateCode(data-rule='required;' data-tips='请输入正确的验证码' style=isRequiredValidateCode?'':'display:none')
+              input(type='text',placeholder='请输入验证码',id='validateCode').loginValidateCode
+              .inline.a-group
+                a.code-img(href='javascript:void(0);')
+                  img(src='/common/captcha/getValidateCode',id='vcode')
+                a.change(href='javascript:void(0);',onclick="document.getElementById('vcode').src='/common/captcha/getValidateCode?r='+Math.random()")
+                  span 换一张
+        -if(loginType==2)
+          input(type='hidden',value=request.query.projectId,id='projectId')
+          .container-group.loginType2
+            .cui-textBoxContainer(data-rule='required;tel' data-tips='请输入正确的手机号码')
+              input(type='text',placeholder='请输入手机号码',class='addonLeftInput',value='',name='mobile').loginName
+              span.addonRight.with
+                i.cpf-icon.cpf-icon-mobile
+                //-cpf-icon-mobile
+            .cui-textBoxContainer.exp(data-rule='required;strLength=6' data-tips='请输入正确的验证码')
+              input(type='text',placeholder='请输入验证码',class='addonLeftInput',value='').loginValidateCode
+              a.addonRight(href='javascript:void(0)')
+                span 获取验证码
+        .a-button
+          a.cui-button.preset-blue(href='javascript:void(0);')
+            span 登&nbsp;&nbsp;录
+block scriptSection
+   script(type="text/javascript", src=pageHelper.setScript('examM.login'))
+

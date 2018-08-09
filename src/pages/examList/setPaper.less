@@ -1,0 +1,487 @@
+/**
+* @Author: Jet.Chan
+* @Date:   2016-12-23T18:15:44+08:00
+* @Email:  guanjie.chen@talebase.com
+* @Last modified by:   Jet.Chan
+* @Last modified time: 2016-12-28T15:09:31+08:00
+*/
+
+@import '../../components/commonStyle/common.less';
+.common-main {
+    padding: 28px 28px 150px;
+    background: #fff;
+}
+
+.ex-content-right {
+    min-width: 1126px;
+}
+
+.setting-wrap {
+    padding: 28px 50px 50px;
+    background: @c-gray-a;
+    font-size: @fs16;
+    // 导航部分
+    .common-nav {
+        margin: 0 8px 28px;
+        color: @fc-b;
+        a {
+            color: @fc-b;
+        }
+        span:last-child {
+            color: @c-standard-a;
+        }
+    }
+    .setting-main {
+        .ques-subject,
+        .options{
+            .edui-editor.edui-default{
+                width: auto !important;
+                .edui-editor-iframeholder.edui-default{
+                    width: auto !important;
+                }
+            }
+        }
+        .sp-step {
+            background: url('/images/create-bg.jpg') right 0px repeat-x;
+            .clearfix;
+            a {
+                float: left;
+                width: 20%;
+                height: 51px;
+                line-height: 51px;
+                box-sizing: border-box;
+                padding-left: 20px;
+                background: url('/images/create-gray.png') left 0px no-repeat;
+                color: #0082ca;
+                font-size: @fs16;
+                border-top: 1px solid #ccc;
+                border-bottom: 1px solid #ccc;
+                &:first-child {
+                    border-left: 1px solid #ccc;
+                    border-radius: 5px 0 0 5px;
+                    background: none;
+                }
+                &:last-child {
+                    border-right: 1px solid #ccc;
+                    border-radius: 0 5px 5px 0;
+                }
+                strong {
+                    display: inline-block;
+                    width: 44px;
+                    margin: -3px 0px 0 0;
+                    text-align: center;
+                    vertical-align: middle;
+                    font: 31px arial;
+                    font-weight: 700;
+                }
+            }
+            a.active {
+                color: #fff;
+                border-color: #0082ca;
+                background-color: #0082ca;
+                &+a {
+                    background: url('/images/create-blue.png') left 0px no-repeat;
+                }
+            }
+        }
+        &>.note {
+            .fs16;
+            color: #ff6000;
+            line-height: 30px;
+            margin: 5px;
+        }
+        .sp-main {
+            .clearfix;
+            min-width: 970px;
+            .sp-sidebar-wrap {
+                float: left;
+                width: 144px;
+                z-index: 1;
+                .sp-sidebar {
+                    .fs14;
+                    .tc;
+                    width: 144px;
+                    .batch-add,
+                    .preview-paper {
+                        padding: 6px;
+                        background: #d2d2d2;
+                        .cui-button {
+                            width: 132px;
+                            padding: 0;
+                            .border-radius(5px)
+                        }
+                        i {
+                            .fs16;
+                            vertical-align: middle;
+                        }
+                        span {
+                            vertical-align: middle;
+                        }
+                        &.preview-paper {
+                            >a {
+                                text-align: left;
+                                >i {
+                                    width: 16px;
+                                    display: inline-block;
+                                    padding-left: 14px;
+                                }
+                            }
+                        }
+                    }
+                    .ques-type,
+                    .assist {
+                        background: #e3e3e3;
+                        &.ques-type {
+                            margin-top: 5px;
+                        }
+                        .title {
+                            color: #333;
+                            background: #d2d2d2;
+                            line-height: 40px;
+                            position: relative;
+                            span {
+                                vertical-align: middle;
+                            }
+                        }
+                        .cpf-icon-ic_help {
+                            .fs18;
+                            color: #288add;
+                            margin-left: 5px;
+                            cursor: pointer;
+                            vertical-align: middle;
+                            position: absolute;
+                            top: 12px;
+                            &:hover {
+                                &+.content {
+                                    display: block;
+                                }
+                            }
+                        }
+                        .content {
+                            display: none;
+                            width: 450px;
+                            z-index: 1;
+                            text-align: left;
+                            left: 135px;
+                            top: 2px;
+                            font-size: 12px;
+                            line-height: 25px;
+                            color: #936818;
+                            padding: 10px;
+                            position: absolute;
+                            background: #ffff91;
+                            box-shadow: 0 0 5px #936818;
+                            -webkit-box-shadow: 0 0 5px #936818;
+                            border-radius: 3px;
+                            -webkit-border-radius: 3px;
+                            i {
+                                font-size: 14px;
+                                position: absolute;
+                                left: -11px;
+                                top: 12px;
+                                color: #ffff91;
+                                transform: rotate(180deg);
+                                -webkit-transform: rotate(180deg);
+                                -ms-transform: rotate(180deg);
+                                &:first-child {
+                                    color: #936818;
+                                    left: -12px;
+                                }
+                            }
+                        }
+                        .item {
+                            .tl;
+                            padding-left: 45px;
+                            color: #888;
+                            cursor: pointer;
+                            background: #f5f5f5;
+                            &:hover {
+                                background: #efefef;
+                            }
+                            &:first-child {
+                                height: 40px;
+                                line-height: 40px;
+                            }
+                            &:not(:first-child) {
+                                height: 39px;
+                                line-height: 39px;
+                                border-top: 1px solid #d2d2d2;
+                            }
+                        }
+                    }
+                }
+            }
+            .sp-content {
+                margin-left: 151px;
+                //试卷题目
+                .sp-paper-name {
+                    .fs16;
+                    padding: 10px 10px 10px 20px;
+                    color: #0082ca;
+                    line-height: 30px;
+                    background: #d2d2d2;
+                    margin: 0 151px 10px 0px;
+                    word-break: break-all;
+                }
+                //题目内容区
+                .sp-question {
+                    //分页
+                    .sp-paging {
+                        .fs16;
+                        height: 44px;
+                        line-height: 44px;
+                        background: #9bd0ed;
+                        border: none;
+                        margin: 0 151px 10px 0px;
+                        .clearfix;
+                        color: @fc-a;
+                        padding: 0 18px;
+                        .paging-num {
+                            float: left;
+                        }
+                        .paging-sort {
+                            float: right;
+                            .mgr10 {
+                                margin-right: 10px;
+                            }
+                            .cui-selectBoxContainer {
+                                .fs16;
+                                color: @fc-b;
+                                width: 106px;
+                                background: #fff;
+                                border-color: #fff;
+                                padding: 3px 8px;
+                                vertical-align: middle;
+                                span {
+                                    line-height: 21px;
+                                    color: @c-standard-a;
+                                }
+                                &:before {
+                                    top: 0.7em;
+                                    -ms-transform: rotate(360deg);
+                                }
+                            }
+                        }
+                        .del-paging {
+                            color: #fff;
+                            transition: 0.2s;
+                            cursor: pointer;
+                            display: inline-block;
+                            vertical-align: middle;
+                            &:hover {
+                                transform: scale(1.2, 1.2);
+                                -webkit-transform: scale(1.2, 1.2);
+                                -ms-transform: scale(1.2, 1.2);
+                            }
+                        }
+                    }
+                    //说明-编辑和说明-预览
+                    // .set-explain,
+                    // .preview-explain{
+                    //     position: relative;
+                    //     margin-bottom: 10px;
+                    //     border:1px solid @fc-b;
+                    //     margin-right: 151px;
+                    //     .order-num{
+                    //         .tc;
+                    //         width:56px;
+                    //         position: absolute;
+                    //         left:0;
+                    //         top:0;
+                    //         line-height: 40px;
+                    //         padding:5px 0;
+                    //         &.operating{
+                    //             a{
+                    //                 display: block;
+                    //                 color:@c-standard-a;
+                    //                 text-decoration: underline;
+                    //             }
+                    //         }
+                    //     }
+                    //     .content{
+                    //         min-height: 210px;
+                    //         padding:7px 15px;
+                    //         margin-left: 57px;
+                    //         border-left:1px solid #888;
+                    //         .top{
+                    //             .clearfix;
+                    //             height: 32px;
+                    //             margin-bottom: 10px;
+                    //             p{
+                    //                 float: left;
+                    //                 line-height: 32px;
+                    //             }
+                    //             a{
+                    //                 float: right;
+                    //                 width:48px;
+                    //                 height: 30px;
+                    //                 line-height: 30px;
+                    //             }
+                    //         }
+                    //         .preview-options{
+                    //             padding:20px;
+                    //             .preview-option{
+                    //                 margin-bottom: 10px;
+                    //                 .cui-radioContainer,
+                    //                 .cui-checkboxContainer{
+                    //                     span{
+                    //                         left: 25px;
+                    //                     }
+                    //                 }
+                    //             }
+                    //         }
+                    //         .explain-subject{
+                    //             height: 126px;
+                    //             margin-bottom: 20px;
+                    //             border:1px solid #888;
+                    //         }
+                    //     }
+                    //     &.obj-completion,
+                    //     &.sub-completion{
+                    //         .ques-subject{
+                    //             height: 126px;
+                    //             border:1px solid #888;
+                    //             margin-bottom: 10px;
+                    //         }
+                    //         .preview-options{
+                    //             padding:20px 0;
+                    //             .preview-option{
+                    //                 position: relative;
+                    //                 padding-left: 70px;
+                    //                 background: url('/images/blue-bg.jpg') 0 0 repeat-y;
+                    //                 .option-index{
+                    //                     .tc;
+                    //                     color: #fff;
+                    //                     font-size: 24px;
+                    //                     font-weight: bold;
+                    //                     position: absolute;
+                    //                     left: 0;
+                    //                     top: 50%;
+                    //                     width: 70px;
+                    //                     margin-top: -18px;
+                    //                 }
+                    //                 .option-content{
+                    //                     height: 68px;
+                    //                     border:1px solid #888;
+                    //                     border-left:none;
+                    //                 }
+                    //             }
+                    //         }
+                    //     }
+                    //     &.set-upload-question,
+                    //     &.preview-upload-question{
+                    //         &.set-upload-question{
+                    //             .ques-subject{
+                    //                 border:none;
+                    //             }
+                    //             &.demo{
+                    //                 .ques-subject{
+                    //                     border:1px solid #888;
+                    //                 }
+                    //             }
+                    //         }
+                    //         .ques-subject,
+                    //         .upload-content{
+                    //             height: 128px;
+                    //             margin-bottom: 10px;
+                    //             border:1px solid #888;
+                    //             &.upload-content{
+                    //                 .tc;
+                    //                 color:#888;
+                    //                 line-height: 128px;
+                    //             }
+                    //         }
+                    //     }
+                    //     &.set-explain{
+                    //         &.demo{
+                    //             .content .explain-subject{
+                    //                 border:1px solid #888;
+                    //             }
+                    //         }
+                    //         .content{
+                    //             min-height: 190px;
+                    //             .explain-subject{
+                    //                 border:none;
+                    //             }
+                    //         }
+                    //     }
+                    //     &.set-explain,
+                    //     &.set-upload-question{
+                    //         border:1px solid @c-standard-a;
+                    //         box-shadow: 0 0 10px @c-standard-a;
+                    //         &.failure{
+                    //             border-color:@c-standard-c;
+                    //             box-shadow: 0 0 10px @c-standard-c;
+                    //         }
+                    //     }
+                    // }
+                }
+            }
+        }
+    }
+    .setting-action {
+        margin-top: 30px;
+        .cui-button {
+            .fs16;
+            padding: 0 65px;
+            height: 44px;
+            line-height: 44px;
+            &.prev {
+                margin-right: 10px;
+            }
+        }
+    }
+}
+
+.import-block {
+    height: 200px;
+    padding: 40px 58px;
+    .name {
+        .fs16;
+        margin-left: 10px;
+    }
+    .cui-textBoxContainer {
+        height: 30px;
+        line-height: 30px;
+        vertical-align: middle;
+        input {
+            width: 300px;
+            height: 22px;
+            line-height: 22px;
+        }
+    }
+    input[type="file"] {
+        font-size: 25px;
+        width: 108px;
+        height: 34px;
+        overflow: hidden;
+        position: absolute;
+        line-height: 130%;
+        cursor: pointer;
+        outline: none;
+        opacity: 0;
+        margin-top: 8px;
+        z-index: 2;
+    }
+    .download {
+        display: inline;
+        margin-left: 10px;
+        padding-right: 15px;
+        a {
+            .fs14;
+            color: @c-standard-a;
+            text-decoration: underline;
+        }
+    }
+    .btns {
+        .tc;
+        margin-top: 60px;
+        .cui-button {
+            .fs16;
+            padding: 2px 50px;
+            &:first-child {
+                margin-right: 10px;
+            }
+        }
+    }
+}

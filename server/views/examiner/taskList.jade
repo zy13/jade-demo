@@ -1,0 +1,61 @@
+extends ../share/layout.base
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('examiner.taskList'))
+
+block content
+  .special-wrap
+    include ../share/component.header.out.jade
+    .wrap
+      -if(code==0)
+        .wrap-detail
+          .words 任务：全部
+            span.blue-color=queryList.taskMarked.totalTaskNum
+            span 个考试任务待评卷， 共
+            span.blue-color=queryList.taskMarked.totalPaperNum
+            span 份试卷。当前已完成
+            span.blue-color=queryList.taskMarked.doneTaskNum
+            span 个考试任务， 已完成
+            span.blue-color=queryList.taskMarked.donePaperNum
+            span 份试卷评卷。
+          .content
+            div.div
+            ul.list
+              li.row.title
+                .cell 项目名称
+                .cell 项目起始时间
+                .cell 试卷名称
+                .cell 主观题量
+                .cell 考生人数
+                .cell 评卷进度
+                .cell 评卷人
+                .cell 操作
+              each i in queryList.pageResponse.results
+                li.row.item
+                  .cell=i.projectName
+                  .cell
+                    span!=i.projectStartDateL?pageHelper.date.format(i.projectStartDateL,'YYYY-MM-DD'):''
+                    span=i.projectStartDateL?'--':''
+                    span=i.projectStartDateL ? (i.projectEndDateL ? pageHelper.date.format(i.projectEndDateL,'YYYY-MM-DD') : '不限') : ''
+                  .cell=i.taskName
+                  .cell!=i.needMarkingNum
+                  .cell!=i.finishNum
+                  -var wid = isNaN(parseInt(100*(i.markedNum/i.finishNum))) ? 0 : parseInt(100*(i.markedNum/i.finishNum))
+                  .cell #{wid}%
+                  .cell=i.accountNames
+                  .cell
+                    -if(i.finishNum==0)
+                      a(href='javascript:void(0)')
+                        span 暂无考生提交试卷
+                    -else
+                      a.pingjuan(href=`/customer/examiner/taskDetail?taskId=${i.taskId}`)
+                        span 评卷
+            include ../share/component.pagination.jade
+      -else
+        .wrap-detail
+          p.message!=message
+            | ...
+    include ../share/common.footer.default.jade
+
+block scriptSection
+  script(type="text/javascript", src= pageHelper.setScript('examiner.taskList'))

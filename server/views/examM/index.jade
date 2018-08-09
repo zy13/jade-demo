@@ -1,0 +1,15 @@
+extends ../share/layout.baseM.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href=pageHelper.setStyle('examM.index'))
+
+block content
+  .loadingM(style='display:none')
+    .jump
+      span 3秒
+    .load
+      .title
+    .title1
+block scriptSection
+   script(type="text/javascript", src=pageHelper.setScript('examM.index'))
+

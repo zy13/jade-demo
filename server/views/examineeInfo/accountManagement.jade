@@ -1,0 +1,351 @@
+//-
+  @Author: Jet.Chan
+  @Date:   2016-12-29T14:48:27+08:00
+  @Email:  guanjie.chen@talebase.com
+  @Last modified by:   Jet.Chan
+  @Last modified time: 2017-03-13T11:38:17+08:00
+
+
+
+extends ../share/layout.base.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('examineeInfo.accountManagement'))
+
+block content
+  .ex-content-right
+    - var tabActive = 0
+    include ../share/component.commonTab.jade
+    .wrap
+      //- 导航
+      p.nav
+        a(href='###') 项目管理&nbsp;
+        i.cpf-icon.cpf-icon-ic_arrowright &nbsp;
+        a(href='/customer/projectList/index/') 项目列表&nbsp;
+        i.cpf-icon.cpf-icon-ic_arrowright &nbsp;
+        span.projectName #{projectName} &nbsp;
+        i.cpf-icon.cpf-icon-ic_arrowright &nbsp;
+        span.taskName #{taskName} &nbsp;
+        i.cpf-icon.cpf-icon-ic_arrowright &nbsp;
+        span 帐号管理
+        .type
+          -console.log(request.query.projectName,request.query.taskName)
+          -var dataManagePermissionCode = 'c1_11';
+            -var acHref='/customer/examineeInfo/accountManagement'
+            -var endAcHref = `?projectId=${request.query.projectId}&taskId=${request.query.taskId}&projectName=${encodeURIComponent(request.query.projectName)}&taskName=${encodeURIComponent(request.query.taskName)}`
+            -acHref=acHref + endAcHref
+            a.cui-button.account.preset-blue(href='javascript:void()')
+              span 帐号管理
+          -if(globalCustomer.permission.includes(dataManagePermissionCode))
+            -var dataHref='/customer/examineeInfo/dataManagement'
+            -var endDataHref = `?projectId=${request.query.projectId}&taskId=${request.query.taskId}&projectName=${encodeURIComponent(request.query.projectName)}&taskName=${encodeURIComponent(request.query.taskName)}`
+            -dataHref = dataHref + endDataHref
+            a.cui-button.data(href=dataHref)
+              span 数据管理
+      .search-filter
+          .search-detail
+            input#projectId(type='hidden', data-id=request.query.projectId?request.query.projectId:'')
+            input#taskId(type='hidden', data-id=request.query.taskId?request.query.taskId:'')
+            input#projectName(type='hidden', value=projectName)
+            input#taskName(type='hidden', value=taskName)
+            input#cmctStatus(type='hidden', value=request.query.cmctStatus)
+            input#cmctWay(type='hidden', value=request.query.cmctStatus)
+            input#status(type='hidden', value='1,2')
+            input#searchType2(type='hidden', value=request.query.searchType2)
+            .search-ent
+              span 搜索：&nbsp;
+              .dateFind.inline
+                .cui-textBoxContainer.inline.st
+                  script.
+                    function minDate(){
+                      WdatePicker({
+                        dateFmt:'yyyy-MM-dd HH:mm:ss',
+                        maxDate:'#F{$dp.$D(\'endDate\')}'
+                      })
+                    }
+                    function maxDate(){
+                      WdatePicker({
+                        dateFmt:'yyyy-MM-dd HH:mm:ss',
+                        minDate:'#F{$dp.$D(\'startDate\')}'
+                      })
+                    }
+                  span.addonLeft 创建时间
+                  input.addonRightInput.startDate(type="text",id='startDate',placeholder='请输入开始时间',name='beginDate',value=request.query.key1Begin,onfocus="minDate()", readonly='true')
+                  span.addonRight
+                    i.cpf-icon.cpf-icon-ic_calendar
+                span --
+                .cui-textBoxContainer.inline.en
+                  input.addonRightInput.endDate(type="text",id='endDate',placeholder='请输入结束时间',name='endDate',value=request.query.key1End ,onfocus="maxDate()", readonly='true')
+                  span.addonRight
+                    i.cpf-icon.cpf-icon-ic_calendar
+              input.searchType2(type='hidden',value=request.query.searchType2 ? request.query.searchType2 : 'account')
+              .cui-selectBoxContainer.inline(data-options=[{value:"account",text:'帐号'},{value:"name",text:'姓名'},{value:"email",text:'邮件'},{value:"mobile",text:'手机'}])
+                -if(request.query.searchType2=='account' || !request.query.searchType2)
+                  span.placeholder 帐号
+                -if(request.query.searchType2=='email')
+                  span.placeholder 邮件
+                -if(request.query.searchType2=='name')
+                  span.placeholder 姓名
+                -if(request.query.searchType2=='mobile')
+                  span.placeholder 手机
+              -if(request.query.searchType2=='email')
+                  input.txt.key2(type='text',placeholder='请输入关键字',name="key",value=request.query.key2)
+              -else if(request.query.searchType2=='mobile')
+                  input.txt.key2(type='text',placeholder='请输入关键字',name="key",value=request.query.key2,data-rule='email',data-tips='请输入正确的邮箱格式')
+              -else
+                input.txt.key2(type='text',placeholder='请输入关键字',name="key",value=request.query.key2,data-rule='tel',data-tips='请输入正确的手机号码')
+              button.btn 搜索
+            .search-status.common-status
+              a 答题状态：&nbsp;
+              .status
+                - var status= [{value:'',text:'全部'},{value:'1',text:'未开始'},{value:'2',text:'答题中'},{value:'3',text:'已完成'}]
+                -if(!request.query.status)
+                  each v,k in status
+                    a(href='javascript:void(0)',class=k==0?'cur':'',data-value=v.value)=v.text
+                -else
+                  - var statusArr = request.query.status.split(',')
+                  each v,k in status
+                    -var isAddCur=false
+                    each j in statusArr
+                      -if(j==v.value) isAddCur=true
+                    a(href='javascript:void(0)',class=k==0?'':(isAddCur?'cur':''),data-value=v.value)=v.text
+            .search-status.cmctWay
+              a 通信方式：&nbsp;
+              .status
+                - var cmctWay= [{value:'',text:'全部'},{value:'1',text:'有邮箱'},{value:'2',text:'无邮箱'},{value:'3',text:'有手机'},{value:'4',text:'无手机'}]
+                -if(!request.query.cmctWay)
+                  each v,k in cmctWay
+                    a(href='javascript:void(0)',class=k==0?'cur':'',data-value=v.value)=v.text
+                -else
+                  - var cmctWayArr = request.query.cmctWay.split(',')
+                  each v,k in cmctWay
+                    -var isAddCur = false
+                    each j in cmctWayArr
+                      -if(j==v.value) isAddCur=true
+                    a(href='javascript:void(0)',class=k==0?'':(isAddCur?'cur':''),data-value=v.value)=v.text
+            .search-status.cmctStatus
+              a 通信状态：&nbsp;
+              .status
+                - var cmctStatus= [{value:'',text:'全部'},{value:'1',text:'已发邮箱'},{value:'2',text:'未发邮箱'},{value:'3',text:'已发短信'},{value:'4',text:'未发短信'}]
+                -if(!request.query.cmctStatus)
+                  each v,k in cmctStatus
+                    a(href='javascript:void(0)',class=k==0?'cur':'',data-value=v.value)=v.text
+                -else
+                  -cmctStatusArr = request.query.cmctStatus.split(',')
+                  each v,k in cmctStatus
+                    -var isAddCur = false
+                    each j in cmctStatusArr
+                      -if(j==v.value) isAddCur=true
+                    a(href='javascript:void(0)',class=k==0?'':(isAddCur?'cur':''),data-value=v.value)=v.text
+      .main
+          .main-action
+            div.cui-checkboxContainer.inline.curPage
+                input(type='checkbox')
+                label
+                  i
+                  span 当前页
+            div.cui-checkboxContainer.inline.allPage
+                input(type='checkbox')
+                label
+                  i
+                  span 所有页
+            div.inline-div
+              span.seled 已选：
+                span 0人
+            div.inline-div
+              -if(globalCustomer.permission.includes("c1_10"))
+                a.btn.seta
+                  span.set-account 帐号信息设定
+              -if(globalCustomer.permission.includes("c1_5"))
+                a.btn.create-account
+                  span 创建帐号
+                a.btn.import-notice(href=`/customer/examineeInfo/accountManagement/importLog?projectId=${request.query.projectId}&taskId=${request.query.taskId}&&projectName=${encodeURIComponent(request.query.projectName)}&taskName=${encodeURIComponent(request.query.taskName)}`)
+                  span 导入日志
+              -if(globalCustomer.permission.includes("c1_6"))
+                a.btn.reset-psw
+                  span 重置密码
+              -if(globalCustomer.permission.includes("c1_7"))
+                a.btn.send-notice
+                  span 发送通知
+              -if(globalCustomer.permission.includes("c1_8"))
+                a.btn.export-acount
+                  span 导出全部帐号
+              -if(globalCustomer.permission.includes("c1_9"))
+                a.btn.remove-acount
+                  span 移除
+          //-帐号管理信息
+          .mainInfo
+              ul.list
+                each i in queryList.results
+                  li.item
+                   div
+                      .cui-checkboxContainer.inline(id=i.id)
+                        input(type='checkbox')
+                        label
+                          i
+                          span
+                   div
+                      div.div1
+                        p
+                          each j in i.userInfos
+                            -if(j.fieldKey=='name')
+                              -if(globalCustomer.permission.includes("c1_5"))
+                                a.edit-account(href='javascript:void(0)')
+                                  span.name=j.fieldValue
+                              -else
+                                span.name=j.fieldValue
+                          each j in i.userInfos
+                            -if(j.isexTension==0)
+                              -if(j.fieldKey=='email')
+                                span.email= j.fieldValue ? `(${j.fieldValue})` : ''
+                              -if(j.fieldKey=='gender')
+                                span.gender=j.fieldValue? j.fieldValue :''
+                          a.st
+                            -if(i.sendEmailStatus==null)
+                              i.cpf-icon
+                            -if(i.sendEmailStatus==1)
+                              i.cpf-icon.cpf-icon-email_sent
+                            -if(i.sendEmailStatus==2)
+                              i.faile.cpf-icon.cpf-icon-email_fail
+                            -if(i.sendEmailStatus==3)
+                              i.success.cpf-icon.cpf-icon-email_success
+                            -if(i.sendSmsStatus==null)
+                              i.cpf-icon
+                            -if(i.sendSmsStatus==1)
+                              i.cpf-icon.cpf-icon-new_sent
+                            -if(i.sendSmsStatus==2)
+                              i.faile.cpf-icon.cpf-icon-new_fail
+                            -if(i.sendSmsStatus==3)
+                              i.success.cpf-icon.cpf-icon-new_success
+                          span.status &nbsp;#{i.answerStatus==1?'未开始':i.answerStatus==2?'答题中':'已完成'}
+                        p
+                          span 创建时间: #{pageHelper.date.format(i.createTime,'YYYY-MM-DD HH:mm:ss')}
+                      div.div2
+                        each j in i.userInfos
+                          -if(j.isexTension==0 && j.fieldKey!='name' && j.fieldKey!='email' && j.fieldKey!='gender')
+                            -if (j.type ==2)
+                              span #{j.fieldName}：#{j.fieldValue ? pageHelper.date.format(j.fieldValue,'YYYY-MM-DD') :''}
+                            -if(j.type != 2)
+                              span #{j.fieldName}：#{j.fieldValue}
+                        each j in i.userInfos
+                          -if(j.isexTension==1)
+                            -var isNew = j.fieldName && j.fieldName.length>10 ? true : false
+                            -var newV = j.fieldName && j.fieldName.length>10 ? pageHelper.formatter.strCut(j.fieldName,13):j.fieldName
+                            -if (j.type ==2)
+                              span(title=isNew?j.fieldName:'') #{newV}：#{j.fieldValue ? pageHelper.date.format(j.fieldValue,'YYYY-MM-DD'):''}
+                            -if (j.type !=2)
+                              span(title=isNew?j.fieldName:'') #{newV}：
+                                span(title=j.fieldValue) #{j.fieldValue}
+              .main-footer
+                span
+                  i.ready.cpf-icon.cpf-icon-email_sent
+                  span 邮件发送中
+                span
+                  i.success.cpf-icon.cpf-icon-email_success
+                  span 邮件发送成功
+                span
+                  i.faile.cpf-icon.cpf-icon-email_fail
+                  span 邮件发送失败
+                span
+                  i.ready.cpf-icon.cpf-icon-new_sent
+                  span 短信发送中
+                span
+                  i.success.cpf-icon.cpf-icon-new_success
+                  span 短信发送成功
+                span
+                  i.faile.cpf-icon.cpf-icon-new_fail
+                  span 短信发送失败
+          //-帐号信息设定
+          .setAccountInfo.dis
+              .title
+                strong 请设定测评者需填写的信息
+              ul.list
+                li.item.byself
+                 div 可选信息
+                 div.byself-inputs
+                  -var countisextension = 0;
+                  each i in accountInfo.optionalList
+                    input(type='hidden',name=i.isextension)
+                    -if(i.fieldKey=='account')
+                      .cui-checkboxContainer.inline(title=i.fieldName)
+                        input(type='checkbox',name=i.fieldKey,disabled='true',checked='true')
+                        label
+                          i
+                          span(title=i.fieldName)=i.fieldName
+                    -else
+                      -if(i.isextension==0)
+                        .cui-checkboxContainer.inline(title=i.fieldName)
+                          -if(i.isshow==0)
+                            input(type='checkbox',name=i.fieldKey)
+                          -if(i.isshow==1)
+                            input(type='checkbox',name=i.fieldKey,checked='true')
+                          label
+                            i
+                            span(title=i.fieldName)=i.fieldName
+                      -if(i.isextension==1)
+                        -countisextension = countisextension+1
+                        .cui-checkboxContainer.inline(data-type=i.type,title=i.fieldName)
+                          -if(i.isshow==0)
+                            input(type='checkbox',name=i.fieldKey)
+                          -if(i.isshow==1)
+                            input(type='checkbox',name=i.fieldKey,checked='true')
+                          label
+                            i
+                            span(title=i.fieldName)=i.fieldName
+                          span(data-value=i.fieldKey).delField x
+                input(type='hidden',id='isextension',data-value=countisextension)
+                li.item
+                 div 添加新属性
+                 div
+                    a.btn.selected
+                      span +&nbsp;添加输入框
+                    a.btn.calendate
+                      span +&nbsp;添加日历框
+                    a.btn.selector
+                      span +&nbsp;添加下拉框
+                li.item.must
+                 div 测评者必填属性
+                 div.inputs
+                    each i in accountInfo.requiredList
+                      .cui-checkboxContainer.inline(title=i.fieldName)
+                        -if(i.ismandatory==1)
+                          -if(i.fieldKey=='account')
+                            input(type='checkbox',name=i.fieldKey,disabled='true',checked='true')
+                          -else
+                            input(type='checkbox',name=i.fieldKey,checked='true')
+                        -if(i.ismandatory==0)
+                          input(type='checkbox',name=i.fieldKey)
+                        label
+                          i
+                          span(title=i.fieldName)=i.fieldName
+                li.item.unique
+                 div 唯一性检查
+                 div
+                   each i in accountInfo.uniqueList
+                    .cui-checkboxContainer.inline(title=i.fieldName)
+                      -if(i.isunique==1)
+                        -if(i.fieldKey=='account' || i.fieldKey=='mobile')
+                          input(type='checkbox',name=i.fieldKey,disabled='true',checked='true')
+                        -else
+                          input(type='checkbox',name=i.fieldKey,checked='true')
+                      -if(i.isunique==0)
+                        input(type='checkbox',name=i.fieldKey)
+                      label
+                        i
+                        span(title=i.fieldName)=i.fieldName
+              div.button
+                a.cui-button.preset-blue.mr-10
+                  span 确定
+                a.cui-button.cancel
+                  span 取消
+        -totalCount=queryList.total
+        -pagesize=queryList.limit
+      input#isogeny(type="hidden",value=isogeny)
+      input#total(type="hidden",value= queryList.total)
+      include ../share/component.pagination.jade
+    include ../share/common.footer.default.jade
+
+block scriptSection
+  include ../share/common.script.ueditor.jade
+  script(type="text/javascript", src= '/my97datePicker/WdatePicker.js')
+  script(type="text/javascript", src= pageHelper.setScript('examineeInfo.accountManagement'))

@@ -1,0 +1,39 @@
+<div class='add_selector'>
+    <div class='handleData'>
+        <div class="cui-textBoxContainer addAttr" data-rule="required" data-tips='属性名称不能为空'>
+            <input type="text" placeholder="请输入属性名称" value='' />
+        </div>
+        {@each msg as r}
+            <div class='cui-radioGroupContainer ${r=="选项4"?"option-tag-mgl-30":""}'>
+                <div class='block'>
+                    <div class="cui-radioContainer inline">
+                        <input type="radio" name="addAttr" value="" />
+                        <label>
+                            <i></i>
+                            <span></span>
+                        </label>
+                    </div>
+                    <div class='cui-textBoxContainer inline'  data-rule="required" data-tips='选项不能为空,如不需要，请删除'>
+                        <input type="text" placeholder="${r}" value='' />
+                        <span>
+                        {@if r=='选项4'}
+                            <i  class='cpf-icon cpf-icon-ic_add'></i>
+                            <i  class='cpf-icon cpf-icon-ic_forbidden_line'></i>
+                        {@else}
+                            <i  class='cpf-icon cpf-icon-ic_forbidden_line'></i>
+                        {@/if}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        {@/each}
+    </div>
+    <div class='oporation'>
+        <a class="cui-button preset-blue pr10 confirm">
+            <span>确定</span>
+        </a>
+        <a class="cui-button cancel">
+            <span>取消</span>
+        </a>
+    </div>
+</div>

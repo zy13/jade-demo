@@ -1,0 +1,40 @@
+<div class="detailWrap email">
+    {@if email.back}
+        <p class="back">
+            <a href="javascript:void(0)">返回编辑页</a>
+        </p>
+    {@/if}
+    {@if email.type=='single'}
+        <p class="weight">邮件：</p>
+        <p class="weight">${email.subject}</p>
+        <div class="line"></div>
+        <div class="detailContent long">
+            <div>$${email.content}</div>
+            <div>$${email.sign}</div>
+        </div>
+    {@else}
+        {@if email.receiver}
+            <p class="weight">邮件：</p>
+            <p class="weight">${email.subject}</p>
+
+            {@if email.date}
+                <p class="light">时间：${email.date}</p>
+            {@/if}
+            <p class="light">收件人：${email.receiver}</p>
+            <div class="line"></div>
+            <div class="detailContent">
+                <div>$${email.content}</div>
+                <div>$${email.sign}</div>
+            </div>
+        {@/if}
+        <div class="btns">
+            {@if email.hasPrevious}
+                <a href="javascript:void(0)" class="cui-button prev">上一个</a>
+            {@/if}
+            {@if email.hasNext}
+                <a href="javascript:void(0)" class="cui-button preset-blue next">下一个</a>
+            {@/if}
+        </div>
+    {@/if}
+</div>
+

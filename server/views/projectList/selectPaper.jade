@@ -1,0 +1,94 @@
+extends ../share/layout.base.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('projectList.selectPaper'))
+
+
+block content
+  .ex-content-right
+    - var tabActive = 0
+    include ../share/component.commonTab.jade
+    .create-wrap
+      p.common-nav
+        span 项目管理&nbsp;
+        i.cpf-icon-ic_arrowright.fs &nbsp;
+        a(href='/customer/projectList/index') 项目列表
+        i.cpf-icon-ic_arrowright.fs &nbsp;
+        - if(createOredit=='create')
+          span 创建项目
+        - else
+          span 修改项目
+      //- 创建项目（第一步）主要
+      .create-main.common-main
+        //- 步骤显示
+        .create-step
+          div.img
+            img(src=pageHelper.setPageImgPath('/images/createProStep2.png'))
+            div.a-group
+              //-a(href= projectId ? '/customer/projectList/editProject/' + projectId + (createOredit=='create' ? '?createOredit=create' : '') : '/customer/projectList/createProject')
+              a(href='###')
+                strong 1
+                span 设置项目信息
+              a.active(href='###')
+                strong 2
+                span 选择试卷
+              //-a(href= projectId ? '/customer/projectList/createFinish/' + projectId + (createOredit == 'create' ? '?createOredit=create' : '') : "###")
+              a(href='###')
+                strong 3
+                span 设置完成
+        //-已选试卷
+        .chosen
+          h2.cp2-title 已选试卷
+          //- 已选试卷-列表
+          ul.chosen-list
+
+        //-试卷列表
+        .storage
+          h2.cp2-title 试卷库
+          //- 试卷库-列表
+          ul
+            li.title
+              div
+                span.cui-checkboxContainer.inline.selectAll
+                  input(type='checkbox')
+                  label
+                    i
+                    span
+              div 试卷名称
+              div 题量
+              div 总分
+              div 试卷参考时长<br>(分钟)
+              div 使用次数
+              div 创建人
+              div 创建时间
+              div 状态
+            - for(var i=0;i<response.results.length;i++)
+              li
+                div
+                  .cui-checkboxContainer.inline(data-id= response.results[i].id)
+                    input(type='checkbox')
+                    label
+                      i
+                      span
+                div= response.results[i].name
+                div= response.results[i].totalNum
+                div= response.results[i].score
+                div= response.results[i].duration
+                div= response.results[i].usage
+                div= response.results[i].creator
+                div= pageHelper.date.format(response.results[i].createdDate,'YYYY-MM-DD HH:mm:ss')
+                div= response.results[i].status? '启用':'禁用'
+        include ../share/component.pagination.jade
+        .create-action.tc
+          a.cui-button.prev(href="/customer/projectList/editProject/#{projectId}")
+            span 上一步
+          a.cui-button.preset-blue.next
+            span 下一步
+    input#projectId(type="hidden",value= projectId)
+    input#createOredit(type="hidden",value= createOredit)
+    include ../share/common.footer.default.jade
+
+block scriptSection
+  include ../share/common.script.ueditor.jade
+  script(type="text/javascript", src= '/my97datePicker/WdatePicker.js')
+  script(type="text/javascript", src= pageHelper.setScript('projectList.selectPaper'))

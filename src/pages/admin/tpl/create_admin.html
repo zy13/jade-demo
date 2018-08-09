@@ -1,0 +1,72 @@
+<!--
+@Author: Jet.Chan
+@Date:   2016-12-02T18:32:06+08:00
+@Email:  guanjie.chen@talebase.com
+@Last modified by:   Jet.Chan
+@Last modified time: 2017-03-06T19:39:59+08:00
+-->
+
+
+<form onsubmit="return !1">
+    <div class='create'>
+        <div class='input-groups'>
+            <div class="cui-textBoxContainer inline valtextbox" data-rule="required" data-tips="请输入帐号">
+                <span><span>*</span>帐号：</span>
+                {@if type!='add'}
+                  <input type="text" placeholder="请输入帐号" name="account" value='${data.account}' readonly='true' />
+                {@else}
+                  <input type="text" placeholder="请输入帐号" name="account" value='${data.account}' />
+                {@/if}
+            </div>
+
+            {@if type=='add'}
+            <div class="left-text-container cui-textBoxContainer  inline valtextbox password" data-rule="required;shortest=6" data-tips="密码不能为空或少于6位">
+                <span><span>*</span>密码：</span>
+                <input type="text" placeholder="请输入密码" name="password" value='${data.password}' class="txtBox180" />
+            </div>
+            <div class="cui-checkboxContainer">
+                <input type="checkbox" name="randomPassword" value="">
+                <label for="randomPassword"><i></i><span class="span-width-90">采用随机密码</span></label>
+            </div>
+            {@/if}
+
+            <div class="cui-textBoxContainer inline valtextbox" data-rule="" data-tips="">
+                <span>姓名：</span>
+                <input type="text" placeholder="请输入姓名" name="name" value="${data.name}" />
+            </div>
+            <div class="cui-textBoxContainer inline valtextbox" data-rule="tel" data-tips="手机格式不正确">
+                <span>手机：</span>
+                <input type="text" placeholder="请输入手机号码" name="mobile" value="${data.mobile}" />
+            </div>
+            <div class="cui-textBoxContainer inline valtextbox" data-rule="required;email" data-tips="请输入正确的邮箱格式">
+                <span><span>*</span>邮箱：</span>
+                <input type="text" placeholder="请输入邮箱" name="email" value="${data.email}" />
+            </div>
+            <div class="cui-textBoxContainer inline ">
+                <span>角色名称：</span>
+                <div class="cui-selectBoxContainer" data-options=${roleJson}>
+                    <span class="placeholder">选择角色</span>
+                </div>
+            </div>
+            <div class="cui-textBoxContainer inline">
+                <span>分组名称：</span>
+                <div class="cui-selectBoxContainer" data-options=${groupJson}>
+                    <span class="placeholder">选择分组</span>
+                </div>
+            </div>
+            <div class="cui-textBoxContainer inline">
+                <span>状态：</span>
+                <i class='slideBtn ${data.status==1?"active":""}'></i>
+            </div>
+        </div>
+        <p class='btn'>
+            <a class="cui-button preset-blue confirm">
+                <span>确定</span>
+            </a>
+            <a class="cui-button cancel">
+                <span>取消</span>
+            </a>
+        </p>
+    </div>
+
+</form>

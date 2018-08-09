@@ -1,0 +1,124 @@
+//-
+  @Author: Jet.Chan
+  @Date:   2016-12-29T14:48:27+08:00
+  @Email:  guanjie.chen@talebase.com
+  @Last modified by:   Jet.Chan
+  @Last modified time: 2017-03-08T11:53:06+08:00
+
+
+
+extends ../share/layout.base.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('examineeInfo.dataManagement'))
+
+
+block content
+  .ex-content-right
+    - var tabType = 1,tabActive = 0;
+    - var exportDetailPermissionCode = 'c1_12';
+    include ../share/component.commonTab.jade
+    .temple-wrap
+      //- 导航部分
+      p.tpl-nav
+        a(href='/customer/projectList/index') 项目管理&nbsp;
+          i.cpf-icon-ic_arrowright.fs &nbsp;
+        a(href='/customer/projectList/index') 项目列表&nbsp;
+          i.cpf-icon-ic_arrowright.fs &nbsp;
+        a.projectName(href='javascript:void(0)',data-pname=request.query.projectName)= request.query.projectName
+          | &nbsp;
+          i.cpf-icon-ic_arrowright.fs &nbsp;
+        a.taskName(href='javascript:void(0)',data-tname=request.query.taskName)= request.query.taskName
+          | &nbsp;
+          i.cpf-icon-ic_arrowright.fs &nbsp;
+        span 数据管理
+      input(type='hidden',data-taskId=request.query.taskId,id='taskId')
+      input(type='hidden',data-projectId=request.query.projectId,id='projectId')
+      input(type='hidden',data-paperId=response.paperId,id='paperId')
+      input(type='hidden',data-limit=request.query.limit||10,id='limit')
+      input(type='hidden',data-pageIndex=request.query.p||1,id='pageIndex')
+      input(type='hidden',data-start=request.query.start||0,id='start')
+      input(type='hidden',data-sortFields=request.query.sortFields||'end_time asc',id='sortFields')
+      .tpl-type
+        -var accountManagePermissionCode = 'c1_4';
+        -if(globalCustomer.permission.includes(accountManagePermissionCode))
+          -var acHref='/customer/examineeInfo/accountManagement/'
+          -var endAcHref=`?projectId=${request.query.projectId}&taskId=${request.query.taskId}&projectName=${encodeURIComponent(request.query.projectName)}&taskName=${encodeURIComponent(request.query.taskName)}`
+          -acHref=acHref + endAcHref
+          a.cui-button(href=acHref)
+            span 帐号管理
+        a.cui-button.preset-blue(href='javascript:void(0)')
+          span 数据管理
+      -var statCont = '';
+      -if(response.sysTimeL<response.startDate) statCont = '未开始'
+      -if(response.sysTimeL>response.endDate) statCont = '已结束'
+      -if(response.startDate<response.sysTimeL&&response.sysTimeL<response.endDate) statCont = '进行中'
+      p.tpl-detail
+          | 考试进度：#{response.inNum}/#{response.preNum}
+          span.blcolor.overed=statCont
+          | 考试时间：
+          span.blcolor=response.startDate?pageHelper.date.format(response.startDate,'YYYY-MM-DD HH:mm:ss') : ''
+          span!=response.startDate? ' — ':''
+          span.blcolor=response.endDate?pageHelper.date.format(response.endDate,'YYYY-MM-DD HH:mm:ss') : (response.startDate?'无限':'')
+      .tpl-main
+        .tpl-main-action
+          -if(globalCustomer.permission.includes(exportDetailPermissionCode))
+            - if(response.downloadStatus==1)
+              a(href='javascript:void(0)').creating#createdExportPaper 生成全部详细试卷
+              span 正在生成考生详细试卷，请耐心等待...
+            - else
+              a(href='javascript:void(0)')#createdExportPaper 生成全部详细试卷
+            - if(response.downloadStatus==2)
+              span(href='javascript:void(0)')#exportPaper= response.fileName
+              span (点击 “文件名” 下载)
+            - if(response.downloadStatus==3)
+              span 试卷生成失败，请尝试重新生成，若有需要请联系倍智客服：
+                span.blcolor 400-012-5066
+        //- 模板列表
+        - if(response.pageResponse&&response.pageResponse.results&&response.pageResponse.results.length>0)
+          - var subjectArr = []
+          each v,i in response.pageResponse.results[0].userInfos
+            - subjectArr.push(v.fieldName)
+          ul.tpl-list
+            li.tpl-title
+              p 帐号
+              p 姓名
+              p 性别
+              p 手机
+              p 邮箱
+              p 考试用时
+              each k,j in subjectArr
+                p=k
+              p(class='time',data-type=request.query.sortFields?request.query.sortFields:'') 提交时间
+                span.triangles
+                  span#triangle-up
+                    span(class=request.query.sortFields=='end_time asc'?'':'span')
+                  span#triangle-down
+                    span(class=request.query.sortFields=='end_time desc'?'':'span')
+              p(class='score',data-type=request.query.sortFields?request.query.sortFields:'') 总分
+                span.triangles
+                  span#triangle-up
+                    span(class=request.query.sortFields=='total_score asc'?'':'span')
+                  span#triangle-down
+                    span(class=request.query.sortFields=='total_score desc'?'':'span')
+              p 评卷是否结束
+            each k,j in response.pageResponse.results
+              li.tpl-item
+                  p=k.account
+                  p=k.name
+                  p=k.gender
+                  p=k.mobile
+                  p=k.email
+                  p=k.usedTime
+                  each n,m in k.userInfos
+                    p=n.value
+                  p(data-value)=k.endTime?pageHelper.date.format(k.endTime,'YYYY-MM-DD HH:mm:ss') : ''
+                  p=k.totalScore==-1?'':pageHelper.formatter.formatNum(k.totalScore,1)
+                  p=k.whetherMarkDone?'是':'否'
+      -totalCount=response.pageResponse.total
+      -pagesize=response.pageResponse.limit
+      include ../share/component.pagination.jade
+    include ../share/common.footer.default.jade
+
+block scriptSection
+  script(type="text/javascript", src= pageHelper.setScript('examineeInfo.dataManagement'))

@@ -1,0 +1,112 @@
+//-
+  @Author: Jet.Chan
+  @Date:   2016-12-29T14:48:27+08:00
+  @Email:  guanjie.chen@talebase.com
+  @Last modified by:   Jet.Chan
+  @Last modified time: 2017-02-14T11:35:59+08:00
+
+
+
+extends ../share/layout.base.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('global.setAccount'))
+
+block content
+  .ex-content-right
+    - var tabActive = 1
+    include ../share/component.commonTab.jade
+    .wrap
+      .nav
+        a(href='###') 项目管理&nbsp;
+        i.cpf-icon.cpf-icon-ic_arrowright &nbsp;
+        span 帐号设定管理
+      .main
+        .setAccountInfo
+          .title
+            strong 请设定测评者需填写的信息
+          ul.list
+            li.item.byself
+              div 可选信息
+              div.byself-inputs
+                -var countisextension = 0;
+                each i in globalInfo.optionalList
+                  input(type='hidden',name=i.isextension)
+                  -if(i.fieldKey=='account')
+                    .cui-checkboxContainer.inline(title= i.fieldName)
+                      input(type='checkbox',name=i.fieldKey,disabled='true',checked='true')
+                      label
+                        i
+                        span=i.fieldName
+                  -else
+                    -if(i.isextension==0)
+                      .cui-checkboxContainer.inline(title= i.fieldName)
+                        -if(i.isshow==0)
+                          input(type='checkbox',name=i.fieldKey)
+                        -if(i.isshow==1)
+                          input(type='checkbox',name=i.fieldKey,checked='true')
+                        label
+                          i
+                          span=i.fieldName
+                    -if(i.isextension==1)
+                      -countisextension = countisextension+1
+                      .cui-checkboxContainer.inline(data-type=i.type,title= i.fieldName)
+                        -if(i.isshow==0)
+                          input(type='checkbox',name=i.fieldKey)
+                        -if(i.isshow==1)
+                          input(type='checkbox',name=i.fieldKey,checked='true')
+                        label
+                          i
+                          span=i.fieldName
+                        span(data-value=i.fieldKey).delField  x
+              input(type='hidden',id='isextension',data-value=countisextension)
+            li.item
+              div 添加新属性
+              div
+                a.btn.selected(data-type='1')
+                  span +&nbsp;添加输入框
+                a.btn.calendate(data-type='2')
+                  span +&nbsp;添加日历框
+                a.btn.selector(data-type='3')
+                  span +&nbsp;添加下拉框
+            li.item.must
+              div 测评者必填属性
+              div.inputs
+                each i in globalInfo.requiredList
+                  .cui-checkboxContainer.inline(title= i.fieldName)
+                    -if(i.ismandatory==1)
+                      -if(i.fieldKey=='account')
+                        input(type='checkbox',name=i.fieldKey,disabled='true',checked='true')
+                      -else
+                        input(type='checkbox',name=i.fieldKey,checked='true')
+                    -if(i.ismandatory==0)
+                      input(type='checkbox',name=i.fieldKey)
+                    label
+                      i
+                      span=i.fieldName
+            li.item.unique
+              div 唯一性检查
+              div
+                each i in globalInfo.uniqueList
+                  .cui-checkboxContainer.inline(title= i.fieldName)
+                    -if(i.isunique==1)
+                      -if(i.fieldKey=='account' || i.fieldKey=='mobile')
+                        -console.log(i);
+                        input(type='checkbox',name=i.fieldKey,disabled='true',checked='true')
+                      -else
+                        input(type='checkbox',name=i.fieldKey,checked='true')
+                    -if(i.isunique==0)
+                      input(type='checkbox',name=i.fieldKey)
+                    label
+                      i
+                      span=i.fieldName
+          div.button
+            a.cui-button.mr-10
+              span 确定
+            -if(canShowProjectView)
+              a.cui-button.preset-blue.cancel
+                span 取消
+    include ../share/common.footer.default.jade
+
+block scriptSection
+  script(type="text/javascript", src= pageHelper.setScript('global.setAccount'))

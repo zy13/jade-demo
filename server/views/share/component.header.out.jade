@@ -1,0 +1,40 @@
+#ex-header-out
+  div.ex-header-content
+    div.content
+      div.logo
+        a.img
+          - if(type==1)
+            img(src='/bzos/osadmin/company/downloadLogo')
+          - else
+            img(src=pageHelper.setPageImgPath('/images/u8.png'))
+        span 欢迎使用TAS人才测评系统
+      .ul
+        -if(type==0)    //考官
+          ul
+            li.name
+              span.cpf-icon.cpf-icon-person
+              span=name
+            li.change-psw.dis
+              a(href='/customer/examiner/resetPassword')
+                span.cpf-icon.cpf-icon-key
+                span 修改密码
+          a.logout(href='javascript:void(0)',data-type='0')
+            span.cpf-icon.cpf-icon-back
+            span 退出
+        - else if(type==1) //考生
+          ul
+            li.name
+              span.cpf-icon.cpf-icon-person
+              span=name.length>10?pageHelper.formatter.strCut(name,13):name
+            - if(!noEdit)
+              li.person_info.dis
+                a(href='/exam/userInfo?isEditUserInfo=1')
+                  span.cpf-icon.cpf-icon-person
+                  span 修改个人信息
+              li.change-psw.dis
+                a(href='/exam/resetPassword')
+                  span.cpf-icon.cpf-icon-key
+                  span 修改密码
+          a.logout(href='javascript:void(0)',data-type='1')
+            span.cpf-icon.cpf-icon-back
+            span 退出

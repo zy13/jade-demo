@@ -1,0 +1,65 @@
+//-
+  @Author: Jet.Chan
+  @Date:   2016-12-29T14:48:27+08:00
+  @Email:  guanjie.chen@talebase.com
+  @Last modified by:   Jet.Chan
+  @Last modified time: 2017-01-24T15:12:58+08:00
+
+
+
+extends ../share/layout.base
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('user.login'))
+
+block content
+  .login-wrap
+    .bg-img
+      img(src=pageHelper.setPageImgPath('/images/bg-img.png'))
+    .login-nav
+      ul
+        li
+          a(href='http://www.talebase.com/',target="_blank")
+            span 解决方案
+        li
+          a(href='http://www.talebase.com/about',target="_blank")
+            span 关于倍智
+        li
+          a(href='http://www.talebase.com/',target="_blank")
+            span 意见反馈
+        li(data-value=isToDownloadIE9)
+          a(href='javascript:void(0);',title="敬请期待")
+            span 试用申请
+        -if(isToDownloadIE9>0)
+          li.isIE
+            a(href='/ie/download/IE11.exe',target="_blank")
+              span 下载IE11浏览器
+    .login-content
+      div.logo
+        img(src=pageHelper.setPageImgPath('/images/logo.png'))
+      div.login-form
+        div.cui-container
+          .cui-textBoxContainer(data-rule="required" data-tips="请输入用户名")
+            input(type="text",placeholder="请输入用户名",value="").loginName
+            span.addonRight
+              i.cpf-icon.cpf-icon-person
+          .cui-textBoxContainer(data-rule="required;shortest=6" data-tips="请输入正确的密码")
+            input(type="password",placeholder="请输入密码",value="").loginPassWord
+            span.addonRight
+              i.cpf-icon.cpf-icon-key
+          .cui-textBoxContainer.validateCode(data-rule="required;" data-tips="请输入正确的验证码" style=isRequiredValidateCode?'':'display:none')
+            input(type="text",placeholder="请输入验证码",value="").loginValidateCode
+            a.vcode(href='javascript:void(0);')
+              img(src='/common/captcha/getValidateCode',id='vcode')
+            a.change(href='javascript:void(0);',onclick="document.getElementById('vcode').src='/common/captcha/getValidateCode?r='+Math.random()")
+              span 换一张
+          .cui-forget-psw
+            a(href='/customer/user/findPassword')
+              span 忘记密码？
+          .cui-botton
+            a.preset-blue
+              span 登&nbsp;&nbsp;录
+  include ../share/common.footer.default.jade
+
+block scriptSection
+  script(type="text/javascript", src= pageHelper.setScript('user.login'))

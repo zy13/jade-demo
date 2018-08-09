@@ -1,0 +1,223 @@
+<!--
+@Author: Jet.Chan
+@Date:   2016-12-29T14:48:28+08:00
+@Email:  guanjie.chen@talebase.com
+@Last modified by:   Jet.Chan
+@Last modified time: 2017-03-08T11:00:58+08:00
+-->
+
+
+
+<div class='create_account'>
+    <div class="cui-radioGroupContainer golbal">
+        <div class="cui-radioContainer inline">
+            <input type="radio" name="crt" value="1" checked="checked" />
+            <label>
+                <i></i>
+                <span>单个</span>
+            </label>
+        </div>
+        <div class="cui-radioContainer inline">
+            <input type="radio" name="crt" value="2" />
+            <label>
+                <i></i>
+                <span>多个</span>
+            </label>
+        </div>
+        <div class="cui-radioContainer inline">
+            <input type="radio" name="crt" value="3" />
+            <label>
+                <i></i>
+                <span>导入</span>
+            </label>
+        </div>
+    </div>
+    <div class='v cui-inputCroupContainer only'>
+        {@each fields as r,i}
+            {@if r.type==1}
+                {@if r.ismandatory==1}
+                    {@if r.fieldKey=='email'}
+                        <div class="cui-textBoxContainer" data-rule="required;email;" >
+                            <span title="${r.fieldName}"><span class='red'>*</span>${r.fieldName}：</span>
+                            <input type="text" placeholder="请输入${r.fieldName}" name='${r.fieldKey}' data-isunique='${r.isunique}'/>
+                        </div>
+                    {@else if r.fieldKey=='mobile'}
+                        <div class="cui-textBoxContainer" data-rule="required;tel;">
+                            <span title="${r.fieldName}"><span class='red'>*</span>${r.fieldName}：</span>
+                            <input type="text" placeholder="请输入${r.fieldName}" name='${r.fieldKey}' data-isunique='${r.isunique}'/>
+                        </div>
+                    {@else if r.fieldKey=='password'}
+                        <div class="cui-textBoxContainer" data-rule="required;shortest=6" data-tips="请输入至少六位${r.fieldName}">
+                            <span title="${r.fieldName}"><span class='red'>*</span>${r.fieldName}：</span>
+                            <input type="text" placeholder="请输入${r.fieldName}" name='${r.fieldKey}' data-isunique='${r.isunique}'/>
+                        </div>
+                    {@else}
+                        <div class="cui-textBoxContainer" data-rule="required" data-tips="请输入${r.fieldName}">
+                            <span title="${r.fieldName}"><span class='red'>*</span>${r.fieldName}：</span>
+                            <input type="text" placeholder="请输入${r.fieldName}" name='${r.fieldKey}' data-isunique='${r.isunique}'/>
+                        </div>
+                    {@/if}
+                {@/if}
+                {@if r.ismandatory==0}
+                    {@if r.fieldKey=='email'}
+                        <div class="cui-textBoxContainer" data-rule="email;" >
+                            <span title="${r.fieldName}">${r.fieldName}：</span>
+                            <input type="text" placeholder="请输入${r.fieldName}" name='${r.fieldKey}' data-isunique='${r.isunique}'/>
+                        </div>
+                    {@else if r.fieldKey=='mobile'}
+                        <div class="cui-textBoxContainer" data-rule="tel;" >
+                            <span title="${r.fieldName}">${r.fieldName}：</span>
+                            <input type="text" placeholder="请输入${r.fieldName}" name='${r.fieldKey}' data-isunique='${r.isunique}'/>
+                        </div>
+                    {@else if r.fieldKey=='password'}
+                        <div class="cui-textBoxContainer" data-rule="shortest=6" data-tips="请输入至少六位${r.fieldName}">
+                            <span title="${r.fieldName}">${r.fieldName}：</span>
+                            <input type="text" placeholder="请输入${r.fieldName}" name='${r.fieldKey}' data-isunique='${r.isunique}'/>
+                        </div>
+                    {@else}
+                        <div class="cui-textBoxContainer" data-rule="" data-tips="请输入${r.fieldName}">
+                            <span title="${r.fieldName}">${r.fieldName}：</span>
+                            <input type="text" placeholder="请输入${r.fieldName}" name='${r.fieldKey}' data-isunique='${r.isunique}'/>
+                        </div>
+                    {@/if}
+                {@/if}
+            {@/if}
+            {@if r.type==2}
+                <div class='dateSelector'>
+                    <span  title="${r.fieldName}" class='span'>
+                        {@if r.ismandatory==1}
+                            <span class='red'>*</span>
+                        {@/if}
+                        ${r.fieldName}：</span>
+                    <div class="cui-textBoxContainer date inline" data-rule="" data-isunique='${r.isunique}' >
+                        <input placeholder="请输入日期" name='${r.fieldKey}' readonly="readonly" onclick="WdatePicker()">
+                        <i class="icon-component cpf-icon-ic_calendar calendar"></i>
+                    </div>
+                </div>
+            {@/if}
+            {@if r.type==3}
+                {@if r.ismandatory==1}
+                    {@if r.fieldKey=='gender'}
+                        <div class="cui-radioGroupContainer">
+                            <span  title="${r.fieldName}" class='span'><span class='red'>*</span>${r.fieldName}：</span>
+                            <div class="cui-radioContainer inline">
+                                <input type="radio" name="gender" value="男"/>
+                                <label>
+                                    <i></i>
+                                    <span>男</span>
+                                </label>
+                            </div>
+                            <div class="cui-radioContainer inline">
+                                <input type="radio" name="gender" value="女"/>
+                                <label>
+                                    <i></i>
+                                    <span>女</span>
+                                </label>
+                            </div>
+                        </div>
+                    {@else}
+                        <div class='selectBox'>
+                            <span  title="${r.fieldName}" class='span'><span class='red'>*</span>${r.fieldName}：</span>
+                            <div class="cui-selectBoxContainer" data-options='${r.select|jsonStringify}' data-isunique='${r.isunique}' name='${r.fieldKey}'>
+                                <span class="placeholder">请选择${r.fieldName}</span>
+                            </div>
+                        </div>
+                    {@/if}
+                {@/if}
+                {@if r.ismandatory==0}
+                    {@if r.fieldKey=='gender'}
+                        <div class="cui-radioGroupContainer">
+                            <span title="${r.fieldName}" class='span'>${r.fieldName}：</span>
+                            <div class="cui-radioContainer inline">
+                                <input type="radio" name="gender" value="男"/>
+                                <label>
+                                    <i></i>
+                                    <span>男</span>
+                                </label>
+                            </div>
+                            <div class="cui-radioContainer inline">
+                                <input type="radio" name="gender" value="女"/>
+                                <label>
+                                    <i></i>
+                                    <span>女</span>
+                                </label>
+                            </div>
+                        </div>
+                    {@else}
+                        <div class='selectBox'>
+                            <span title="${r.fieldName}" class='span'>${r.fieldName}：</span>
+                            <div class="cui-selectBoxContainer" data-options='${r.select|jsonStringify}' data-isunique='${r.isunique}' name='${r.fieldKey}'>
+                                <span class="placeholder">请选择${r.fieldName}</span>
+                            </div>
+                        </div>
+                    {@/if}
+                {@/if}
+            {@/if}
+        {@/each}
+    </div>
+    <div class='v cui-inputCroupContainer muti dis'>
+        <div class="cui-textBoxContainer" data-rule="shortest=1;longest=10;" data-tips="请输入1-10个字符">
+            <span>帐号前缀：</span>
+            <input type="text" placeholder="请输入1-10个字符，不输默认test" />
+        </div>
+        <div class="cui-textBoxContainer" data-rule="shortest=6" data-tips="请输入至少六位密码">
+            <span>默认密码：</span>
+            <input type="text" placeholder="如果不输入，系统会自动生成6位密码" />
+        </div>
+        <div class='dataed'>
+            <div class="cui-radioGroupContainer">
+                <span>自定义数字：</span>
+                <div class="cui-radioContainer inline">
+                    <input type="radio" name="data" value="21" checked="checked" />
+                    <label>
+                        <i></i>
+                        <span>是</span>
+                    </label>
+                </div>
+                <div class="cui-radioContainer inline">
+                    <input type="radio" name="data" value="22" />
+                    <label>
+                        <i></i>
+                        <span>否</span>
+                    </label>
+                </div>
+            </div>
+            <div class='da doing'>
+                <div class="cui-textBoxContainer st validate-num" data-rule="required;digits;min=1;" >
+                    <span>开始数字：</span>
+                    <input type="text" maxlength="40" class='start' placeholder="请输入开始数字" />
+                </div>
+                <div class="cui-textBoxContainer end validate-num" data-rule="required;digits;min=1;">
+                    <span>结束数字：</span>
+                    <input type="text" maxlength="40" class='end' placeholder="请输入结束数字" />
+                </div>
+            </div>
+            <div class='da todo dis'>
+                <div class="cui-textBoxContainer amount" data-rule="required;digits;min=1;max=1000;" data-tips='请输入1到1000的正整数'>
+                    <span>数量：</span>
+                    <input type="text" placeholder="请输入帐号数量，每次最多只能1000个" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class='v import dis'>
+        <div class="cui-textBoxContainer" data-rule="required" data-tips="导入文件不能为空">
+            <div>选择导入文件：</div>
+            <input type="text" id="filePath" placeholder='文件格式为xls或xlsx' value="" readonly="true" />
+            <a href='javascript:void(0);' class='select-file'>
+                <span>选择文件</span>
+            </a>
+            <a class='modLoad' href='javascript:void(0);'>模板下载</a>
+        </div>
+        <div class='most'>每次最多只能导入10000个帐号</div>
+        <input type="file" class='file' id='file' name="file" value="" onchange="document.getElementById('filePath').value = this.value" />
+    </div>
+    <div class='oporation'>
+        <a class="cui-button preset-blue pr10 confirmBtn">
+            <span>确定</span>
+        </a>
+        <a class="cui-button cancel">
+            <span>取消</span>
+        </a>
+    </div>
+</div>

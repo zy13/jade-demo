@@ -1,0 +1,120 @@
+@import '../../components/commonStyle/common.less';
+.special-wrap{
+    min-width: 1024px;
+}
+.wrap{
+    padding-top: 58px;
+    width: 1000px;
+    margin:0 auto;
+    &>.title{
+        .fs14;
+        height: 77px;
+        line-height: 77px;
+        padding-left: 50px;
+    }
+    &>.header{
+        .clearfix;
+        background: #fff;
+        padding:20px 20px 30px;
+        border-radius: 5px 5px 0 0;
+        border-bottom: 1px solid #dcdcdc;
+        .progress-wrap{
+            width:766px;
+            .fl;
+            p{
+                .fs16;
+                margin-bottom: 15px;
+                .done{
+                    color:#ff6000;
+                    margin:0 5px;
+                }
+                .total{
+                    color:#009bdf;
+                    margin:0 5px;
+                }
+            }
+            .progress{
+                width:766px;
+                height: 20px;
+                border-radius: 5px;
+                background: #dcdcdc;
+                position: relative;
+                overflow: hidden;
+                .block{
+                    height: 20px;
+                    background: #27a4f2;
+                    border-radius: 5px 0 0 5px;
+                }
+                span{
+                    .fs14;
+                    .tr;
+                    top:0;
+                    min-width:30px;
+                    color:#ff6000;
+                    height: 20px;
+                    line-height: 20px;
+                    position: absolute;
+                }
+            }
+
+        }
+        .time{
+            .fr;
+            .tc;
+            width:170px;
+            position: relative;
+            p:first-child{
+                .fs16;
+                margin-bottom: 8px;
+            }
+            p:nth-child(2){
+                font-size: 36px;
+                height: 30px;
+                line-height: 30px;
+                color:#009bdf;
+                letter-spacing:2px;
+                &.urgent{
+                    color:#ff6000;
+                }
+            }
+            .cpf-icon-extend{
+                font-size: 20px;
+                color:#009bdf;
+                position: absolute;
+                right:-4px;
+                bottom:-24px;
+                cursor: pointer;
+            }
+        }
+    }
+    .contain{
+        padding:60px 0;
+        background: #fff;
+        .tc;
+        i{
+            font-size: 100px;
+            color:#b1e1f5;
+        }
+        .word{
+            font-size: 24px;
+            color:#888;
+            margin:30px 0 60px;
+        }
+        .return{
+            .tc;
+            .cui-button{
+                .fs16;
+                width:128px;
+                height: 42px;
+                line-height: 42px;
+                border-color: #27a4f2;
+                background: #27a4f2;
+                &:hover{
+                    background: #269be4;
+                    border-color: #269be4;
+                }
+            }
+        }
+    }
+
+}

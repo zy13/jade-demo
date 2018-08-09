@@ -1,0 +1,308 @@
+extends ../share/layout.base
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('examiner.paper'))
+
+block content
+  .special-wrap
+    include ../share/component.header.out.jade
+    .wrap
+      -if(code==0)
+        .wrap-detail
+          .words 任务：全部
+            span.blue-color=queryList.taskMarked.totalTaskNum
+            span 个考试任务待评卷，共
+            span.blue-color=queryList.taskMarked.totalPaperNum
+            span 份试卷。当前已完成
+            span.blue-color=queryList.taskMarked.doneTaskNum
+            span 个考试任务，已完成
+            span.blue-color=queryList.taskMarked.donePaperNum
+            span 份试卷评卷。
+            a.cui-button.preset-blue.back(href='/customer/examiner/taskList')
+              span 返回列表
+          .content
+            .base-style
+              //- input(type='hidden',name='taskName',value=request.query.taskName)
+              input(type='hidden',name='taskId',value=request.query.taskId)
+              input(type='hidden',name='paperId',value=request.query.paperId)
+              input(type='hidden',name='number',value=queryList.number)#paperSeria
+              input(type='hidden',name='evaluate',value=request.query.evaluate)
+              input(type='hidden',name='showType',value=request.query.showType || 1)
+              input(type='hidden',name='taskId',value=request.query.taskId)
+              input(type='hidden',name='userId',value=request.query.userId)
+              .title-state
+                span.taskname(title=queryList.paperName)=queryList.paperName.length>15?pageHelper.formatter.strCut(queryList.paperName,18):queryList.paperName
+                span.evaluate 评卷方式：
+                .cui-selectBoxContainer.eva(data-options=[{value:1,text:'按考生评卷'},{value:2,text:'按试题评卷'}])
+                  span=request.query.evaluate==1 ? '按考生评卷' : '按试题评卷'
+                span.distyle 显示方式：
+                .cui-selectBoxContainer.way(data-options=[{value:1,text:'仅显示未评试题'},{value:2,text:'显示全部试题'}])
+                  span=request.query.showType==2 ?'显示全部试题' : '仅显示未评试题'
+                a.cui-button
+                  span 检查评卷情况
+              -var len = taskDetail.examinees.results.length
+              -var num = len > 100 ? '527px':'auto'
+              -var commonClass = request.query.pagesize ? ' ':'dis'
+              - var arr=[],limit=parseInt(request.query.limit) || 50
+                  - for(var i=0;i<Math.ceil(parseInt(queryList.total)/limit);i++)
+                    - arr.push({value:i+1,text:i+1})
+              div(class='mark-detail #{commonClass}')
+                input(type='hidden',id='loadm',data-value=request.query.pagesize||100)
+                div
+                  .p 已评情况如下，请选择任意考生序号开始评卷
+                  .a-group(style=`height: ${num};overflow-y: auto;`)
+                    each i,v in taskDetail.examinees.results
+                      -if(i.subScore==0 || i.subScore)
+                        a.done(href=`/customer/examiner/evaluate1?paperId=${request.query.paperId}&taskId=${request.query.taskId}&number=${i.serialNo}&showType=2&userId=${i.userId}`,id=i.userId)
+                            span!=i.serialNo
+                            img(src=pageHelper.setPageImgPath('/images/done.png'))
+                        -if((v+1)%5==0&& (v+1)%15!=0)
+                          .pr30
+                        -if((v+1)%15==0)
+                          br
+                        -if((v+1)%30==0)
+                          .pb30
+                      -else
+                        a(href=`/customer/examiner/evaluate1?paperId=${request.query.paperId}&taskId=${request.query.taskId}&number=${i.serialNo}&showType=1&userId=${i.userId}`,id=i.userId)
+                          span!=i.serialNo
+                        -if((v+1)%5==0&& (v+1)%15!=0)
+                          .pr30
+                        -if((v+1)%15==0)
+                          br
+                        -if((v+1)%30==0)
+                          .pb30
+                -if(taskDetail.examinees.total>100 && len<taskDetail.examinees.total )
+                  .div-loadm
+                    a(href='javascript:void(0)')
+                      span 加载更多
+              -if( queryList!=undefined && queryList.examerAnswerses.length)
+                -if(queryList.type==6) //填空题
+                  .area-ts
+                    .p.testNumber(data-id=queryList.number) 试题序号：#{queryList.number}
+                    -if(request.query.showType&&request.query.showType.toString()=='1')
+                      .remain
+                        | 剩余
+                        span.blue-color=queryList.total
+                        | 个考生未评
+                    -else
+                      .paging
+                        span 查询第
+                        .cui-selectBoxContainer(data-options=arr)
+                          span.result= request.query.pageIndex || 1
+                        span 页
+                    .p 【主观填空题】
+                    .p
+                      span!=queryList.number
+                       | 、
+                      !=queryList.stem
+                    .div
+                      .title-state
+                        span 评分标准
+                      .body
+                        p!=queryList.referenceAnswer
+                  .question-group
+                    -var width = queryList.dBlankStyleSetting==null ? 150: queryList.dBlankStyleSetting.width
+                    -var height =queryList.dBlankStyleSetting==null ? 50: queryList.dBlankStyleSetting.height
+                    each i,v in queryList.examerAnswerses
+                      -var len = i.fullScore.length
+                      -if(len==1)
+                        .question.single(data-canscore=i.canScore?'yes':'no')
+                          div.seria(data-seqno=i.seqNo,data-user=i.userId) 考生序号&nbsp;#{i.seqNo}
+                          -if(i.answersNumber==0)
+                              p.answersNumber 该题该考生未作答
+                          .cui-textBoxContainer.notxt
+                            textarea.textarea(style='width: #{width}px;height: #{height-2}px;',readonly='true')!=i.answers&&i.answers.length?i.answers[0].answer:''
+                          -if(i.fullScore!=null || i.fullScore)
+                            .score.score-detail.score-container
+                              span.full 本题满分
+                              span.blue-color=i.fullScore[0]
+                              span 分
+                              .cui-textBoxContainer.setscore.inline.one-style(data-rule='number;max=#{i.fullScore[0]};min=0',data-tips='请输入0~#{i.fullScore[0]}的分数')
+                                span 得分
+                                -if(i.canScore)
+                                  input(type='text',value=i.score[0],data-value=i.score[0],name='score',onpaste="return false;",data-full=i.fullScore[0])
+                                -else
+                                  input(type='number',value=i.score[0],name='score',data-full=i.fullScore[0],readonly='true')
+                      -if(len>1)
+                        .question.more(data-canscore=i.canScore?'yes':'no')
+                          div.seria(data-seqno=i.seqNo,data-user=i.userId) 考生序号&nbsp;#{i.seqNo}
+                          -if(i.answersNumber==0)
+                              p.answersNumber 该题该考生未作答
+                          -if(i.answers && i.answers.length)
+                            each j,k in i.answers
+                              .cui-textBoxContainer.notxt
+                                -var spanWidth = width > 70 ? 70 : (width < 40 ? 40 : width)
+                                span.addonLeft(style='width: #{spanWidth}px;height: #{height}px;line-height: #{height}px')=k+1
+                                textarea.textarea(style='width: #{width}px;height: #{height-2}px;',readonly='true')!=j.answer
+                          -else
+                            each j,k in i.fullScore
+                              .cui-textBoxContainer.notxt
+                                -var spanWidth = width > 70 ? 70 : (width < 40 ? 40 : width)
+                                span.addonLeft(style='width: #{spanWidth}px;height: #{height}px;line-height: #{height}px')=k+1
+                                textarea.textarea(style='width: #{width}px;height: #{height-2}px;',readonly='true')
+                          -if(i.fullScore!=null || i.fullScore)
+                            div.score
+                              span.full 本题满分
+                              each m,n in i.fullScore
+                                -if(n==0)
+                                  span (
+                                .span
+                                  span #{n+1}、
+                                  span.blue-color #{m}
+                                  -if(n==i.fullScore.length-1)
+                                    span 分
+                                  -else
+                                    span 分;
+                                -if(n==i.fullScore.length-1)
+                                  span )
+                            div.scror-group.score-detail.score-container
+                              span.get 得分
+                              each x,y in i.score
+                                div.cui-textBoxContainer.setscore.inline(data-rule='number;;max=#{i.fullScore[y]};min=0',data-tips='请输入0~#{i.fullScore[y]}的分数')
+                                  span.addonLeft=y+1
+                                  -if(i.canScore)
+                                    input(type='text',value=x,data-value=x,name='score',onpaste="return false;",data-full=i.fullScore[y])
+                                  -else
+                                    input(type='number',value=x,name='score',data-full=i.fullScore[y],readonly='true')
+                -if(queryList.type==7) //上传题
+                  .area-ts
+                    .p.testNumber(data-id=queryList.number) 试题序号：#{queryList.number}
+                    -if(request.query.showType&&request.query.showType.toString()=='1')
+                      .remain
+                        | 剩余
+                        span.blue-color=queryList.total
+                        | 个考生未评
+                    -else
+                      .paging
+                        span 查询第
+                        .cui-selectBoxContainer(data-options=arr)
+                          span.result= request.query.pageIndex || 1
+                        span 页
+                    .p 【上传题】
+                      span （点击下载）
+                    .p #{queryList.number}、!{queryList.stem}
+                    .div
+                      .title-state
+                        span 评分标准
+                      .body
+                        p!=queryList.referenceAnswer
+                  .question-group
+                    each i,v in queryList.examerAnswerses
+                      -var len = i.score.length
+                      -if(len==1)
+                        .question.upload(data-canscore=i.canScore?'yes':'no')
+                          .seria(data-seqno=i.seqNo,data-user=i.userId) 考生序号&nbsp;#{i.seqNo}
+                          -if(i.answersNumber==0)
+                              p.answersNumber 该题该考生未作答
+                          .img-group.notxt
+                            each x,y in i.answers
+                              .cui-textBoxContainer.score-container
+                                -if(x.type=='img')
+                                  a.a.isImg(href='javascript:void(0)',data-href=x.answer,data-name=x.answer.split('/')[x.answer.split('/').length-1],data-userId=i.userId)
+                                    span.inline-block
+                                      span.name=x.name||''
+                                      br
+                                      span=x.size||'0kb'
+                                    span.inline-block
+                                      img(src=x.answer?x.answer:pageHelper.setPageImgPath('/images/img.png'))
+                                -if(x.type=='word')
+                                  a.a.word(href='javascript:void(0)',data-href=x.answer,data-name=x.answer.split('/')[x.answer.split('/').length-1],data-userId=i.userId)
+                                    span.inline-block
+                                      span.name=x.name||''
+                                      br
+                                      span=x.size||'0kb'
+                                    span.inline-block
+                                      img(src=pageHelper.setPageImgPath('/images/word.png'))
+                                -if(x.type=='xls')
+                                  a.a.xls(href='javascript:void(0)',data-href=x.answer,data-name=x.answer.split('/')[x.answer.split('/').length-1],data-userId=i.userId)
+                                    span.inline-block
+                                      span.name=x.name||''
+                                      br
+                                      span=x.size||'0kb'
+                                    span.inline-block
+                                      img(src=pageHelper.setPageImgPath('/images/xls.png'))
+                          -if(i.fullScore!=null || i.fullScore)
+                            .score.score-detail.score-container
+                              span.full 本题满分
+                              span.blue-color=i.fullScore[0]
+                              span 分
+                              .cui-textBoxContainer.setscore.inline.one-style(data-rule='number;max=#{i.fullScore[0]};min=0',data-tips='请输入0~#{i.fullScore[0]}的分数')
+                                span 得分
+                                -if(i.canScore)
+                                  input(type='text',value=i.score[0],data-value=i.score[0],name='score',onpaste="return false;",data-full=i.fullScore[0])
+                                -else
+                                  input(type='number',value=i.score[0],name='score',data-full=i.fullScore[0],readonly='true')
+                      -if(len>1)
+                        .question.upload
+                          .seria(data-seqno=i.seqNo,data-user=i.userId) 考生序号&nbsp;#{i.seq}
+                          .img-group.notxt
+                              each x,y in i.answers
+                                .cui-textBoxContainer.score-container
+                                  -if(x.type==0)
+                                    a.isImg(href='javascript:void(0)',data-href=x.filePath,data-name=x.name.split('.')[0],data-suffix=x.name.split('.')[1],data-userid=i.userId)
+                                      input(type='text',value=x.answer,readonly='true')
+                                      img(src=pageHelper.setPageImgPath('/images/img.png'))
+                                  -if(x.type==1)
+                                    a(href=x.answer)
+                                      input(type='text',value=x.answer,readonly='true')
+                                      img(src=pageHelper.setPageImgPath('/images/word.png'))
+                                  -if(x.type==2)
+                                    a(href=x.answer)
+                                      input(type='text',value=x.answer,readonly='true')
+                                      img(src=pageHelper.setPageImgPath('/images/xls.png'))
+                                  -if(x.type==3)
+                                    p
+                                      input(type='text',value=x.answer,readonly='true')
+                          -if(i.fullScore!=null || i.fullScor.length)
+                            .score
+                              span.full 本题满分
+                              each m,n in i.fullScore
+                                .span
+                                    span #{n+1}、
+                                    span.blue-color #{m}
+                                    -if(n==i.fullScore.length-1)
+                                      span 分
+                                    -else
+                                      span 分;
+                            .scror-group.score-detail.score-container
+                              span.get 得分
+                              each x,y in i.score
+                                div.cui-textBoxContainer.setscore.inline(data-rule='number;max=#{i.fullScore[y]};min=0',data-tips='请输入0~#{i.fullScore[y]}的分数')
+                                  span.addonLeft=y+1
+                                  -if(i.canScore)
+                                    input(type='text',value=x,data-value=x,name='score',onpaste="return false;",data-full=i.fullScore[y])
+                                  -else
+                                    input(type='number',value=x,name='score',data-full=i.fullScore[y],readonly='true')
+              -else
+                .erroe-page
+                  -if(message)
+                    p!=message
+                  -else
+                    p 暂时没有未评试题！
+              -if(request.query.showType&&request.query.showType.toString()=='1')
+                .remain
+                  | 剩余
+                  span.blue-color=queryList.total
+                  | 个考生未评
+              -else
+                .paging
+                  span 查询第
+                  .cui-selectBoxContainer(data-options=arr)
+                    span.result= request.query.pageIndex || 1
+                  span 页
+          .pre-next
+            a.cui-button.pre.mr-10(href='javascript:void(0)')
+              span 上一题
+            a.cui-button.next.preset-blue.mr-10(href='javascript:void(0)')
+              span 下一题
+            -if( queryList!=undefined && queryList.examerAnswerses.length)
+              a.cui-button.save-btn
+                span 保存当页
+      -else
+        .wrap-detail
+          p.message!=message
+            | ...
+    include ../share/common.footer.default.jade
+
+block scriptSection
+  script(type="text/javascript", src= pageHelper.setScript('examiner.paper'))

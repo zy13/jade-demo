@@ -1,0 +1,67 @@
+extends ../share/layout.base
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('exam.taskList'))
+
+block content
+  .special-wrap
+    include ../share/component.header.out.jade
+    .wrap
+      ul.ctx
+        -var isDis = v==0 ?'':'dis'
+        -if(code==0 && r.dExamTaskResponses.length>0)
+          each i,v in r.dExamTaskResponses
+            li
+              .ctx-top(data-procode=i.projectId)
+                div
+                  span=i.projectName
+                  span=i.projectStartDate ? pageHelper.date.format(i.projectStartDate,'YYYY-MM-DD HH:mm:ss'):''
+                  em=i.projectStartDate? '--':''
+                  span=i.projectStartDate ? (i.projectEndDate ? pageHelper.date.format(i.projectEndDate,'YYYY-MM-DD HH:mm:ss') : '不限') : ''
+                div.description!=i.description
+                //- div.description 欢迎参加本次考试。以下是您需要完成的考试内容，请点击“开始答题”后，按系统提示作答。<br/>在此衷心感谢您的配合与支持！
+              -if(i.dExamTasksList&&i.dExamTasksList.length>0)
+                .ctx-main
+                  ul
+                    li.title
+                      p 试卷名称
+                      p 题量
+                      p 试卷参考时长(分钟)
+                      p 考试时间
+                      p 考试状态
+                      p 操作
+                    each j in i.dExamTasksList
+                      //-var isCanDo = j.canAnswer ? `window.location.href='/exam/paper?taskId=${}&paperId=${j.paperId}&pageNo=1'` : ''
+                      -var canAnswer = j.canAnswer ? '':'stop'
+                      li(class='#{isDis} #{canAnswer}')
+                        p=j.taskName
+                        p=j.paperNum
+                        p=j.examTime
+                        p
+                          span=j.taskStartDate ? pageHelper.date.format(j.taskStartDate,'YYYY-MM-DD HH:mm:ss'):''
+                          em=j.taskStartDate ? ' -- ' : ''
+                          span=j.taskStartDate ? (j.taskEndDate ? pageHelper.date.format(j.taskEndDate,'YYYY-MM-DD HH:mm:ss') : '不限') : ''
+                        -if(j.examineeStatus=='答题中')
+                          p.ing(data-tip=j.tips)=j.examineeStatus
+                        -if(j.examineeStatus=='未开始')
+                          p.none(data-tip=j.tips,title=j.tips)=j.examineeStatus
+                        -if(j.examineeStatus=='已完成' || j.examineeStatus=='已停止')
+                          p(data-tip=j.tips,title=j.tips)=j.examineeStatus
+                        p
+                          -if(j.examineeStatus=='未开始' || j.examineeStatus=='答题中')
+                            a.todo(href="javascript:void(0)",class=canAnswer,data-tips=j.tips,data-taskid=j.taskId,data-paperid=j.paperId) 进入答题
+                          -if(j.examineeStatus=='已停止')
+                            a.stop.todo(href='javascript:void(0)',data-tips=j.tips) 进入答题
+        -else if(code==0 && r.dExamTaskResponses.length==0)
+          p.message 您暂时没有考试任务！
+        -else
+          -if(message.length)
+            p.message!=message
+              | ...
+          -else
+            p.message 您的考试任务未到开考时间！
+
+    include ../share/common.footer.default.jade
+
+block scriptSection
+  script(type="text/javascript", src= pageHelper.setScript('exam.taskList'))

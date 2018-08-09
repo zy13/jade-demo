@@ -1,0 +1,39 @@
+//-
+  @Author: Jet.Chan
+  @Date:   2017-01-07T14:13:59+08:00
+  @Email:  guanjie.chen@talebase.com
+  @Last modified by:   Jet.Chan
+  @Last modified time: 2017-02-22T11:28:16+08:00
+
+
+
+extends ../share/layout.base
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('common.notFound'))
+
+block content
+  .wrap
+    .content
+      .code= code>1000? (code.indexOf('29000')>-1?403:'500'):code
+      - if(code == '403')
+        .note 您没有权限访问此页面
+      - else if(code == '500')
+        .note 服务器忙，请稍后重试
+      - else if(code >1000)
+        -if(lastErrorData && lastErrorData.code >1000 && lastErrorData.message)
+          .note
+            br
+            - if(code == '29000001')
+              ='您的帐号于'+lastErrorData.message+'在其他设备登录，如果这不是您的操作，请及时修改您的登录密码。'
+              //- p.p3
+              //-   a(style='text-decoration: underline;',href='')点击重新登录
+            - else
+              =lastErrorData.message
+        -else
+          .note 服务君已罢工，请稍后重试
+      - else
+        .note 您要的信息服务君没有找到
+
+block scriptSection
+  script(type="text/javascript", src= pageHelper.setScript('common.notFound'))

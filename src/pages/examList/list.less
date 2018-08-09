@@ -1,0 +1,352 @@
+/**
+* @Author: Jet.Chan
+* @Date:   2016-12-29T14:48:28+08:00
+* @Email:  guanjie.chen@talebase.com
+* @Last modified by:   Jet.Chan
+* @Last modified time: 2017-03-09T15:15:28+08:00
+*/
+
+
+
+@import '../../components/commonStyle/common';
+@cell-width: 10%;
+.dis {
+    display: none;
+}
+
+.wrap {
+    box-sizing: border-box;
+    min-width: 1028px;
+    padding: 28px 58px;
+    background: @c-gray-a;
+    font-size: @fs16;
+    .nav {
+        color: @fc-b;
+        span {
+            &:last-of-type {
+                color: @c-standard-a;
+            }
+        }
+        i {
+            font-size: @fs;
+        }
+        a,i {
+            color: @fc-b;
+        }
+    }
+    .search-filter {
+        .search-detail {
+            span {
+                color: @c-gray-g;
+            }
+            .cui-selectBoxContainer {
+                width: 100px;
+                border-radius: 0;
+                font-size: @fs14;
+                border-color: @c-standard-a;
+                background: #fff;
+                color: @fc-b;
+                padding: 13px 10px;
+                border-radius: 4px;
+                vertical-align: middle;
+                line-height: 18px;
+                &:before {
+                    -ms-transform:rotate(360deg);
+                    top: 1.5em;
+                }
+            }
+
+            .active:before{
+
+              transform: rotate(0);
+              -webkit-transform:rotate(180deg);
+            }
+            .search-ent {
+                margin: 18px 0;
+                .dateFind{
+                    // margin-right: 1%;
+                }
+                .cui-selectBoxContainer {
+                    width: 120px;
+                    border-top-left-radius: 4px;
+                    border-right-color: #fff;
+                    border-bottom-left-radius: 4px;
+                    border-top-right-radius: 0px;
+                    border-bottom-right-radius: 0px;
+                    &:before{
+                        -ms-transform:rotate(360deg);
+                    }
+                }
+                .txt {
+                    width: 160px;
+                    height: 44px;
+                    line-height: 44px;
+                    vertical-align: middle;
+                    border: 1px solid @c-standard-a;
+                    border-top-right-radius: 4px;
+                    border-bottom-right-radius: 4px;
+                    padding: 0 8px;
+                    font-size: @fs14;
+                    background: @c-gray-a;
+                    font-family: microsoft yahei;
+                    &:nth-of-type(1) {
+                        border-top-right-radius: 0px;
+                        border-bottom-right-radius: 0px;
+                    }
+                }
+                .placeholder{
+                    font-size: 14px;
+                    font-family: microsoft yahei;
+                }
+                .addonLeft{
+                    background: #fff;
+                    font-size: 14px;
+                    border: 1px solid @c-standard-a;
+                    height: 40px;
+                    line-height: 40px;
+                    color: #aaa;
+                    vertical-align: middle;
+                    border-top-left-radius: 4px;
+                    border-bottom-left-radius: 4px;
+                    position: relative;
+                    top: 0 !important;
+                    font-family: microsoft yahei;
+                    font-size: 14px;
+                }
+                .addonRight {
+                    background: @c-gray-a;
+                    color: @fc-b;
+                    padding: 5px 16px;
+                    font-size: 20px;
+                    vertical-align: middle;
+                    border-top-color: @c-standard-a;
+                    border-bottom-color: @c-standard-a;
+                    border-left-width: 0;
+                    border-right-color: @c-standard-a;
+                    border-top-right-radius: 4px;
+                    border-bottom-right-radius: 4px;
+                    position: relative;
+                    top: 0 !important;
+                    font-family: 'microsoft yahei' !important;
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+                .addonRightInput{
+                     border: 1px solid @c-standard-a;
+                     border-left-width: 0;
+                     width:140px;
+                     font-size: 14px;
+                     font-family: microsoft yahei;
+                     vertical-align: middle;
+                }
+                .endDate{
+                    border-left: 1px solid @c-standard-a;
+                    border-top-left-radius: 4px;
+                    border-bottom-left-radius: 4px;
+                }
+                .startDate,.endDate{
+                  line-height: 34px
+                }
+            }
+            .search-f {
+                .cui-selectBoxContainer {
+                    width: 250px;
+                    margin-right: 18px;
+                    &:before{
+                        -ms-transform:rotate(360deg);
+                    }
+                }
+            }
+            .btn {
+                width: 100px;
+                height: 45px;
+                line-height: 45px;
+                vertical-align: middle;
+                background: @c-standard-a;
+                color: #fff;
+                margin-left: 10px;
+                font-size: @fs16;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+        }
+        .search-status {
+            margin: 30px auto;
+            vertical-align: middle;
+            a {
+                color: @c-gray-g;
+                padding-right: 10px;
+            }
+            .status {
+                display: inline-block;
+                a {
+                    font-size: @fs14;
+                    color: @fc-b;
+                    padding: 20px;
+                    &.cur {
+                        background: @c-standard-a;
+                        color: #fff;
+                        padding: 5px 25px;
+                        border-radius: 3px;
+                        padding-top: 8px;
+                        padding-bottom: 8px;
+                    }
+                }
+            }
+        }
+    }
+    // 主体
+    .main {
+        background: #fff;
+        padding: 28px 26px;
+        // 删除
+        .main-action {
+            background: @c-gray-c;
+            padding: 16px 2.5%;
+            .cui-checkboxContainer {
+                width: 150px;
+                top: 3px;
+                label {
+                    span {
+                        left: 27px;
+                        color: #333;
+                    }
+                }
+            }
+            .inline-div {
+                display: inline-block;
+                .btn {
+                    display: inline-block;
+                    line-height: 28px;
+                    border: 1px solid @c-standard-b;
+                    border-radius: 2px;
+                    .tc;
+                    margin: 0 10px 0 0;
+                    width: 108px;
+                    background: #fff;
+                    color: @c-standard-b;
+                    font-size: @fs14;
+                    &.cur,
+                    &:hover {
+                        cursor: pointer;
+                        background: @c-standard-b;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+        .mainInfo {
+            .list {
+                display: table;
+                width: 100%;
+                .title{
+                    display: table-row;
+                    >div{
+                        display: table-cell;
+                        border-bottom: 1px solid #333;
+                        padding: 20px 10px;
+                        font-size: @fs16;
+                        vertical-align: middle;
+                        word-break: keep-all;
+                        .tc;
+                        >span{
+                            display: inline-block;
+                        }
+                    }
+                }
+                .item {
+                    display: table-row;
+                    >div {
+                        display: table-cell;
+                        padding: 20px 2.5px;
+                        vertical-align: middle;
+                        border-bottom: 1px dashed #d7d7d7;
+                        font-size: @fs14;
+                        color: #888;
+                        .tc;
+                        // width:10%;
+                        word-wrap: break-word;
+                        word-break: break-word;
+                        word-break: break-all;
+                        a{
+                            padding: 0 4px;
+                            color: #0082ff;
+                            text-decoration: underline;
+                            // &:last-of-type{
+                            //     text-decoration: none;
+                            // }
+                            &.del{
+                                color: #ff0000;
+                                text-decoration: underline;
+                            }
+                            &:hover{
+                                cursor: pointer;
+                            }
+                        }
+                        &:nth-of-type(1){
+                            width: 20%;
+                        }
+                        &:nth-of-type(2),
+                        &:nth-of-type(3),
+                        &:nth-of-type(8){
+                            width:5%;
+                        }
+                        &:nth-of-type(7){
+                            word-break: keep-all;
+                        }
+
+                        &:last-of-type{
+                            word-break: keep-all;
+                        }
+                    }
+                    &:last-of-type {
+                        >div {
+                            border-bottom: 1px solid #333;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.copyProject{
+    .project-name{
+        .tc;
+        .cui-textBoxContainer{
+            margin: 40px 10px;
+            input{
+                width: 350px;
+            }
+            .valid-tips{
+                left: 170px;
+            }
+        }
+    }
+    .oporation{
+        .tc;
+        padding-bottom: 40px;
+        .cui-button{
+            padding: 0 40px;
+            &.preset-blue{
+                margin-right: 18px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:1400px){
+    #startDate,#endDate{
+        width: 120px;
+    }
+    .search-detail{
+        input.key2{
+            width: 100px !important;
+        }
+        .btn{
+            width: 90px !important;
+        }
+    }
+
+}

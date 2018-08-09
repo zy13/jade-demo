@@ -1,0 +1,74 @@
+/**
+* @Author: Jet.Chan
+* @Date:   2016-12-22T17:50:24+08:00
+* @Email:  guanjie.chen@talebase.com
+* @Last modified by:   Jet.Chan
+* @Last modified time: 2016-12-22T17:50:24+08:00
+*/
+
+@import '../commonStyle/common.less';
+
+.set-question{
+    &.single{
+        .ques-content{
+            .content{
+                .ques-subject,
+                .options .option-content{
+                    border:none;
+                }
+                .options{
+                    .options-item{
+                        .option-content{
+                            min-height: 120px;
+                        }
+                        .cui-radioContainer,
+                        .cui-checkboxContainer{
+                            position: absolute;
+                            left:0;
+                            top:50%;
+                            width:38px;
+                            margin-top: -9px;
+                            label>i{
+                                left: 50%;
+                                margin-left: -9px;
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+        .ques-setting{
+            .setting{
+                & > .title{
+                        padding:5px 0 5px 10px;
+                        background: #d2d2d2;
+                        color:#212121;
+                        & + *{
+                            margin-top: 10px;
+                        }
+                    }
+                .change{
+                    .button{
+                        width: 62px;
+                    }
+                }
+                .layout{
+                    .row-num{
+                        line-height: 32px;
+                        margin-bottom: 10px;
+                        .cui-selectBoxContainer{
+                            width: 60px;
+                            min-width: 60px;
+                            margin:0 5px;
+                            background: #fff;
+                            &:before{
+                                -ms-transform:rotate(360deg);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

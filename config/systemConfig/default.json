@@ -1,0 +1,78 @@
+{
+    "development": {
+        "app": {
+            "http": {
+                "host": "rap.cepin.net",
+                "path": "/mockjs/7",
+                "console": true,
+                "mock": true
+            }
+        },
+        "static": {
+            "srcPath": {
+                "pagePath": "./src/pages/"
+            },
+            "ajaxDomain": "http://rap.cepin.net/mockjs/7",
+            "staticDomain": "http://localhost",
+            "staticPort": "9001",
+            "euditorServerUrl": ""
+        }
+    },
+    "dev": {
+        "app": {
+            "http": {
+                "host": "exam.cepin.net",
+                "path": "/bzos",
+                "console": false,
+                "mock": false
+            }
+        },
+        "static": {
+            "srcPath": {
+                "pagePath": "./src/pages/"
+            },
+            "ajaxDomain": "http://exam.cepin.net/bzos",
+            "staticDomain": "http://exam.cepin.net",
+            "staticPort": "9001",
+            "euditorServerUrl": "/"
+        }
+    },
+    "test": {
+        "app": {
+            "http": {
+                "host": "tas.cepin.net",
+                "path": "/bzos",
+                "console": false,
+                "mock": false
+            }
+        },
+        "static": {
+            "srcPath": {
+                "pagePath": "./src/pages/"
+            },
+            "ajaxDomain": "http://tas.cepin.net/bzos",
+            "staticDomain": "http://cdn.tas.cepin.net",
+            "staticPort": "",
+            "euditorServerUrl": "/"
+        }
+    },
+    "production": {
+        "app": {
+            "http": {
+                "host": "{domain}",
+                "path": "/bzos",
+                "console": false,
+                "mock": false
+            }
+        },
+        "static": {
+            "srcPath": {
+                "pagePath": "./src/pages/"
+            },
+            "ajaxDomain": "http://{domain}/bzos",
+            "staticDomain": "http://cdn.tas.talebase.com",
+            "staticPort": "",
+            "euditorServerUrl": "/"
+        }
+    }
+}

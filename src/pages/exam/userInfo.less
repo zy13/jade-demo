@@ -1,0 +1,151 @@
+@import '../../components/commonStyle/common.less';
+.special-wrap {
+    .wrap {
+        width: 1000px;
+        margin: 0 auto;
+        padding: 58px 0;
+        .title {
+            .fs16;
+            height: 77px;
+            line-height: 77px;
+            padding-left: 50px;
+        }
+        .note{
+            .fs16;
+            height: 48px;
+            line-height: 48px;
+            padding-left: 50px;
+            color:#fff;
+            background: #27a4f2;
+            border-radius: 5px 5px 0 0;
+        }
+        .contain-wrap {
+            padding: 25px 50px 100px;
+            background: #fff;
+            .contain{
+                width:570px;
+                margin:0 auto;
+                .item{
+                    margin:10px 0 20px;
+                    &>span{
+                        .fs14;
+                        .tr;
+                        width:134px;
+                        color:#888;
+                        vertical-align: middle;
+                        line-height: 22px;
+                        margin-right: 10px;
+                        word-break:break-all;
+                        display: inline-block;
+                        position: relative;
+                        padding-right: 16px;
+                        &:not(.tl):after{
+                            content:'：';
+                            background: #fff;
+                            position: absolute;
+                            right:0;
+                            top: 50%;
+                            margin-top:-11px;
+                        }
+                        &.ellipsis{
+                            max-height: 44px;
+                            overflow: hidden;
+                            &:before{
+                                content:'...';
+                                background: #fff;
+                                position: absolute;
+                                right:4px;
+                                bottom:0;
+                            }
+                        }
+                        &.tl{
+                            text-align: left;
+                        }
+                        .must-color{
+                            color:#f00;
+                            margin-right: 5px;
+                        }
+                    }
+                    .cui-selectBoxContainer{
+                        width:410px;
+                        min-height: 34px;
+                        vertical-align: middle;
+                        &:before{
+                            -ms-transform:rotate(360deg);
+                        }
+                    }
+                    .cui-textBoxContainer{
+                        width:410px;
+                        margin:0;
+                        position: relative;
+                        vertical-align: middle;
+                        input{
+                            width:388px;
+                            height: 22px;
+                            line-height: 22px;
+                            border-color:#ccc;
+                            &.hold{
+                                background: #fff;
+                            }
+                            &.success{
+                                background: #fff;
+                            }
+                            &.failure{
+                                border-color:#ff5252;
+                            }
+                        }
+                        &.date{
+                            i{
+                                position: absolute;
+                                right:5px;
+                                color:#888;
+                                font-size: 22px;
+                                height: 34px;
+                                line-height: 32px;
+                                border-left: 1px solid #ccc;
+                                padding-left: 5px;
+                            }
+                        }
+                        &.locked{
+                            input{
+                                border-color:#fff;
+                                color:@fc-b;
+                            }
+                        }
+                    }
+                    .cui-radioContainer{
+                        label{
+                            span{
+                                .fs14;
+                                color:#888;
+                                left:24px;
+                            }
+                        }
+                    }
+                }
+                .confirm {
+                    .tc;
+                    margin-top: 110px;
+                    a {
+                        .fs16;
+                        width: 130px;
+                        height: 42px;
+                        line-height: 42px;
+                        &:nth-child(1){
+                            color: #fff;
+                            border: none;
+                            background: #27a4f2;
+                            &:hover {
+                                background: #249ae3;
+                            }
+                        }
+                        &:nth-child(2){
+                            border-color:#27a4f2;
+                            margin-left: 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,31 @@
+@import '../commonStyle/common';
+
+.managementTab{
+    height: 52px;
+    padding: 30px 30px 0;
+    background: @c-gray-c;
+    .tabs{
+        .clearfix;
+        >li{
+            .fl;
+            .tc;
+            .fs16;
+            color:@fc-a;
+            height: 52px;
+            &.active{
+                background: @c-gray-a;
+                border-radius: 2px;
+                a{
+                    color:@c-standard-a;
+                }
+            }
+            >a{
+                padding:0 28px;
+                height: 52px;
+                line-height: 52px;
+                display: block;
+                color:#333;
+            }
+        }
+    }
+}

@@ -1,0 +1,182 @@
+.exam-content {
+    margin: 0 6%;
+    position: relative;
+    top: 45px;
+    .div-group {
+        width: 100%;
+        text-align: center;
+        padding: 5% 0 10%;
+        background-color: #fff;
+        border-radius: 8px;
+        .div-body {
+            .warn-tips {
+                text-align: left;
+                font-size: 12px;
+                padding-bottom: 2%;
+                padding-left: 2%;
+                line-height: 20px;
+            }
+            .from-group {
+                margin-bottom: 12%;
+                text-align: left;
+                font-size: 14px;
+                color: #888;
+                .div {
+                    margin: 10px 0;
+                    input {
+                        width: 65%;
+                        height: 25px;
+                    }
+                    &.cui-textBoxContainer {
+                        position: relative;
+                        input[name=account]{
+                            border: none;
+                        }
+                        .valid-tips {
+                            margin-left: 27.5%;
+                        }
+                    }
+                    .cui-datePickerContainer,
+                    .cui-selectBoxContainer {
+                        height: 36px;
+                        width: 72%;
+                        border-color: #e1e1e3;
+                        vertical-align: middle;
+                        display: inline-block;
+                        position: relative;
+                        box-shadow: none;
+                        padding-left: 0 !important;
+                        padding-right: 0 !important;
+                        >span{
+                            display: inline-block;
+                            width: 65%;
+                            padding: 0 4%;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            word-break: keep-all;
+                        }
+                        select {
+                            width: 100%;
+                            height: 38px;
+                            position: absolute;
+                            opacity: 0;
+                            left: 0;
+                            top: 0;
+                        }
+                        .cui-datePicker {
+                            margin: auto;
+                            position: fixed;
+                            bottom: 0;
+                            width: 100%;
+                            text-align: center;
+                            top: auto;
+                            .days,
+                            .months,
+                            .years {
+                                margin: auto;
+                            }
+                        }
+                        .result,
+                        .select-value {
+                            font-size: 12px;
+                            color: #000;
+                        }
+                    }
+                    .span-group {
+                        padding-right: 4%;
+                        width: 24%;
+                        max-width: 80px;
+                        text-align: right;
+                        span {
+                            vertical-align: middle;
+                            &.name {
+                                text-align: justify;
+                                max-width: 57px;
+                                padding-left: 0;
+                                padding-right: 3%;
+                                span {
+                                    line-height: 24px;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    word-break: break-all;
+                                    display: -webkit-box;
+                                    -webkit-line-clamp: 2;
+                                    -webkit-box-orient: vertical;
+                                    display: -moz-box;
+                                    -moz-line-clamp: 3;
+                                    -moz-box-orient: vertical;
+                                }
+                            }
+                        }
+                    }
+                    .wth1 {
+                        display: inline-block !important;
+                        width: 29px;
+                    }
+                    .wth2 {
+                        display: inline-block !important;
+                        width: 7px;
+                    }
+                    &.cui-radioGroup {
+                        .radio-group {
+                            padding-left: 8px;
+                            .cui-radioContainer.inline {
+                                width: 65px;
+                                position: relative;
+                                top: 13px;
+                                label>span {
+                                    padding-left: 5px;
+                                    color: #888;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .a-button >a {
+                padding: 1% 0;
+                background-color: #009BDF;
+                font-size: 16px;
+                width: 98%;
+            }
+        }
+    }
+}
+@media screen and (max-width: 321px) {
+    .from-group>.div {
+        input {
+            width: 56% !important;
+        }
+        .cui-datePickerContainer,
+        .cui-selectBoxContainer {
+            width: 64% !important;
+            >span{
+                width: 56% !important;
+            }
+        }
+    }
+    .span-group {
+        width: 28% !important;
+        .name{
+            padding-left: 0 !important;
+        }
+    }
+    .cui-textBoxContainer {
+        .valid-tips {
+            margin-left: 31.5% !important;
+            ;
+        }
+    }
+    .div-body{
+         .a-button > a{
+            width: 90% !important;
+         }
+         .from-group{
+            .div{
+                .wth1{
+                    width: 24px !important;
+                }
+            }
+         }
+    }
+}

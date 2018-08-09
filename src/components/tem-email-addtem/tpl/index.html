@@ -1,0 +1,93 @@
+<div class="win-main">
+    <!-- 模板名称 -->
+    <div class="win-item">
+        <span class="win-left must">模板名称：</span>
+        <div class="win-right">
+            {@if email.reuse}
+                <div class="cui-selectBoxContainer" data-options=${email.opts}>
+                    <span class="result">${email.defaultValue}</span>
+                </div>
+            {@else}
+                <div class="cui-textBoxContainer inline" data-rule="required;" data-tips="请输入模板名称">
+                    <input type="text" placeholder="" value="${email.name}" maxlength="100"/>
+                    <i class="cpf-icon cpf-icon-ic_ok checkOk"></i>
+                </div>
+            {@/if}
+        </div>
+    </div>
+    <!-- 邮件主题 -->
+    <div class="win-item">
+        <span class="win-left must">邮件主题：</span>
+        <div class="win-right">
+            <div class="cui-textBoxContainer inline" data-rule="required;" data-tips="请输入邮件主题">
+                <input type="text" placeholder="" value="${email.subject}" maxlength="100"/>
+            </div>
+        </div>
+    </div>
+    <!-- 邮件内容 -->
+    <div class="win-item">
+        <span class="win-left must">邮件内容：</span>
+        <div class="win-right" >
+            {@if email.reuse}
+            <script id="${email.contentId}" type="text/plain" ></script>
+            {@else}
+            <script id="emailContent" type="text/plain" ></script>
+            {@/if}
+
+        </div>
+    </div>
+    <!-- 邮件签名 -->
+    <div class="win-item">
+        <span class="win-left">邮件签名：</span>
+        <div class="win-right" >
+            {@if email.reuse}
+            <script id="${email.signId}" type="text/plain" ></script>
+            {@else}
+            <script id="emailSign" type="text/plain" ></script>
+            {@/if}
+        </div>
+    </div>
+    {@if email.reuse}
+    <!-- 是否保存为新模板 -->
+    <div class="win-item">
+        <div class="win-left">
+            <div class="cui-checkboxContainer inline">
+               <input type="checkbox"/>
+               <label>
+                   <i></i>
+                   <span>保存为新模板：</span>
+               </label>
+           </div>
+        </div>
+        <div class="win-right" >
+            <div class="cui-textBoxContainer inline" data-rule="required;" data-tips="请输入新模板名称">
+                <input type="text" disabled="disabled" />
+            </div>
+        </div>
+    </div>
+    {@/if}
+    <!-- 是否默认 -->
+    <div class="win-item">
+        <span class="win-left">是否默认：</span>
+        <div class="win-right">
+            <div class="whetherDefault inline">
+                {@if email.whetherDefault=="1" || email.whetherDefault==1}
+                    <i class="slideBtn active"></i>
+                {@else}
+                    <i class="slideBtn"></i>
+                {@/if}
+            </div>
+        </div>
+    </div>
+    {@if !email.reuse}
+        <!-- 按钮 -->
+        <div class="win-action">
+            <a class="cui-button preset-blue sure" >
+                <span>确定</span>
+            </a>
+            <a class="cui-button cancel">
+                <span>取消</span>
+            </a>
+        </div>
+    {@/if}
+</div>

@@ -1,0 +1,191 @@
+/**
+* @Author: Jet.Chan
+* @Date:   2016-12-29T14:48:28+08:00
+* @Email:  guanjie.chen@talebase.com
+* @Last modified by:   Jet.Chan
+* @Last modified time: 2017-03-06T15:55:56+08:00
+*/
+
+
+
+@import '../commonStyle/common';
+
+#sendInform{
+    height: 100%;
+    overflow: auto;
+    position: relative;
+    .cui-selectBoxContainer{
+        height: 33px;
+        &:before{
+            -ms-transform:rotate(360deg);
+        }
+        .result{
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          display: block;
+          width: 100%;
+        }
+    }
+    &>.examiner.all{
+        display: none;
+        &.active{
+            display: block;
+            &+.editEmail{
+                .win-main:first-child{
+                    padding-top: 0;
+                    .win-item:first-child{
+                        display: none;
+                    }
+                }
+            }
+        }
+        .win-main:first-child{
+            padding-bottom: 0;
+        }
+    }
+    .win-main:first-child{
+        .win-item{
+            margin-bottom: 15px;
+        }
+        .note{
+            padding-left: 70px;
+            .fs16;
+            color:@fc-a;
+            margin-bottom: 8px;
+            span{
+                color:@c-standard-c;
+                margin:0 2px;
+            }
+        }
+    }
+
+    .win-right{
+        width:625px;
+        .examiner{
+            line-height: 32px;
+        }
+
+        .account.cui-button{
+            background: #dfecfb;
+            padding:0 15px;
+            height: 23px;
+            line-height: 23px;
+            margin-right: 5px;
+            >i{
+                font-size: 12px;
+                vertical-align: baseline;
+                display: inline-block;
+                transition:0.2s;
+                &:hover{
+                    transform:scale(1.2,1.2);
+                    -webkit-transform:scale(1.2,1.2);
+                    -ms-transform:scale(1.2,1.2);
+                }
+            }
+        }
+    }
+    .cui-selectBoxContainer{
+        width:621px;
+        .cui-optionsWrapper{
+            z-index: 100001;
+        }
+    }
+    .cui-textBoxContainer{
+        width:620px;
+        input{
+            width:599px;
+        }
+    }
+    .cui-checkboxContainer{
+        width:105px;
+        label>i{
+            left:-8px;
+            top:5px;
+        }
+        span{
+            color:#888;
+        }
+    }
+    .editEmail,.editMess,.editBoth{
+        display: none;
+        &.active{
+            display: block;
+        }
+        .win-main{
+            padding-bottom: 0;
+            &:not(:first-child){
+                padding-top:0;
+            }
+            &:first-child{
+                padding-top: 20px;
+            }
+        }
+    }
+    .text{
+        textarea{
+            width:603px;
+        }
+    }
+    .editMess{
+        margin:0 10px;
+        .win-main{
+            padding:28px 20px;
+            &:first-child{
+                padding-bottom: 0;
+            }
+        }
+        &.bor{
+            .win-main:first-child+.win-main{
+                padding-top: 28px;
+            }
+            border-top:1px solid #288add;
+            .win-main:first-child{
+                display: none;
+            }
+        }
+
+    }
+    .editBoth{
+        .win-main:nth-child(3){
+            margin:0 15px;
+            padding:28px 15px;
+            border-top:1px solid #288add;
+        }
+
+        .text{
+            textarea{
+                widows: 598px;
+            }
+        }
+    }
+    .win-action{
+        .tc;
+        margin: 0 0 30px;
+        padding-top: 0;
+        a{
+            .fs16;
+            padding:2px 70px;
+            margin:0 10px;
+            &.vaild{
+                background: #a0a0a0;
+                border-color: #a0a0a0;
+                color:#fff;
+                cursor: not-allowed;
+            }
+        }
+    }
+    .previewEmail,.previewMess,.previewBoth{
+        position: absolute;
+        left:0;
+        top:0;
+        width:100%;
+        height: 100%;
+        display: none;
+        background: #fff;
+        z-index: 100001;
+        &.active{
+            display: block;
+        }
+    }
+}

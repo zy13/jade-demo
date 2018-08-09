@@ -1,0 +1,54 @@
+#ex-header
+  div.ex-header-content
+    div.ex-cont.ex-content-left
+      div.content-width
+    div.ex-cont.ex-content
+      div 欢迎使用TAS人才测评系统
+
+    div.ex-cont.ex-content-rgt
+      ul
+        li.setting
+          -if(globalCustomer.permission.includes('c2_4'))
+            a(href='/customer/admin/companyMessage',target='ifmContent')
+              i.cpf-icon.cpf-icon-person
+              span=globalCustomer.name
+          -else if(globalCustomer.permission.includes('c2_5'))
+            a(href='/customer/admin/resetPassword',target='ifmContent')
+              i.cpf-icon.cpf-icon-person
+              span=globalCustomer.name
+          -else
+            a(href="javascript:void(0)")
+              i.cpf-icon.cpf-icon-person
+              span=globalCustomer.name
+          ul.more
+            -if(globalCustomer.permission.includes('c2_4'))
+              li
+                a(href='/customer/admin/companyMessage',target='ifmContent')
+                  i.cpf-icon.cpf-icon-admin
+                  span 企业信息
+            -if(globalCustomer.permission.includes('c2_5'))
+              li
+                a(href='/customer/admin/resetPassword',target='ifmContent')
+                  i.cpf-icon.cpf-icon-key
+                  span 修改密码
+        li.setManager
+          a(href='/customer/admin/group', target='ifmContent')
+            i.cpf-icon.cpf-icon-admin
+            span 管理员设置
+          ul.more
+            li
+              a(href='/customer/admin/group',target='ifmContent')
+                i.cpf-icon.cpf-icon-project
+                span 分组管理
+            li
+              a(href='/customer/admin/adminList',target='ifmContent')
+                i.cpf-icon.cpf-icon-admin
+                span 管理员列表
+            li
+              a(href='/customer/admin/role',target='ifmContent')
+                i.cpf-icon.cpf-icon-person
+                span 角色管理
+        li.logout
+          a(href='javascript:void(0)',id='exitBtn')
+            i.cpf-icon.cpf-icon-back
+            span 退出

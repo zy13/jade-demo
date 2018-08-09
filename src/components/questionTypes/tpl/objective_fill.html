@@ -1,0 +1,46 @@
+<!--
+@Author: Jet.Chan
+@Date:   2016-12-23T18:15:44+08:00
+@Email:  guanjie.chen@talebase.com
+@Last modified by:   Jet.Chan
+@Last modified time: 2017-03-07T17:39:29+08:00
+-->
+
+
+
+<div class="preview-question ${dBlankStemSetting.type=='1'?'obj-completion':'sub-completion'}  sortableitem" data-id='${unicode}' data-value='${dataString}'>
+    <input type="hidden" name="id" value="${unicode}">
+    <input type="hidden" name="type" value="${dBlankStemSetting.type}">
+    <div class="order-num operating">
+        <p>Q<span class="sortNum">${sortNum}</span></p>
+        <a href="javascript:void(0)" class="moveup">上移</a>
+        <a href="javascript:void(0)" class="movedown">下移</a>
+        <a href="javascript:void(0)" class='copy'>复制</a>
+        <a href="javascript:void(0)" class='delete' data-id='${unicode}'>删除</a>
+    </div>
+    <div class="content">
+        <div class="top">
+            <p class="ques-type">${dBlankStemSetting.type=='1'?'【客观填空题】':'【主观填空题】'}</p><a class="cui-button edit" data-value='${dataString}'><span>编辑</span></a>
+        </div>
+        <div class="ques-subject">$${dBlankStemSetting.question?dBlankStemSetting.question:'请填写题目'}</div>
+        <p>填空项</p>
+        <div class="preview-options">
+          {@each options as item}
+          {@if setHeight>70}
+          <div class="preview-option " {@if setHeight>-1}style="padding-left:70px"{@else}style="padding-left:70px"{@/if}>
+              <p class="option-index" {@if setHeight>-1} style="width:70px"{@else} style="width:70px"{@/if}>${item}</p>
+              <div class="option-wrap" {@if setHeight>-1} style="width:${setWidth}"{@else} style="width:${setWidth}"{@/if}>
+                  <div class="option-content" {@if setHeight>-1} style="height:${setHeight}px"{@else} style="height:${setHeight}px"{@/if}></div>
+              </div>
+          </div>
+          {@else}
+          <div class="preview-option " {@if setHeight>-1}style="padding-left:${setHeight}px"{@else}style="padding-left:${setHeight}px"{@/if}>
+              <p class="option-index" {@if setHeight>-1}style="width:${setHeight}px"{@else}style="width:${setHeight}px"{@/if}>${item}</p>
+              <div class="option-wrap" {@if setHeight>-1}style="width:${setWidth}"{@else}style="width:${setWidth}"{@/if}>
+                  <div class="option-content" {@if setHeight>-1} style="height:${setHeight}px"{@else} style="height:${setHeight}px"{@/if}></div>
+              </div>
+          </div>
+          {@/if} {@/each}
+        </div>
+    </div>
+</div>

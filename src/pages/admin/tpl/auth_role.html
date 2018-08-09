@@ -1,0 +1,64 @@
+<div class='auth'>
+    <div class='checks-group'>
+        <ul>
+            <li>
+                <div class="local">
+                    <div class="cui-checkboxContainer inline">
+                        <input type="checkbox" class='all'/>
+                        <label>
+                            <i></i>
+                            <span>全选</span>
+                        </label>
+                    </div>
+                </div>
+            </li>
+            {@each response as r}
+            <li>
+                <div class='local for-all'>
+                    <div class="cui-checkboxContainer inline">
+                        <input type="checkbox" class='f${r.type} yiji'/>
+                        <label>
+                            <i></i>
+                            {@if r.type==0}
+                                <span>全局-项目管理</span>
+                            {@/if}
+                            {@if r.type==1}
+                                <span>项目-项目管理</span>
+                            {@/if}
+                            {@if r.type==3}
+                                <span>考试库</span>
+                            {@/if}
+                            {@if r.type==2}
+                                <span>管理员设置</span>
+                            {@/if}
+                        </label>
+                    </div>
+                </div>
+                <div class='total for-all'>
+                    {@each r.permissions as p}
+                    <div class="cui-checkboxContainer inline" id='${p.id}' >
+                        {@if p.hasPermission}
+                            <input type="checkbox" class='f${r.type} erji' checked/>
+                        {@else}
+                            <input type="checkbox" class='f${r.type} erji'/>
+                        {@/if}
+                        <label>
+                            <i></i>
+                            <span>${p.name}</span>
+                        </label>
+                    </div>
+                    {@/each}
+                </div>
+            </li>
+            {@/each}
+        </ul>
+    </div>
+    <p class='btn'>
+        <a class="cui-button preset-blue confirm">
+            <span>确定</span>
+        </a>
+        <a class="cui-button cancel">
+            <span>取消</span>
+        </a>
+    </p>
+</div>

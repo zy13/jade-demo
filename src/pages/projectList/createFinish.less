@@ -1,0 +1,104 @@
+/**
+* @Author: Jet.Chan
+* @Date:   2016-12-29T14:48:28+08:00
+* @Email:  guanjie.chen@talebase.com
+* @Last modified by:   Jet.Chan
+* @Last modified time: 2017-03-09T15:17:33+08:00
+*/
+
+
+
+@import '../../components/commonStyle/common';
+.m-wrap {
+    box-sizing: border-box;
+    min-width: 1028px;
+    // height: 100%;
+    padding: 28px 50px;
+    background: @c-gray-a;
+    font-size: @fs16;
+    // 导航
+    .m-nav {
+        margin-bottom: 25px;
+        color: @fc-b;
+        a{
+            color: @fc-b;
+        }
+        span {
+            color: @c-standard-a;
+        }
+        i {
+            font-size: @fs;
+        }
+    }
+    .m-main {
+        .m-content {
+            background: #fff;
+            padding: 28px;
+            .nav {
+                padding-bottom: 28px;
+                position: relative;
+                img {
+                    width: 100%;
+                    height: 56px;
+                }
+                .a-group {
+                    position: relative;
+                    width: 100%;
+                    margin: auto;
+                    a {
+                        color: @c-standard-a;
+                        display: inline-block;
+                        .border-radius(5px);
+                        position: relative;
+                        top: -58px;
+                        width: 33%;
+                        word-break: break-all;
+                        text-align: center;
+                        vertical-align: middle;
+                        &.active {
+                            color: #fff;
+                        }
+                        strong {
+                            font-size: 30px;
+                            margin-right: 40px;
+                            vertical-align: middle;
+                        }
+                        span {
+                            vertical-align: middle;
+                        }
+                    }
+                }
+            }
+            .cont {
+                text-align: center;
+                .good-job {
+                    padding-bottom: 78px;
+                    i {
+                        color: #99CDEA;
+                        font-size: 100px;
+                    }
+                }
+                .say-sth {
+                    font-size: 24px;
+                    color: #6d6d6d;
+                }
+            }
+            .do {
+                text-align: center;
+                padding-top: 60px;
+                padding-bottom: 28px;
+                .cui-button {
+                    font-size: @fs16;
+                    &:nth-of-type(1) {
+                        margin-right: 26px;
+                        padding: 4px 49px;
+                    }
+                    &:nth-of-type(2) {
+                        padding-top: 4px;
+                        padding-bottom: 4px;
+                    }
+                }
+            }
+        }
+    }
+}

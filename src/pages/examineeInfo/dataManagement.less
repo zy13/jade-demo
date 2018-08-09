@@ -1,0 +1,173 @@
+@import '../../components/commonStyle/common';
+@cell-width:7.14%;
+html,body{
+    height:100%;
+}
+.blcolor{
+    color: #0082ca;
+}
+.temple-wrap{
+    padding:28px 50px 100px;
+    background: @c-gray-a;
+    font-size:@fs16;
+    // 导航部分
+    .tpl-nav{
+        margin:0 8px;
+        color:@fc-b;
+        a{
+            color:@fc-b;
+        }
+        span{
+            color:@c-standard-a;
+        }
+    }
+    .tpl-type{
+        margin: 25px 0;
+        a{
+            .fs16;
+            padding:0 57px;
+            height: 40px;
+            line-height: 40px;
+            &:first-child{
+                margin-right: 10px;
+            }
+        }
+    }
+    .tpl-detail{
+        padding-bottom: 25px;
+        .blcolor{
+            color: #0082ca;
+            &.overed{
+                padding: 0 20px;
+            }
+        }
+    }
+    .tpl-main{
+        background: #fff;
+        padding:28px 26px;
+        // 按钮
+        .tpl-main-action{
+            padding:16px 30px;
+            background: @c-gray-c;
+            a{
+                width:135px;
+                background: @c-standard-b;
+                color:#fff;
+                display:inline-block;
+                line-height:28px;
+                border:1px solid @c-standard-b;
+                border-radius: 2px;
+                .tc;
+                .fs14;
+                margin:0 40px 0 0;
+                &.creating{
+                    cursor: no-drop;
+                }
+            }
+            #exportPaper{
+                cursor: pointer;
+                margin-right: 20px;
+                &:hover{
+                    text-decoration: underline;
+                }
+                &+span{
+                    color:#777;
+                }
+            }
+        }
+        // 列表
+        .tpl-list{
+            display:table;
+            width:100%;
+            .tc;
+            // 标题
+            .tpl-title{
+                display:table-row;
+                p{
+                    display:table-cell;
+                    width:@cell-width;
+                    line-height:45px;
+                    padding:15px 0 0 0;
+                    border-bottom: 1px solid @fc-a;
+                    vertical-align: middle;
+                    .fw;
+                    color:@fc-a;
+                    &:nth-of-type(1),&:nth-of-type(4),
+                    &:nth-of-type(5),&:nth-of-type(7),
+                    &:nth-of-type(9){
+                        width:2*@cell-width;
+                        word-break: break-all;
+                    }
+                    &:nth-of-type(7),&:nth-of-type(8){
+                        cursor: pointer;
+                    }
+                }
+            }
+            // 列表
+            .tpl-item{
+                display:table-row;
+                p{
+                    .fs14;
+                    display:table-cell;
+                    width:@cell-width;
+                    padding:25px 0;
+                    border-bottom:1px dashed @c-gray-c;
+                    vertical-align: middle;
+                    color:@fc-b;
+                    word-break: break-all;
+                    &:nth-of-type(1),&:nth-of-type(4),
+                    &:nth-of-type(5),&:nth-of-type(7),
+                    &:nth-of-type(9){
+                        width:2*@cell-width;
+                        word-break: break-all;
+                    }
+
+                }
+            }
+        }
+    }
+}
+.triangles{
+    position: relative;
+    left: 3px;
+    #triangle-up{
+        position: absolute;
+        top: -2px;
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-bottom: 10px solid #000;
+        .span{
+            position: absolute;
+            top: 1px;
+            width: 0;
+            height: 0;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-bottom: 8px solid #fff;
+            left: -4px;
+        }
+    }
+    #triangle-down{
+        position: absolute;
+        bottom: -2px;
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 10px solid #000;
+        .span{
+            position: absolute;
+            bottom: 1px;
+            width: 0;
+            height: 0;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 8px solid #fff;
+            left: -4px;
+        }
+    }
+}
+
+

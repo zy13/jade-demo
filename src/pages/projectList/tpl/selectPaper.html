@@ -1,0 +1,158 @@
+<li class="chosen-item" id="${time}">
+    <h5 class="item-name">
+        <span>${name}</span>
+        <a class="item-del" data-id=${id}>
+            <i class="cpf-icon cpf-icon-ic_delete"></i>删除
+        </a>
+    </h5>
+    <div class="item-part">
+        <span class="left">是否统一交卷：</span>
+        <div class="right">
+            <div class="cui-radioGroupContainer">
+                <div class="cui-radioContainer inline">
+                {@if !hadStart}
+                    {@if finishType == "1"}
+                    <input type="radio" name="${examType}" value="1" checked="checked"/>
+                    {@else}
+                    <input type="radio" name="${examType}" value="1" />
+                    {@/if}
+                {@else}
+                    {@if finishType == "1"}
+                    <input type="radio" name="${examType}" value="1" checked="checked" disabled="disabled"/>
+                    {@else}
+                    <input type="radio" name="${examType}" value="1"  disabled="disabled"/>
+                    {@/if}
+                {@/if}
+                    <label>
+                        <i></i>
+                        <span>统一时点交卷</span>
+                    </label>
+                </div>
+                <div class="cui-radioContainer inline">
+                    {@if !hadStart}
+                        {@if finishType == "2"}
+                        <input type="radio" name="${examType}" value="2" checked="checked" />
+                        {@else}
+                        <input type="radio" name="${examType}" value="2"  />
+                        {@/if}
+                    {@else}
+                        {@if finishType == "2"}
+                        <input type="radio" name="${examType}" value="2" checked="checked" disabled="disabled"/>
+                        {@else}
+                        <input type="radio" name="${examType}" value="2" disabled="disabled"/>
+                        {@/if}
+                    {@/if}
+                    <label>
+                        <i></i>
+                        <span>按试卷时长交卷</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="item-part ${hid = finishType=='1'?'':'hidden'}">
+        <span class="left must">考试起止时间：</span>
+        <div class="right">
+            <span class="date">
+                {@if !hadStart}
+                    <input id="startDateL${time}" class="startDateL startDate Wdate" type="text" readonly="readonly" data-value="${startDateL}" value="${startDateL}"/>
+                    <i class="cui-icon cpf-icon-ic_calendar" onclick="document.getElementById('startDateL${time}').click()"></i>
+                {@else}
+                    <input id="startDateL${time}" class="startDateL startDate Wdate" type="text" readonly="readonly" data-value="${startDateL}" value="${startDateL}" disabled="disabled"/>
+                    <i class="cui-icon cpf-icon-ic_calendar"></i>
+                {@/if}
+            </span>
+            <em>--</em>
+            <span class="date">
+                {@if !hadStart}
+                    <input id="endDateL${time}" class="endDateL endDate Wdate" type="text" readonly="readonly" data-value="${endDateL}"  value="${endDateL}" />
+                    <i class="cui-icon cpf-icon-ic_calendar" onclick="document.getElementById('endDateL${time}').click()"></i>
+                {@else}
+                    <input id="endDateL${time}" class="endDateL endDate Wdate" type="text" readonly="readonly" data-value="${endDateL}"  value="${endDateL}"  disabled="disabled"/>
+                    <i class="cui-icon cpf-icon-ic_calendar"></i>
+                {@/if}
+            </span>
+        </div>
+    </div>
+    <div class="item-part">
+        <span class="left">开考&nbsp;</span>
+        <div class="right">
+            <div class="cui-textBoxContainer inline" data-rule="digits" data-tips="请输入正整数">
+                {@if !hadStart}
+                    <input type="text" placeholder="" value="${latestStartDateL}"/>
+                {@else}
+                    <input type="text" placeholder="" value="${latestStartDateL}" disabled="disabled" />
+                {@/if}
+            </div>
+            <span>分钟后不允许进入答题</span>
+        </div>
+    </div>
+
+    <div class="item-part ${hid = finishType=='2'?'':'hidden'}">
+        <span class="left must">允许进入答题时间：</span>
+        <div class="right">
+            <span class="date">
+                {@if !hadStart}
+                    <input id="startDate${time}" class="startDate Wdate" type="text" readonly="readonly" data-value="${startDate}"  value="${startDate}" />
+                    <i class="cui-icon cpf-icon-ic_calendar" onclick="document.getElementById('startDate${time}').click()"></i>
+                {@else}
+                    <input id="startDate${time}" class="startDate Wdate" type="text" readonly="readonly" data-value="${startDate}"  value="${startDate}" disabled="disabled"/>
+                    <i class="cui-icon cpf-icon-ic_calendar"></i>
+                {@/if}
+            </span>
+            <em>--</em>
+            <span class="date">
+                {@if !hadStart}
+                    <input id="latestStartDate${time}" class="endDate Wdate" type="text" readonly="readonly" data-value="${latestStartDate}" value="${latestStartDate}" />
+                    <i class="cui-icon cpf-icon-ic_calendar" onclick="document.getElementById('latestStartDate${time}').click()"></i>
+                {@else}
+                    <input id="latestStartDate${time}" class="endDate Wdate" type="text" readonly="readonly" data-value="${latestStartDate}" value="${latestStartDate}" disabled="disabled"/>
+                    <i class="cui-icon cpf-icon-ic_calendar"></i>
+                {@/if}
+            </span>
+        </div>
+    </div>
+    <div class="item-part">
+        <span class="left must">考试时长：</span>
+        <div class="right">
+            <div class="cui-textBoxContainer inline" data-rule="required;digits" data-tips="正整数且不能为空">
+                {@if !hadStart}
+                <input type="text" placeholder="" value="${examTime ? examTime : ''}" maxlength="3" />
+                {@else}
+                <input type="text" placeholder="" value="${examTime ? examTime : ''}" disabled="disabled" maxlength="3"/>
+                {@/if}
+            </div>
+            <span>分钟</span>
+            <i class="cpf-icon cpf-icon-ic_help"></i>
+            <div class="tip">
+                <i class="cpf-icon cpf-icon-ic_triangle"></i>
+                <i class="cpf-icon cpf-icon-ic_triangle"></i>
+                <p>考试时长：指真实考试时允许的考试时间长度。<br>考试参考时长：指在创建试卷时，由创建人评估的试卷正常完成所需时间长度。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="item-part">
+        <span class="left">页面切换次数超过</span>
+        <div class="right">
+            <div class="cui-textBoxContainer inline" data-rule="digits" data-tips="请输入正整数">
+                <input type="text" placeholder="" value="${pageChangeLimit}" maxlength="3" />
+            </div>
+            <span>次时终止考试</span>
+        </div>
+    </div>
+    <div class="item-part master-part">
+        <span class="left">选择评卷人：</span>
+        <div class="master right">
+        {@each examiners as item }
+            <a class="account cui-button c-preset-green" data-id="${item.account}" data-name="${item.name}">
+                <span>${item.name}</span>
+                <i class="cui-icon cpf-icon-thin-close"></i>
+            </a>
+        {@/each}
+            <a class="cui-button preset-green selectAccount">
+                <span>请选择...</span>
+            </a>
+        </div>
+    </div>
+</li>

@@ -1,0 +1,85 @@
+/**
+* @Author: Jet.Chan
+* @Date:   2016-12-29T14:48:28+08:00
+* @Email:  guanjie.chen@talebase.com
+* @Last modified by:   Jet.Chan
+* @Last modified time: 2017-01-16T21:46:32+08:00
+*/
+
+
+
+@import '../commonStyle/common.less';
+.select-win{
+    // main
+    .select-win-main{
+        padding:50px 70px;
+        .clearfix();
+        .left{
+            float: left;
+        }
+        .right{
+            float: right;
+        }
+        // 中间按钮
+        .middle{
+            overflow:hidden;
+            height: 352px;
+            // line-height:352px;
+            p{
+                display:inline-block;
+                width:100%;
+                margin-top: 100px;
+                a{
+                    display:block;
+                    margin:15px 0;
+                    .tc();
+                    font-size: 40px;
+                    cursor:pointer;
+                    color:@c-standard-a;
+                }
+            }
+        }
+        //可选列表 已选列表
+        .win-select{
+            width:200px;
+            border: 1px solid @c-standard-a;
+            p{
+                line-height:39px;
+                padding:0 0 0 15px;
+                border-bottom:1px solid @c-standard-a;
+                color:@c-standard-a;
+            }
+            .win-scroll{
+                height:310px;
+                // 自定义滚动条
+                position: relative;
+                overflow: auto;
+                li{
+                    line-height: 29px;
+                    border-bottom:1px solid #fff;
+                    text-indent: 15px;
+                    color:@fc-b;
+                    cursor:pointer;
+                    &.active,&:hover{
+                        background: @c-standard-a;
+                        color:#fff;
+                    }
+
+                }
+            }
+        }
+    }
+    // 按钮组
+    .select-win-action{
+        .tc();
+        a{
+            &:first-child{
+                margin-right: 10px;
+            }
+            .fs16;
+            height: 43px;
+            line-height: 43px;
+            padding:0 73px;
+        }
+    }
+}

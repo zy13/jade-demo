@@ -1,0 +1,260 @@
+//-
+  @Author: Jet.Chan
+  @Date:   2016-12-29T14:48:27+08:00
+  @Email:  guanjie.chen@talebase.com
+  @Last modified by:   Jet.Chan
+  @Last modified time: 2017-03-10T16:36:40+08:00
+
+
+
+extends ../share/layout.base.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('projectList.notifyRecords'))
+
+block content
+  .ex-content-right
+    - var tabActive = 0
+    include ../share/component.commonTab.jade
+    .log-wrap
+      //- 导航
+      p.log-nav
+        a(href='###') 项目管理&nbsp;
+        i.cpf-icon.cpf-icon-ic_arrowright &nbsp;
+        a(href='/customer/projectList/index/') 项目列表
+        i.cpf-icon.cpf-icon-ic_arrowright &nbsp;
+        -var pname = projectName ? projectName : request.query.projectName
+        span.projectName(title=pname.length>10?pname:'')=pageHelper.formatter.strCut(pname,13)
+        i.cpf-icon.cpf-icon-ic_arrowright &nbsp;
+        span 通知日志
+        .log-type
+         -var taskId = request.query.taskId ? request.query.taskId : ''
+         a(class=(request.query.sendType==0 ? 'preset-blue':'' )+' cui-button email',href='/customer/projectList/notifyRecords?projectId=#{request.query.projectId}&taskId=#{taskId}&sendType=0&projectName=#{encodeURIComponent(projectName)}')
+           span 邮件日志
+         a(class=(request.query.sendType==1 ? 'preset-blue':'')+' cui-button message',href='/customer/projectList/notifyRecords?projectId=#{request.query.projectId}&taskId=#{taskId}&sendType=1&projectName=#{encodeURIComponent(projectName)}')
+           span 短信日志
+      .log-search
+        .search-filter
+          .search-detail
+            input.sendType(type='hidden',name='sendType',value=request.query.sendType)
+            input#projectId(type='hidden',name='projectId',value=request.query.projectId)
+            input#taskId(type='hidden',name='taskId',value=request.query.taskId)
+            input#searchType(type='hidden',name='searchType',value=request.query.searchType)
+            .search-f
+              span 筛选：&nbsp;
+              -var projectId = request.query.projectId
+              -var temp = 0, taskName='', dataOpts = [], taskOpts = []
+              each i,v in proSelect
+                -if(i.id==request.query.projectId)
+                  - temp = v
+                  each m,n in i.tasks
+                    -if(m.id==request.query.taskId)
+                      - taskName = m.name
+                -dataOpts.push({'text': i.name,'value':i.id})
+              .cui-selectBoxContainer.project(data-options=dataOpts,id='project')
+                span.placeholder=proSelect[temp].name ? proSelect[temp].name : '请选择项目'
+              -if(proSelect[temp].tasks.length)
+                each x,y in proSelect[temp].tasks
+                  -if(x.projectId==proSelect[temp].id)
+                    -taskOpts.push({'text':x.name,'value':x.id})
+              .cui-selectBoxContainer.project(data-options=taskOpts,id='task')
+                  span.placeholder=taskName?taskName:'请选择试卷'
+            .search-ent
+              span 搜索：&nbsp;
+              .dateFind.inline
+                .cui-textBoxContainer.inline
+                  script.
+                    function minDate(){
+                      WdatePicker({
+                        dateFmt:'yyyy-MM-dd HH:mm:ss',
+                        maxDate:'#F{$dp.$D(\'sendDateEnd\')}'
+                      })
+                    }
+                    function maxDate(){
+                      WdatePicker({
+                        dateFmt:'yyyy-MM-dd HH:mm:ss',
+                        minDate:'#F{$dp.$D(\'sendDateBegin\')}'
+                      })
+                    }
+                  span.addonLeft 发送时间
+                  input.addonRightInput#sendDateBegin.txt.sendDateBegin(type='text',placeholder='请输入开始时间',name="sendDateBegin",value=request.query.sendDateBegin ? request.query.sendDateBegin:'',onfocus="minDate()")
+                  span.addonRight.mr0
+                    i.cui-icon.cpf-icon-ic_calendar(onclick="WdatePicker({el:'sendDateBegin',maxDate:'#F{$dp.$D(sendDateEnd)}',dateFmt:'yyyy-MM-dd HH:mm:ss'})")
+                em &nbsp;--&nbsp;
+                input#sendDateEnd.txt.sendDateEnd(type='text',placeholder='请输入结束时间',name="sendDateEnd",value=request.query.sendDateEnd?request.query.sendDateEnd:'',onfocus="maxDate()")
+                span.addonRight
+                  i.cui-icon.cpf-icon-ic_calendar(onclick="WdatePicker({el:'sendDateEnd',minDate:'#F{$dp.$D(sendDateBegin)}',dateFmt:'yyyy-MM-dd HH:mm:ss'})")
+              input.searchType(type='hidden',value=request.query.searchType ? request.query.searchType : 'account')
+              -var optsArray = [{value:"account",text:'帐号'},{value:"name",text:'姓名'},{value:"email",text:'邮件'},{value:"mobile",text:'手机'}]
+              -var tempText = ''
+              each p in optsArray
+                -if(request.query.searchType&&request.query.searchType==p.value)
+                  -tempText = p.text
+              .cui-selectBoxContainer(data-options=optsArray)
+                span.placeholder=tempText?tempText:'帐号'
+              input.txt(type='text',placeholder='请输入关键字',name="key",value=request.query.key)
+              button.btn 搜索
+            .search-status
+              a 状态：&nbsp;
+              .sendStatus
+                - var sendStatus= [{value:'',text:'全部'},{value:'1',text:'发送成功'},{value:'0',text:'发送失败'}]
+                -if(!request.query.sendStatus) request.query.sendStatus=''
+                  each v in sendStatus
+                    a(href=pageHelper.querySet({sendStatus:v.value},request.query),class=request.query.sendStatus==v.value?'cur':'',data-value=v.value)=v.text
+            .search-role
+              a 角色：&nbsp;
+              .role
+                -var roleId= [{value:'',text:'全部'},{value:'1',text:'考生'},{value:'0',text:'评卷人'}]
+                -if(!request.query.roleId) request.query.roleId=''
+                  each v in roleId
+                    a(href=pageHelper.querySet({roleId:v.value},request.query),class=request.query.roleId==v.value?'cur':'',data-value=v.value?v.value:'')=v.text
+      -var sendNotifyPermissionCode = 'c1_7';
+      -if(request.query.sendType==0 || !request.query.sendType)
+        .log-main.email
+          .log-main-action
+            div.cui-checkboxContainer.inline.curPage
+                input(type='checkbox')
+                label
+                  i
+                  span 当前页
+            div.cui-checkboxContainer.inline.allPage
+                input(type='checkbox')
+                label
+                  i
+                  span 所有页
+            div.inline-div
+              span.seled 已选：
+                span 0人
+            div.inline-div
+              -if(globalCustomer.permission.includes(sendNotifyPermissionCode))
+                a.btn.resendEmail
+                  span.reno 重新发送通知
+                  .tip
+                    .triangle_b
+                    .triangle_w
+                    .note 重发后，刷新页面查看最新发送状态
+
+              a.btn.export
+                span 导出
+          //-列表
+          ul.log-list
+            li.log-title
+              p
+                span
+              p 帐号
+              p 姓名/邮箱/手机
+              p 邮件主题
+              p 邮件内容
+              p 发送人
+              p 发送时间
+              p 发送状态
+            each val in querylist.results
+              li.log-item
+                p
+                  -if(val.sendStatus == 0)
+                    span.cui-checkboxContainer.inline(id=val.id)
+                      input(type='checkbox')
+                      label
+                        i
+                        span
+                  - else
+                    span
+                p=val.account
+                p
+                  span=val.name || ''
+                  br
+                  span=val.email || ''
+                  br
+                  span=val.mobile || ''
+                p.ctrHeight
+                  span=val.sendSubject||''
+                p.sendContent.ctrHeight
+                  span(title=val.sendContent||'')=val.sendContent||''
+                p=val.sender||''
+                p
+                  -if(val.sendDate)
+                    span #{pageHelper.date.format(parseInt(val.sendDate),'YYYY-MM-DD HH:mm:ss')}
+                  -else
+                    span= val.sendDate
+                p
+                  -if(val.sendStatus==0)
+                    span.failed 发送失败
+                  -if(val.sendStatus==1)
+                    span 发送成功
+                  -if(val.sendStatus==2)
+                    span 发送中
+        -  pagesize = querylist.limit
+        -  totalCount = querylist.total
+      -if(request.query.sendType==1)
+        .log-main.message
+          .log-main-action
+            div.cui-checkboxContainer.inline.curPage
+                input(type='checkbox')
+                label
+                  i
+                  span 当前页
+            div.cui-checkboxContainer.inline.allPage
+                input(type='checkbox')
+                label
+                  i
+                  span 所有页
+            div.inline-div
+              span.seled 已选：
+                span 0人
+            div.inline-div
+              -if(globalCustomer.permission.includes(sendNotifyPermissionCode))
+                a.btn.resendSms
+                  span.reno 重新发送通知
+              a.btn.export
+                span 导出
+          //-列表
+          ul.log-list
+            li.log-title
+              p
+                span
+              p 帐号
+              p 姓名/邮箱/手机
+              p 短信内容
+              p 发送人
+              p 发送时间
+              p 发送状态
+            each val in querylist.results
+              li.log-item
+                p
+                  -if(val.sendStatus == 0)
+                    span.cui-checkboxContainer.inline(id=val.id)
+                      input(type='checkbox')
+                      label
+                        i
+                        span
+                  - else
+                    span
+                p=val.account
+                p
+                  span=val.name || ''
+                  br
+                  span=val.mobile || ''
+                  br
+                  span=val.email || ''
+                p.sendContent.ctrHeight
+                  span(title=val.sendContent||'')=val.sendContent||''
+                p=val.sender||''
+                p #{pageHelper.date.format(parseInt(val.sendDate),'YYYY-MM-DD HH:mm:ss')}
+                p
+                  -if(val.sendStatus==0)
+                    span.failed 发送失败
+                  -if(val.sendStatus==1)
+                    span 发送成功
+                  -if(val.sendStatus==2)
+                    span 发送中
+        -  pagesize = querylist.limit
+        -  totalCount = querylist.total
+      input#isogeny(type="hidden",value=isogeny)
+      input#total(type="hidden",value= querylist.total)
+      input#sendType(type="hidden",value= sendType)
+      include ../share/component.pagination.jade
+    include ../share/common.footer.default.jade
+
+block scriptSection
+  script(type="text/javascript", src= '/my97datePicker/WdatePicker.js')
+  script(type="text/javascript", src= pageHelper.setScript('projectList.notifyRecords'))

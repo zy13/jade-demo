@@ -1,0 +1,633 @@
+@import '../../components/commonStyle/common.less';
+.common-main {
+    padding: 28px 28px 50px;
+    background: #fff;
+}
+
+.ex-content-right {
+    min-width: 1126px;
+}
+
+.cui-textBoxContainer.score {
+    input.fail {
+        border-color: @c-standard-c;
+    }
+    input.succ {
+        border-color: @c-standard-b;
+    }
+}
+
+.setting-wrap {
+    padding: 28px 50px 50px;
+    background: @c-gray-a;
+    font-size: @fs16;
+    // 导航部分
+    .common-nav {
+        margin: 0 8px 28px;
+        color: @fc-b;
+        a {
+            color: @fc-b;
+        }
+        span:last-child {
+            color: @c-standard-a;
+        }
+    }
+    .setting-main {
+        .sp-step {
+            background: url('/images/create-bg.jpg') right 0px repeat-x;
+            .clearfix;
+            a {
+                float: left;
+                width: 20%;
+                height: 51px;
+                line-height: 51px;
+                box-sizing: border-box;
+                padding-left: 20px;
+                background: url('/images/create-gray.png') left 0px no-repeat;
+                color: #0082ca;
+                font-size: @fs16;
+                border-top: 1px solid #ccc;
+                border-bottom: 1px solid #ccc;
+                &:first-child {
+                    border-left: 1px solid #ccc;
+                    border-radius: 5px 0 0 5px;
+                    background: none;
+                }
+                &:last-child {
+                    border-right: 1px solid #ccc;
+                    border-radius: 0 5px 5px 0;
+                }
+                strong {
+                    display: inline-block;
+                    width: 44px;
+                    margin: -3px 0px 0 0;
+                    text-align: center;
+                    vertical-align: middle;
+                    font: 31px arial;
+                    font-weight: 700;
+                }
+            }
+            a.active {
+                color: #fff;
+                border-color: #0082ca;
+                background-color: #0082ca;
+                &+a {
+                    background: url('/images/create-blue.png') left 0px no-repeat;
+                }
+            }
+        }
+        .sp-main {
+            .clearfix;
+            min-width: 970px;
+            margin-top: 40px;
+            .sp-content {
+                //试卷题目
+                .sp-paper-title {
+                    .fs16;
+                    .clearfix;
+                    padding: 10px 10px 10px 20px;
+                    color: #0082ca;
+                    line-height: 30px;
+                    background: #e3e3e3;
+                    margin: 0 195px 10px 0px;
+                    position: relative;
+                    .name {
+                        .fl;
+                        width: 75%;
+                        word-break: break-all;
+                    }
+                    .score {
+                        .fr;
+                        .tr;
+                        width: 22%;
+                        span {
+                            color: #ff6000;
+                        }
+                    }
+                    .checkScore {
+                        .tc;
+                        position: absolute;
+                        width: 190px;
+                        background: #e3e3e3;
+                        top: 0;
+                        right: -195px;
+                        padding: 9px 0 10px;
+                        .cui-button {
+                            height: 28px;
+                            line-height: 28px;
+                            padding: 0 40px;
+                            .border-radius(3px);
+                        }
+                    }
+                }
+                //题目内容区
+                .sp-question {
+                    //分页
+                    .sp-paging {
+                        .fs16;
+                        height: 44px;
+                        line-height: 44px;
+                        background: #9bd0ed;
+                        margin: 0 195px 10px 0px;
+                        .clearfix;
+                        color: @fc-a;
+                        padding: 0 18px;
+                        .paging-num {
+                            float: left;
+                        }
+                        .paging-sort {
+                            float: right;
+                            .mgr10 {
+                                margin-right: 10px;
+                            }
+                            .sort {
+                                color: #ff6000;
+                                margin-right: 15px;
+                            }
+                        }
+                    }
+                    //题型预览、说明-编辑和说明-预览
+                    .set-explain,
+                    .preview-explain,
+                    .preview-question,
+                    .set-upload-question,
+                    .preview-upload-question {
+                        position: relative;
+                        margin-bottom: 10px;
+                        border: 1px solid @fc-b;
+                        margin-right: 195px;
+                        word-break: break-all;
+                        &.failure {
+                            border-color: @c-standard-c;
+                            box-shadow: 0 0 10px @c-standard-c;
+                        }
+                        .preview-content {
+                            .fs14;
+                            .order-num {
+                                .tc;
+                                width: 56px;
+                                position: absolute;
+                                left: 0;
+                                top: 0;
+                                line-height: 40px;
+                                padding: 5px 0;
+                                &.operating {
+                                    a {
+                                        display: block;
+                                        color: @c-standard-a;
+                                        text-decoration: underline;
+                                    }
+                                }
+                            }
+                            .content {
+                                min-height: 210px;
+                                padding: 7px 15px 20px;
+                                margin-left: 57px;
+                                border-left: 1px solid #888;
+                                .top {
+                                    .clearfix;
+                                    height: 32px;
+                                    margin-bottom: 10px;
+                                    p {
+                                        float: left;
+                                        line-height: 32px;
+                                    }
+                                    a {
+                                        float: right;
+                                        width: 48px;
+                                        height: 30px;
+                                        line-height: 30px;
+                                    }
+                                }
+                                .ques-subject {
+                                    word-break: break-word;
+                                    min-height: 126px;
+                                    padding:10px;
+                                    border:1px solid #d2d2d2;
+                                    img {
+                                        max-width: 66%;
+                                    }
+                                    ol,
+                                    ul,
+                                    li {
+                                        list-style: inherit;
+                                    }
+                                    ol,
+                                    ul {
+                                        padding-left: 40px;
+                                    }
+                                    table {
+                                        border-collapse: collapse;
+                                        td {
+                                            border: 1px solid #ccc;
+                                            padding: 0 5px;
+                                        }
+                                    }
+                                }
+                                .preview-options {
+                                    padding: 20px;
+                                    .preview-option {
+                                        margin-bottom: 20px;
+                                        ol,
+                                        ul,
+                                        li {
+                                            list-style: inherit;
+                                        }
+                                        ol,
+                                        ul {
+                                            padding-left: 40px;
+                                        }
+                                        table {
+                                            border-collapse: collapse;
+                                            td {
+                                                border: 1px solid #ccc;
+                                                padding: 0 5px;
+                                            }
+                                        }
+                                        img {
+                                            max-width: 66%;
+                                        }
+                                        .cui-radioContainer,
+                                        .cui-checkboxContainer {
+                                            span {
+                                                left: 25px;
+                                            }
+                                        }
+                                    }
+                                }
+                                .explain-subject {
+                                    min-height: 126px;
+                                    margin-bottom: 20px;
+                                    border: 1px solid #d2d2d2;
+                                    ol,
+                                    ul,
+                                    li {
+                                        list-style: inherit;
+                                    }
+                                    ol,
+                                    ul {
+                                        padding-left: 40px;
+                                    }
+                                    table {
+                                        border-collapse: collapse;
+                                        td {
+                                            border: 1px solid #ccc;
+                                            padding: 0 5px;
+                                        }
+                                    }
+                                    img {
+                                        max-width: 66%;
+                                    }
+                                }
+                            }
+                        }
+                        .setting-score {
+                            .fs14;
+                            width: 170px;
+                            min-height: 340px;
+                            position: absolute;
+                            right: -195px;
+                            top: 0;
+                            background: #f5f5f5;
+                            padding: 15px 10px;
+                            .title {
+                                color: @fc-a;
+                                margin-bottom: 20px;
+                            }
+                        }
+                        &.single,
+                        &.multiple {
+                            .note {
+                                margin: 20px 0 0;
+                            }
+                            .preview-options {
+                                .preview-option {
+                                    position: relative;
+                                    padding-left: 18px;
+                                    .cui-radioContainer,
+                                    .cui-checkboxContainer {
+                                        position: absolute;
+                                        left: 0;
+                                        top: 50%;
+                                        margin-top: -9px;
+                                        width: 18px;
+                                        height: 18px;
+                                    }
+                                    .option-content {
+                                        min-height: 21px;
+                                        img {
+                                            max-width: 66%;
+                                        }
+                                        cursor: pointer;
+                                        padding-left: 10px;
+                                        // border:1px solid #888;
+                                        // height: 200px;
+                                    }
+                                }
+                            }
+                            .setting-score {
+                                .item {
+                                    &.dis {
+                                        display: none;
+                                    }
+                                    color:@fc-b;
+                                    .cui-textBoxContainer {
+                                        width: 90px;
+                                        min-width: 60px;
+                                        input {
+                                            width: 68px;
+                                            padding: 0 10px;
+                                        }
+                                        &.long {
+                                            width: 168px;
+                                            margin: 10px 0;
+                                            input {
+                                                width: 148px;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        &.multiple {
+                            .setting-score {
+                                .item {
+                                    .cui-selectBoxContainer {
+                                        width: 168px;
+                                        border-color: @c-standard-a;
+                                        background: #fff;
+                                        &:before {
+                                            border-top-color: @c-standard-a;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        &.preview-explain {
+                            ol,
+                            ul,
+                            li {
+                                list-style: inherit;
+                            }
+                            ol,
+                            ul {
+                                padding-left: 40px;
+                            }
+                            table {
+                                border-collapse: collapse;
+                                td {
+                                    border: 1px solid #ccc;
+                                    padding: 0 5px;
+                                }
+                            }
+                            img {
+                                max-width: 66%;
+                            }
+                            min-height: 126px;
+                            padding:10px;
+                            .fs14;
+                        }
+                        &.obj-completion,
+                        &.sub-completion {
+                            .preview-content {
+                                .content {
+                                    .fs14;
+                                    .ques-subject {
+                                        min-height: 126px;
+                                        border: 1px solid #d2d2d2;
+                                        margin-bottom: 10px;
+                                    }
+                                    .setting {
+                                        .fs14;
+                                        margin: 20px 0;
+                                        .clearfix;
+                                        .num {
+                                            margin: 0 10px;
+                                            color: @c-standard-a;
+                                        }
+                                        .cui-radioGroupContainer {
+                                            margin-left: 20px;
+                                            label {
+                                                >i {
+                                                    top: 1px;
+                                                }
+                                                >span {
+                                                    top: -1px;
+                                                    margin-left: 10px;
+                                                }
+                                            }
+                                        }
+                                        .obj-completion-tip {
+                                            position: relative;
+                                            float: right;
+                                            margin-right: 20px;
+                                            &:hover {
+                                                .tips {
+                                                    display: block;
+                                                }
+                                            }
+                                            .help-icon {
+                                                color: #288add;
+                                                font-size: 20px;
+                                            }
+                                            .tips {
+                                                display: none;
+                                                width: 200px;
+                                                z-index: 1;
+                                                right: -235px;
+                                                top: -10px;
+                                                .fs;
+                                                color: #936818;
+                                                padding: 10px;
+                                                position: absolute;
+                                                background: #ffff91;
+                                                box-shadow: 0 0 5px #936818;
+                                                -webkit-box-shadow: 0 0 5px #936818;
+                                                .border-radius(3px);
+                                                i {
+                                                    .fs14;
+                                                    position: absolute;
+                                                    left: -11px;
+                                                    top: 12px;
+                                                    color: #ffff91;
+                                                    transform: rotate(180deg);
+                                                    -webkit-transform: rotate(180deg);
+                                                    -ms-transform: rotate(180deg);
+                                                    &:first-child {
+                                                        color: #936818;
+                                                        left: -12px;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    .tip {
+                                        color: @c-standard-a;
+                                    }
+                                    .analysis {
+                                        .analysis-content {
+                                            height: 68px;
+                                            margin-top: 10px;
+                                            overflow: hidden;
+                                            textarea {
+                                                .fs14;
+                                                resize: none;
+                                                width: 100%;
+                                                height: 100%;
+                                                box-sizing: border-box;
+                                                border: 1px solid #888;
+                                                padding: 5px 10px;
+                                                outline: none;
+                                                line-height: 20px;
+                                            }
+                                        }
+                                    }
+                                    .preview-options {
+                                        padding: 20px 0 0;
+                                        .preview-option {
+                                            position: relative;
+                                            padding-left: 70px;
+                                            background: url('/images/blue-bg.jpg') 0 0 repeat-y;
+                                            .option-index {
+                                                .tc;
+                                                color: #fff;
+                                                font-size: 24px;
+                                                font-weight: bold;
+                                                position: absolute;
+                                                left: 0;
+                                                top: 50%;
+                                                width: 70px;
+                                                margin-top: -18px;
+                                            }
+                                            .option-content {
+                                                height: 68px;
+                                                border: 1px solid #888;
+                                                border-left: none;
+                                                overflow: hidden;
+                                                textarea {
+                                                    .fs14;
+                                                    resize: none;
+                                                    width: 100%;
+                                                    height: 100%;
+                                                    height: 67px \9;
+                                                    box-sizing: border-box;
+                                                    padding: 5px 10px;
+                                                    outline: none;
+                                                    line-height: 20px;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            .setting-score {
+                                .cui-textBoxContainer {
+                                    width: 170px;
+                                    position: relative;
+                                    margin: 10px 0;
+                                    input {
+                                        width: 114px;
+                                        padding: 0 10px 0 44px;
+                                        border-color: @c-standard-a;
+                                        height: 34px;
+                                        line-height: 34px;
+                                        &.fail {
+                                            border-color: @c-standard-c;
+                                            background: #ffebeb;
+                                            &+i {
+                                                color: @c-standard-c;
+                                                border-color: @c-standard-c;
+                                            }
+                                        }
+                                    }
+                                    i {
+                                        .tc;
+                                        left: 0;
+                                        top: 1px;
+                                        width: 34px;
+                                        height: 34px;
+                                        line-height: 34px;
+                                        position: absolute;
+                                        color: @c-standard-a;
+                                        border-right: 1px solid @c-standard-a;
+                                        font-style: normal;
+                                    }
+                                }
+                            }
+                        }
+                        &.preview-upload-question {
+                            .preview-content {
+                                .content {
+                                    .ques-subject,
+                                    .upload-content {
+                                        min-height: 128px;
+                                        margin-bottom: 10px;
+                                        border: 1px solid #d2d2d2;
+                                        &.upload-content {
+                                            .tc;
+                                            color: #bbb;
+                                            border: none;
+                                            font-size: 26px;
+                                            font-style: italic;
+                                            line-height: 128px;
+                                            background: url('/images/upload_bg.png') 0 0;
+                                        }
+                                    }
+                                    .tip {
+                                        color: @c-standard-a;
+                                    }
+                                    .analysis {
+                                        .analysis-content {
+                                            height: 68px;
+                                            margin-top: 10px;
+                                            overflow: hidden;
+                                            textarea {
+                                                .fs14;
+                                                resize: none;
+                                                width: 100%;
+                                                height: 100%;
+                                                box-sizing: border-box;
+                                                border: 1px solid #888;
+                                                padding: 5px 10px;
+                                                outline: none;
+                                                line-height: 20px;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            .setting-score {
+                                .content {
+                                    .cui-textBoxContainer {
+                                        min-width: 60px;
+                                        input {
+                                            width: 68px;
+                                            padding: 0 10px;
+                                        }
+                                        textarea {
+                                            width: 128px;
+                                            .fs14;
+                                            line-height: 25px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .setting-action {
+        margin-top: 30px;
+        .cui-button {
+            .fs16;
+            padding: 0 65px;
+            height: 44px;
+            line-height: 44px;
+            &:not(:first-child) {
+                margin-left: 10px;
+            }
+        }
+    }
+}

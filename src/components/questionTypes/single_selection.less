@@ -1,0 +1,59 @@
+/**
+* @Author: Jet.Chan
+* @Date:   2016-12-22T17:50:24+08:00
+* @Email:  guanjie.chen@talebase.com
+* @Last modified by:   Jet.Chan
+* @Last modified time: 2016-12-22T17:50:24+08:00
+*/
+
+@import '../commonStyle/common.less';
+
+//预览状态
+
+.preview-question.single{
+    .content{
+        .ques-subject{
+            min-height: 120px;
+            padding:10px;
+        }
+        .preview-options{
+            overflow: hidden;
+            .options-item{
+                position: relative;
+                &.item1{
+                    width:100%;
+                }
+                &.item2{
+                    width:50%;
+                    float: left;
+                }
+                &.item3{
+                    width:33.3%;
+                    float: left;
+                }
+                &.item4{
+                    width:25%;
+                    float: left;
+                }
+                .cui-radioContainer,
+                .cui-checkboxContainer{
+                    position: absolute;
+                    left:0;
+                    top:50%;
+                    width:38px;
+                    margin-top: -9px;
+                    label>i{
+                        left: 50%;
+                        margin-left: -9px;
+                    }
+                }
+                .option-content{
+                    padding:8px 10px 8px 38px;
+                    line-height: 30px;
+                }
+            }
+        }
+    }
+}
+
+

@@ -1,0 +1,27 @@
+<!--
+@Author: Jet.Chan
+@Date:   2016-12-27T10:57:45+08:00
+@Email:  guanjie.chen@talebase.com
+@Last modified by:   Jet.Chan
+@Last modified time: 2017-01-13T11:59:08+08:00
+-->
+
+
+
+<div class="sp-paging sortableitem preview-question" data-value="${dataString}" data-id="${unicode}">
+    <input type="hidden" name="unicode" value="${unicode}">
+    <div class="paging-num">分页符（<span class="num">${sortNum}</span>）</div>
+    <div class="paging-sort"><span class="mgr10">本页</span><span>题目规则：</span>
+        <div data-options="[{&quot;value&quot;:0,&quot;text&quot;:&quot;固定顺序&quot;},{&quot;value&quot;:1,&quot;text&quot;:&quot;随机顺序&quot;}]" class="cui-selectBoxContainer mgr10"><span class="result">${dPageStyleSetting.subjectOrder==0?'固定顺序':'随机顺序'}</span>
+
+        </div><span>选项排序：</span>
+        <div data-options="[{&quot;value&quot;:0,&quot;text&quot;:&quot;固定顺序&quot;},{&quot;value&quot;:1,&quot;text&quot;:&quot;随机顺序&quot;}]" class="cui-selectBoxContainer mgr10"><span class="result">${dPageStyleSetting.optionOrder==0?'固定顺序':'随机顺序'}</span>
+
+        </div>
+        {@if isCanDelete==true ||isCanDelete == undefined}
+        <i class="cpf-icon cpf-icon-ic_close del-paging" data-id='${unicode}'></i>
+        {@else}
+        <i class="cpf-icon cpf-icon-ic_close del-paging" style="visibility:hidden" data-id='${unicode}'></i>
+        {@/if}
+    </div>
+</div>

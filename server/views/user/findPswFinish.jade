@@ -1,0 +1,20 @@
+extends ../share/layout.base
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('user.findPswFinish'))
+
+block content
+  include ../share/component.header.out.jade
+  .wrap
+    .content
+      div.form
+        div.cui-container
+          .finish
+            span 您的密码已发到您的邮箱，请到您的邮箱中查看
+          .cui-botton
+            a.preset-blue(href='/customer/user/login')
+              span 返回登录页
+  include ../share/common.footer.default.jade
+
+block scriptSection
+  script(type="text/javascript", src= pageHelper.setScript('user.findPswFinish'))

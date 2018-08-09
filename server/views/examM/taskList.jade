@@ -1,0 +1,61 @@
+extends ../share/layout.baseM.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href=pageHelper.setStyle('examM.taskList'))
+
+block content
+  .exam-content
+    .div-group
+      .div-body
+        .div-list
+          -if(code==0 && r.dExamTaskResponses.length>0)
+            each i,v in r.dExamTaskResponses
+              -var isDis = v==0 ?'':'dis'
+              .div-item
+                div(class=v==0?'div-project up':'div-project all',data-procode=i.projectId)
+                  .div-t
+                    a.project-title(href='javascript:void(0)')
+                      span=i.projectName
+                    p
+                      span.start=i.projectStartDate ? pageHelper.date.format(i.projectStartDate,'YYYY-MM-DD HH:mm:ss'):''
+                      span=i.projectStartDate? '--':''
+                      span.end=i.projectStartDate ? (i.projectEndDate ? pageHelper.date.format(i.projectEndDate,'YYYY-MM-DD HH:mm:ss') : '不限') : ''
+                    a.shrink(href='javascript:void(0)')
+                      -var iClass = v==0?'cpf-icon-shrink':'cpf-icon-extend'
+                      i(class='cpf-icon #{iClass}')
+                  div(class='div-b #{isDis}')
+                    p!=i.description
+                each j in i.dExamTasksList
+                  -var canAnswer = j.canAnswer ? 'yes':'no'
+                  div(class='div-task #{isDis} #{canAnswer}',data-taskid=j.taskId,data-paperid=j.paperId)
+                    .div-lr(data-tip=j.tips)
+                      .div-left
+                        a.task-title(href='javascript:void(0)')
+                          span=j.taskName
+                        p.time
+                            span.start=j.taskStartDate ? pageHelper.date.format(j.taskStartDate,'YYYY-MM-DD HH:mm:ss'):''
+                            span=j.taskStartDate ? '--' : ''
+                            span.end=j.taskStartDate ? (j.taskEndDate ? pageHelper.date.format(j.taskEndDate,'YYYY-MM-DD HH:mm:ss') : '不限') : ''
+                        p.data
+                          | 题量：
+                          span=j.paperNum
+                          | &nbsp;&nbsp;试卷参考时长：
+                          -if(j.examTime)
+                            span=j.examTime
+                              | 分钟
+                          -if(j.examineeStatus=='答题中' && j.canAnswer)
+                            span.status.must-color(data-tip=j.tips)=j.examineeStatus
+                          -if(j.examineeStatus=='未开始' || j.examineeStatus=='已停止')
+                            span.status.color-grey(data-tip=j.tips)=j.examineeStatus
+                          -if(j.examineeStatus=='已完成' || (j.examineeStatus=='答题中' && !j.canAnswer))
+                            span.status.color-doing(data-tip=j.tips)=j.examineeStatus
+          -else if(code==0 && r.dExamTaskResponses.length==0)
+            p.message 您暂时没有考试任务！
+          -else
+            -if(message.length)
+              p.message!=message
+                | ...
+            -else
+              p.message 您的考试任务未到开考时间！
+block scriptSection
+   script(type="text/javascript", src=pageHelper.setScript('examM.taskList'))

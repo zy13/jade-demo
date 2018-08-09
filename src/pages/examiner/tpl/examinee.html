@@ -1,0 +1,135 @@
+{@each list as v,i}
+    ${len=v.fullScore.length}
+    ${width=v.dBlankStyleSetting==null ? 150: v.dBlankStyleSetting.width}
+    ${height=v.dBlankStyleSetting==null ? 50: v.dBlankStyleSetting.height}
+
+    {@if v.type==6}
+    <div class="question more" data-canscore="${v.canScore?'yes':'no'}">
+        <div class="div-left">
+            <div class="titleType">【主观填空题】</div>
+            <div class="detail" data-seqno="${v.number}">
+                <span class="seqno">$${v.number}、</span>
+                <p>$${v.stem}</p>
+            </div>
+            <div class="panel">
+                ${answer = (v.answers&&v.answers.length>0)?v.answers:v.fullScore}
+                {@each answer as k,_i}
+                    <div class="cui-textBoxContainer inline anwser notxt">
+                        ${spanWidth = width > 70 ? 70 : (width < 40 ? 40 : width}
+                        <span class="addonLeft" style="width:'${spanWidth}px;'height:'${height}px;'line-height: '${height}px'">${_i+1}</span>
+                        <textarea class="textarea" style="width:'${width}px;'height: '${height-2}px;'" readonly='true'>$${k.answer?k.answer:''}</textarea>
+                    </div>
+                {@/each}
+            </div>
+            <div class="score">
+                <div class="span-group">
+                    <span class="full">本题满分</span>
+                    {@each v.fullScore as k,_i}
+                        {@if _i==0}({@/if}
+                        <div class="span">
+                            <span>${_i+1}</span>
+                            <span class="blue-color">${k}</span>
+                            {@if _i==v.fullScore.length-1}
+                            <span>分</span>
+                            {@else}
+                            <span>分;</span>
+                            {@/if}
+                        </div>
+                        {@if _i==v.fullScore.length-1}){@/if}
+                    {@/each}
+                </div>
+            </div>
+            <div class="score-group scores-container">
+                <span class="get-score blue-color">得分</span>
+                {@each v.score as k,_i}
+                <div class="cui-textBoxContainer setscore inline" data-rule='number;max=${v.fullScore[_i]};min=0' data-tips='请输入0~${v.fullScore[_i]}的分数'>
+                    <span class="addonLeft">${_i+1}</span>
+                    {@if v.canScore}
+                        <input type='text' value="${k}" data-value="${x}" name='score' data-full="${v.fullScore[_i]}">
+                    {@else}
+                        <input type='number' value="${x}" data-value="${x}" data-full="${v.fullScore[_i]}" name='score' readonly='true'>
+                    {@/if}
+                </div>
+                {@/each}
+            </div>
+        </div>
+        <div class="div-right">
+            <div class="set-ss inline">
+                <div class="title-state">
+                    <span>评分标准</span>
+                </div>
+                <div class="body">
+                    <p>$${v.referenceAnswer}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {@/if}
+
+    {@if v.type==7}
+    <div class="question upload" data-canscore="${v.canScore?'yes':'no'}">
+        <div class="div-left">
+            <div class="titleType">【上传题】</div>
+            <div class="detail" data-seqno="${v.number}">
+                <span class="seqno">$${v.number}</span>
+                <p>$${v.stem}</p>
+            </div>
+            <div class="panel">
+                {@if v.answersNumber==0}
+                    <p class="answersNumber">该题该考生未作答</p>
+                {@/if}
+                <div class="img-group notxt">
+                    {@each v.answers as k,_i}
+                        <div class="cui-textBoxContainer">
+                            <a class="a ${k.type=='img'?'isImg':k.type=='word'?'word':'xls'}" href='javascript:void(0)' data-href="${k.answer?k.answer:'javascript:void(0)'}" data-name="${k.answer.split('/')[k.answer.split('/').length-1]}" data-userid="${userId}">
+                                <span class="inline-block">
+                                    <span class="name">${k.name||''}</span><br>
+                                    <span>${k.size||'0kb'}</span>
+                                </span>
+                                <span class="inline-block">
+                                    <img src="${k.answer?k.answer:'/images/img.png'}">
+                                </span>
+                            </a>
+                        </div>
+                    {@/each}
+                </div>
+            </div>
+            <div class="score">
+                <div class="span-group">
+                    <span class="full">本题满分</span>
+                    {@each v.fullScore as k,_i}
+                    <div class="span">
+                        <span>${_i+1}、</span>
+                        <span class="blue-color">${k}</span>
+                        {@if _i==(v.fullScore.length-1)}
+                          <span>分</span>
+                        {@else}
+                          <span>分;</span>
+                        {@/if}
+                    </div>
+                    {@/each}
+                </div>
+            </div>
+            <div class="score-group scores-container">
+                <span class="get-score blue-color">得分</span>
+                {@each v.score as k,_i}
+                    <div class="cui-textBoxContainer setscore inline" data-a="${v.score}" data-rule='number;max=${v.fullScore[_i]};min=0' data-tips='请输入0~${v.fullScore[_i]}的分数'>
+                        <span class="addonLeft">${_i+1}</span>
+                        {@if i.canScore}
+                            <input type='text' value="${k}" data-value="${k}" name='score' data-full="${v.fullScore[_i]}" max="${v.fullScore[_i]}">
+                        {@else}
+                            <input type='number' value="${k}" data-value="${k}" data-full="${v.fullScore[_i]}" name='score' readonly='true'>
+                        {@/if}
+                    </div>
+                {@/each}
+            </div>
+        </div>
+        <div class="div-right">
+            <div class="set-ss inline">
+                <div class="title-state"><span>评分标准</span></div>
+                <div class="body"><p>$${v.referenceAnswer}</p></div>
+            </div>
+        </div>
+    </div>
+    {@/if}
+{@/each}

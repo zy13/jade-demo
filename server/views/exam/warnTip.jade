@@ -1,0 +1,29 @@
+extends ../share/layout.base
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('exam.warnTip'))
+
+block content
+  .special-wrap
+    include ../share/component.header.out.jade
+    .wrap
+      .title 温馨提示
+      .contain
+        .note
+          p 请在没有外界干扰的环境下进行考试，考试期间关闭下载工具和通讯软件，以确保网络连接畅通。
+          p 如遇到网速较慢，文字、图片不能显示时，请关闭作答窗口，稍后或更换网络环境后重新登录，继续作答。
+          p 开始答题后，请认真阅读答题说明，按要求答题。
+          p 试卷有计时时间，请把握好答题速度。
+          p 为了确保您能正常使用系统，建议使用IE9以上浏览器或者Chrome。
+          .cui-checkboxContainer.inline
+            input(type='checkbox')
+            label
+              i
+              span 我已阅读温馨提示
+        .confirm
+          a.cui-button.preset-blue
+            span 确定
+    include ../share/common.footer.default.jade
+
+block scriptSection
+  script(type="text/javascript", src= pageHelper.setScript('exam.warnTip'))

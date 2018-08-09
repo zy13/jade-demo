@@ -1,0 +1,81 @@
+//-
+  @Author: Jet.Chan
+  @Date:   2016-12-29T14:48:27+08:00
+  @Email:  guanjie.chen@talebase.com
+  @Last modified by:   Jet.Chan
+  @Last modified time: 2017-03-13T11:56:36+08:00
+
+
+
+extends ../share/layout.base.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('examineeInfo.importLog'))
+
+block content
+  .ex-content-right
+    - var tabActive = 0
+    include ../share/component.commonTab.jade
+    .wrap
+      //- 导航
+      input(type='hidden',data-taskId=request.query.taskId,id='taskId')
+      input(type='hidden',data-projectId=request.query.projectId,id='projectId')
+      -var dataManagePermissionCode = 'c1_11';
+      p.nav
+        span 项目管理&nbsp;
+        i.cpf-icon-ic_arrowright.fs &nbsp;
+        a(href='/customer/projectList/index/') 项目列表
+        i.cpf-icon.cpf-icon-ic_arrowright &nbsp;
+        span.projectName #{projectName}
+        i.cpf-icon.cpf-icon-ic_arrowright &nbsp;
+        span.taskName #{taskName}
+        i.cpf-icon.cpf-icon-ic_arrowright &nbsp;
+        span 帐号管理
+        - let url=`/customer/examineeInfo/accountManagement/?projectId=${request.query.projectId}&taskId=${request.query.taskId}&projectName=${encodeURIComponent(request.query.projectName)}&taskName=${encodeURIComponent(request.query.taskName)}`
+        .type
+          a.cui-button.account.preset-blue(href=url)
+            span 帐号管理
+          -if(globalCustomer.permission.includes(dataManagePermissionCode))
+            a.cui-button.data(href=url.replace('accountManagement','dataManagement'))
+              span 数据管理
+      .main
+          .main-action
+            div.inline-div
+              a.btn.import-notice
+                span 导出错误日志
+          .mainInfo
+              ul.list
+                  li.title
+                    div
+                      span 帐号
+                    div
+                      span 操作人
+                    div
+                      span 时间
+                    div
+                      span 状态
+                    div
+                      span 备注
+                  each i in queryList.results
+                    li.item
+                      div
+                        span=i.examinee
+                      div
+                        span=i.creater
+                      div
+                        span=pageHelper.date.format(i.createdDateL,'YYYY-MM-DD HH:mm:ss')
+                      div
+                        -if(i.status==0)
+                          span.fail 失败
+                        -if(i.status==1)
+                          span.fail 成功
+                      div.remark
+                        span=i.remark
+      -totalCount=queryList.total
+      -pagesize=queryList.limit
+        include ../share/component.pagination.jade
+    include ../share/common.footer.default.jade
+
+block scriptSection
+  script(type="text/javascript", src= '/my97datePicker/WdatePicker.js')
+  script(type="text/javascript", src= pageHelper.setScript('examineeInfo.importLog'))

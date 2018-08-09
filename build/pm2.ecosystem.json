@@ -1,0 +1,72 @@
+{
+    "apps": [{
+        "name": "examination",
+        "script": "./server_build/start.js",
+        "exec_mode": "cluster",
+        "instances": 0,
+        "out_file": "/www/nodeApp/log/examination-app.log",
+        "error_file": "/www/nodeApp/log/examination-err.log",
+        "env": {
+            "COMMON_VARIABLE": "true"
+        },
+        "env_dev": {
+            "NODE_ENV": "dev",
+            "PORT": "9500"
+        },
+        "env_test": {
+            "NODE_ENV": "test",
+            "PORT": "9500"
+        },
+        "env_production": {
+            "NODE_ENV": "production",
+            "PORT": "9500"
+        }
+    }],
+    "deploy": {
+        "dev": {
+            "user": "root",
+            "host": [{
+                "host": "192.168.1.158",
+                "port": "22"
+            }],
+            "ref": "origin/develop",
+            "repo": "git@gitlab.cepin.com:pjtfe/examination.git",
+            "path": "/home/local/examination/examination",
+            "post-deploy": "npm install ; npm update ;npm run build.babel.server; cp -r server/views  server_build; npm run build.test ; pm2 startOrRestart build/pm2.ecosystem.json --env dev",
+            "env": {
+                "NODE_ENV": "dev",
+                "PORT": "9500"
+            }
+        },
+        "test": {
+            "user": "root",
+            "host": [{
+                "host": "192.168.1.242",
+                "port": "22"
+            }],
+            "ref": "origin/control",
+            "repo": "git@gitlab.cepin.com:pjtfe/examination.git",
+            "path": "/home/local/examination/examination",
+            "post-deploy": "npm install ; npm update ;npm run build.babel.server; cp -r server/views  server_build; npm run build.test ; pm2 startOrRestart build/pm2.ecosystem.json --env test",
+            "env": {
+                "NODE_ENV": "test",
+                "PORT": "9500"
+            }
+        },
+        "pre": {
+            "user": "root",
+            "host": [{
+                "host": "211.147.239.180",
+                "port": "9023"
+            }],
+            "ref": "origin/control",
+            "repo": "git@gitlab.cepin.com:pjtfe/examination.git",
+            "path": "/home/local/examination/examination",
+            "post-deploy": "npm install ; npm update ;npm run build.babel.server; cp -r server/views  server_build; npm run build.production ; pm2 startOrRestart build/pm2.ecosystem.json --env production",
+            "env": {
+                "NODE_ENV": "production",
+                "PORT": "9500"
+            }
+        }
+    }
+}

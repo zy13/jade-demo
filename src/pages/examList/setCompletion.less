@@ -1,0 +1,93 @@
+@import '../../components/commonStyle/common.less';
+
+.common-wrap {
+    padding: 28px 50px 50px;
+    background: @c-gray-a;
+    font-size: @fs16;
+    // 导航部分
+    .common-nav {
+        margin: 0 8px 28px;
+        color: @fc-b;
+        a {
+            color: @fc-b;
+        }
+        span:last-child {
+            color: @c-standard-a;
+        }
+    }
+    .common-main {
+        padding: 28px 28px 50px;
+        background: #fff;
+        .cp-step{
+            background: url('/images/create-bg.jpg') right 0px repeat-x;
+            .clearfix;
+            a{
+                float: left;
+                width: 20%;
+                height:51px;
+                line-height: 51px;
+                box-sizing: border-box;
+                padding-left: 20px;
+                background: url('/images/create-gray.png') left 0px no-repeat;
+                color:#0082ca;
+                font-size: @fs16;
+                border-top:1px solid #ccc;
+                border-bottom:1px solid #ccc;
+                &:first-child{
+                    border-left:1px solid #ccc;
+                    border-radius: 5px 0 0 5px;
+                    background: none;
+                }
+                &:last-child{
+                    border-right:1px solid #ccc;
+                    border-radius:0 5px 5px 0;
+                }
+                strong{
+                    display:inline-block;
+                    width:44px;
+                    margin:-3px 0px 0 0 ;
+                    text-align: center;
+                    vertical-align: middle;
+                    font:31px arial;
+                    font-weight:700;
+                }
+            }
+            a.active{
+                color:#fff;
+                border-color:#0082ca;
+                background-color: #0082ca;
+                &+a{
+                    background: url('/images/create-blue.png') left 0px no-repeat;
+                }
+            }
+        }
+        .setting-completion{
+            margin-top: 40px;
+            .good-job{
+                .tc;
+                font-size: 150px;
+                color:#99cdea;
+            }
+            .say-sth{
+                .tc;
+                color:@fc-b;
+                font-size: 24px;
+            }
+        }
+    }
+
+    .setting-action {
+        .cui-button {
+            .fs16;
+            .tc;
+            width:178px;
+            margin:30px 0;
+            padding: 0px;
+            height: 44px;
+            line-height: 44px;
+            &:first-child+.cui-button{
+                margin-left: 10px;
+            }
+        }
+    }
+}

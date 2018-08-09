@@ -1,0 +1,40 @@
+<!--
+@Author: Jet.Chan
+@Date:   2016-12-29T14:48:28+08:00
+@Email:  guanjie.chen@talebase.com
+@Last modified by:   Jet.Chan
+@Last modified time: 2016-12-30T13:36:20+08:00
+-->
+
+
+
+<div class="preview-question single sortableitem" data-id='${unicode}' data-value='${dataString}'>
+    <div class="order-num operating">
+        <p>Q<span class="sortNum">${sortNum}</span></p>
+        <a href="javascript:void(0)" class="moveup">上移</a>
+        <a href="javascript:void(0)" class="movedown">下移</a>
+        <a href="javascript:void(0)" class="copy">复制</a>
+        <a href="javascript:void(0)" class="delete" data-id='${unicode}'>删除</a>
+    </div>
+    <div class="content">
+        <div class="top">
+            <p class="ques-type">${type=='4'?'【单选题】':'【多选题】'}</p>
+            <a class="cui-button edit" data-value='${dataString}'><span>编辑</span></a>
+        </div>
+        <div class="ques-subject">$${dOptionStemSetting.question?dOptionStemSetting.question:'请填写题目'}</div>
+        <div class="preview-options cui-radioGroupContainer">
+            {@each dOptionStemSetting.options as item,i}
+                <div class="options-item item${dOptionStyleSetting.optionSetting}">
+                    <div class="cui-radioContainer inline">
+                        <input type="radio" name="options${unicode}">
+                        <label>
+                            <i></i>
+                            <span></span>
+                        </label>
+                    </div>
+                    <div class="option-content">$${item.label?item.label:'请填写选项'}</div>
+                </div>
+            {@/each}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,89 @@
+<!--
+@Author: Jet.Chan
+@Date:   2016-12-23T18:15:44+08:00
+@Email:  guanjie.chen@talebase.com
+@Last modified by:   Jet.Chan
+@Last modified time: 2017-01-06T11:28:37+08:00
+-->
+<div class="set-question multiple sortableitem" data-value='${dataString}' data-type='${type}'>
+    <input type="hidden" name="id" value="${unicode}">
+    <input type="hidden" name="type" value="${type}">
+    <div class="ques-content">
+        <div class="operating">
+            <p data-sortNum='${sortNum}'>Q${sortNum}</p>
+        </div>
+        <div class="content">
+            <div class="top">
+                <p class="ques-type">${type=='4'?'【单选题】':'【多选题】'}</p>
+                <a class="cui-button save" data-id='${unicode}' data-type="${type}">
+                    <span>保存</span>
+                </a>
+            </div>
+            <div class="ques-subject">
+                <script id="Subject${unicode}" type="text/plain" data-placeholder="请填写题目">$${dOptionStemSetting.question}</script>
+            </div>
+            <div class="options">
+                {@each dOptionStemSetting.options as item,i}
+                <div class="options-item">
+                    <div class="cui-checkboxContainer inline">
+                        <input type="checkbox">
+                        <label><i></i></label>
+                    </div>
+                    <div class="option-content">
+                        <script id="${item.maskCode}" type="text/plain" data-placeholder="请填写选项">$${item.label}</script>
+                    </div>
+                    <i class="cpf-icon cpf-icon-thin-close del-option" data-id='${item.maskCode}'></i>
+                </div>
+                {@/each}
+            </div>
+            <div class="add-option">
+                <a class="cui-button">添加选项</a></div>
+        </div>
+    </div>
+    <div class="ques-setting">
+        <div class="title">题目设置
+            <i class="cpf-icon cpf-icon-thin-close del-setting"></i>
+        </div>
+        <div class="setting">
+            <p class="title">题型转换</p>
+            <div class="change">
+                <a href="javascript:void(0)" class="button changeOptionsTypes ${type=='4'?'active':''}" data-type='4'>单选题</a>
+                <a href="javascript:void(0)" class="button changeOptionsTypes ${type=='5'?'active':''}" data-type='5'>多选题</a>
+                <div class="cui-checkboxContainer">
+                    <input type="checkbox">
+                    <label>
+                        <i></i>
+                        <span>应用到同类型题目</span>
+                    </label>
+                </div>
+            </div>
+            <p class="title">PC端布局转换</p>
+            <div class="layout">
+                <div class="row-num"><span>每行</span>
+                    <div class='cui-selectBoxContainer' data-options="[{&quot;value&quot;:1,&quot;text&quot;:&quot;1&quot;},{&quot;value&quot;:2,&quot;text&quot;:&quot;2&quot;},{&quot;value&quot;:3,&quot;text&quot;:&quot;3&quot;},{&quot;value&quot;:4,&quot;text&quot;:&quot;4&quot;}]" class="cui-selectBoxContainer"><span class="result">1</span>
+                        <div class="cui-optionsWrapper">
+                            <hr>
+                            <div class="cui-options">
+                                <ul>
+                                    <li data-value="1">1</li>
+                                    <li data-value="2">2</li>
+                                    <li data-value="3">3</li>
+                                    <li data-value="4">4</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div><span>个</span></div>
+                <div class="cui-checkboxContainer">
+                    <input type="checkbox">
+                    <label>
+                        <i></i>
+                        <span>应用到同类型题目</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="tc">
+            <a class="cui-button preset-blue" data-type="${type}">保存</a>
+        </div>
+    </div>
+</div>

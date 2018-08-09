@@ -1,0 +1,52 @@
+/**
+* @Author: Jet.Chan
+* @Date:   2016-12-22T17:52:10+08:00
+* @Email:  guanjie.chen@talebase.com
+* @Last modified by:   Jet.Chan
+* @Last modified time: 2016-12-22T17:52:10+08:00
+*/
+
+@import '../commonStyle/common.less';
+
+.preview-question{
+    &.obj-completion{
+        .ques-subject{
+            min-height: 126px;
+            margin-bottom: 10px;
+            padding:10px;
+        }
+        .preview-options{
+            padding:20px 0;
+            .preview-option{
+                position: relative;
+                margin-bottom: 10px;
+                background: url('/images/blue-bg.jpg') 0 0 repeat-y;
+                .option-index{
+                    .tc;
+                    color: #fff;
+                    font-size: 18px;
+                    font-weight: bold;
+                    position: absolute;
+                    left: 0;
+                    top: 50%;
+                    margin-top: -9px;
+                    line-height: 18px;
+                }
+                .option-wrap{
+                    position: relative;
+                    background: #fff;
+                    .option-content{
+                        height: 68px;
+                        border:1px solid #b8b8b8;
+                        border-left:none;
+                    }
+                    .del-option{
+                        position: absolute;
+                        right:-30px;
+                        top:0;
+                    }
+                }
+            }
+        }
+    }
+}

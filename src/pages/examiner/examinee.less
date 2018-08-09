@@ -1,0 +1,565 @@
+*{
+    font-family: 'microsoft yahei' !important;
+}
+
+body {
+    background-color: #F5F5F5;
+    font: 12px/1.5 Arial,microsoft yahei,Verdana,simsun;
+}
+
+.dis {
+    display: none;
+}
+
+.blue-color {
+    color: #0082ca;
+    padding-right: 10px;
+    &.get-s {
+        padding-right: 20px;
+    }
+}
+
+.one-style {
+    input {
+        height: 26px;
+        width: 120px;
+        border-color: #888;
+    }
+    .valid-tips {
+        left: 50px;
+    }
+}
+
+.answersNumber {
+    color: red;
+    padding-left: 25px;
+    padding: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    td {
+        border: 1px solid #ccc;
+        text-align: center;
+        img {
+            max-width: 100%;
+        }
+    }
+}
+
+.area-ts,.question-group {
+    ol,
+    ul {
+        list-style: inside;
+        li {
+            list-style: inherit;
+            p {
+                text-align: left !important;
+            }
+            img {
+                max-width: 100% !important;
+            }
+        }
+    }
+    img {
+        max-width: 100%;
+    }
+}
+.wrap {
+    padding-top: 58px;
+    min-width: 1366px;
+    font-family: '微软雅黑';
+    .wrap-detail {
+        padding: 0 10%;
+        .words {
+            height: 76px;
+            line-height: 76px;
+            font-size: 16px;
+            position: relative;
+            padding-left: 20px;
+            .blue-color {
+                color: #0082ca;
+                padding-left: 6px;
+                padding-right: 6px;
+            }
+            .back {
+                position: absolute;
+                right: 0;
+                top: 22px;
+                background: #27A4F2;
+                border-color: #27A4F2;
+            }
+        }
+        .content {
+            .base-style {
+                background: #fff;
+                text-align: left;
+                border-radius: 8px;
+                font-size: 16px;
+                position: relative;
+                .title-state {
+                    background: #27A4F2;
+                    color: #fff;
+                    padding: 12px 18px;
+                    border-top-left-radius: 8px;
+                    border-top-right-radius: 8px;
+                    position: relative;
+                    .taskname,
+                    .evaluate,
+                    .distyle {
+                        padding-left: 24px;
+                        position: relative;
+                        top: 8px;
+                        &.taskname {
+                            display: inline-block;
+                            width: 22%;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                            white-space: normal;
+                            word-break: keep-all;
+                            vertical-align: middle;
+                        }
+                    }
+                    .cui-selectBoxContainer {
+                        background: #fff;
+                        color: #888;
+                    }
+                    .cui-button {
+                        position: absolute;
+                        right: 42px;
+                        top: 14px;
+                        font-size: 16px;
+                        padding: 1px 20px;
+                        border-radius: 4px;
+                        border-color: #fff;
+                    }
+                }
+                .mark-detail {
+                    width: 100%;
+                    background: #eee;
+                    z-index: 9;
+                    padding-bottom: 20px;
+                    >div {
+                        background: #fff;
+                        width: 96%;
+                        padding: 20px 2%;
+                        .p {
+                            padding-bottom: 20px;
+                            padding-left: 10px;
+                            color: #888;
+                        }
+                        .a-group {
+                            text-align: left;
+                            a {
+                                display: inline-block;
+                                width: 6.2%;
+                                text-align: center;
+                                &.done {
+                                    position: relative;
+                                    span {
+                                        background: #0082CA;
+                                    }
+                                    img {
+                                        position: absolute;
+                                        left: 50%;
+                                        top: 50%;
+                                        margin-left: -20px;
+                                        margin-top: -20px;
+                                    }
+                                }
+                                span {
+                                    width: 80%;
+                                    display: inline-block;
+                                    color: #fff;
+                                    font-size: 16px;
+                                    font-weight: bold;
+                                    background: #B1CBEA;
+                                    margin: 3px;
+                                    text-align: center;
+                                    padding-top: 18%;
+                                    padding-bottom: 18%;
+                                    vertical-align: middle;
+                                }
+                            }
+                            .pr30 {
+                                display: inline-block;
+                                width: 3.5%;
+                            }
+                            .pb30 {
+                                display: block;
+                                padding-bottom: 30px;
+                            }
+                        }
+                    }
+                    .div-loadm {
+                        width: 100%;
+                        text-align: center;
+                        padding: 10px 0;
+                        >a {
+                            text-decoration: underline;
+                            color: #0082ca;
+                            font-size: 16px;
+                        }
+                    }
+                }
+                .area-ts {
+                    .p {
+                        color: #333;
+                        text-align: left;
+                        font-size: 16px;
+                        padding-left: 40px;
+                        padding-top: 10px;
+                        padding-bottom: 10px;
+                        p {
+                            display: inline;
+                            word-break: break-all;
+                        }
+                    }
+                }
+                .question-group {
+                    padding-left: 40px;
+                    padding-right: 40px;
+                    padding-bottom: 20px;
+                    color: 333;
+                    .question {
+                        border-bottom: 1px dashed #888;
+                        margin-bottom: 20px;
+                        position: relative;
+                        min-height: 220px;
+                        .div-left {
+                            width: 72%;
+                            margin-right: 3%;
+                            display: inline-block;
+                            .titleType,
+                            .detail {
+                                padding-bottom: 10px;
+                                >span{
+                                    float: left;
+                                }
+                                p {
+                                    display: inline;
+                                    word-break: break-all;
+                                    img {
+                                        max-width: 100%;
+                                    }
+                                }
+                            }
+                            .panel {
+                                min-height: 40px;
+                                .cui-textBoxContainer {
+                                    width: 100%;
+                                    margin-right: 0;
+                                    margin-left: 0;
+                                    input,
+                                    textarea {
+                                        border-color: #888;
+                                    }
+                                }
+                            }
+                            .score {
+                                width: 100%;
+                                margin-bottom: 20px;
+                                .span-group {
+                                    padding-top: 16px;
+                                    span {
+                                        vertical-align: middle;
+                                        &.blue-color {
+                                            color: #0082ca;
+                                            padding-left: 10px;
+                                            padding-right: 10px;
+                                        }
+                                        &.full {
+                                            padding-right: 20px;
+                                        }
+                                    }
+                                }
+                                .cui-textBoxContainer {
+                                    float: right;
+                                    margin-right: 0;
+                                    margin-left: 0;
+                                    span {
+                                        vertical-align: middle;
+                                    }
+                                    .get-score {
+                                        width: 100px;
+                                        color: #0082ca;
+                                    }
+                                }
+                            }
+                        }
+                        .div-right {
+                            display: inline-block;
+                            width: 25%;
+                            float: right;
+                            position: absolute;
+                            top: 36px;
+                            min-height: 69px;
+                            background: #F5F5F5;
+                            border-top-left-radius: 10px;
+                            border-top-right-radius: 10px;
+                            border-bottom-left-radius: 8px;
+                            border-bottom-right-radius: 8px;
+                            .set-ss {
+                                width: 100%;
+                                height: 100%;
+                                .body {
+                                    padding: 10px;
+                                    font-size: 14px;
+                                    min-height: 100px;
+                                }
+                            }
+                        }
+                        &.more {
+                            .div-left {
+                                .panel>.textBoxContainer-group {
+                                    .addonLeft {
+                                        padding: 10px 0 !important;
+                                        text-align: center;
+                                        color: #fff;
+                                        background: #9BD0ED;
+                                        font-size: 18px;
+                                        border-width: 0;
+                                        color: #fff;
+                                        font-size: 18px;
+                                        font-weight: bold;
+                                        text-align: center;
+                                        background: #9BD0ED;
+                                        vertical-align: middle;
+                                        position: relative;
+                                        top: 0 !important;
+                                    }
+                                    .textarea {
+                                        max-width: 87%;
+                                        padding: 10px;
+                                        border-width: 0;
+                                        border-top: 1px solid #888;
+                                        border-bottom: 1px solid #888;
+                                        border-right: 1px solid #888;
+                                        vertical-align: middle;
+                                        border-top-left-radius: 0;
+                                        border-bottom-left-radius: 0;
+                                    }
+                                }
+                                .score {
+                                    .span-group {
+                                        .full {
+                                            padding-right: 20px;
+                                        }
+                                        .span {
+                                            display: inline-block;
+                                            padding: 0 10px;
+                                            .blue-color {
+                                                padding-left: 0px;
+                                            }
+                                        }
+                                    }
+                                }
+                                .score-group {
+                                    padding-bottom: 20px;
+                                    .get-score {
+                                        color: #0082ca;
+                                    }
+                                    .addonLeft {
+                                        // padding: 2% 0 0.5%;
+                                        text-align: center;
+                                        background: #9BD0ED;
+                                        font-size: 18px;
+                                        border-width: 0;
+                                        color: #fff;
+                                        font-size: 18px;
+                                        font-weight: bold;
+                                        text-align: center;
+                                        background: #9BD0ED;
+                                        vertical-align: middle;
+                                        width: 20px;
+                                        display: inline-block;
+                                        height: 34px;
+                                        line-height: 34px;
+                                        text-align: center;
+                                        font-size: 14px;
+                                        font-weight: thin;
+                                        position: relative;
+                                        top: -1px !important;
+                                    }
+                                    input {
+                                        width: 100px;
+                                        height: 26px;
+                                        border-left: 0;
+                                        margin-right: 20px;
+                                        border-color: #888;
+                                        border-top-left-radius: 0;
+                                        border-bottom-left-radius: 0;
+                                    }
+                                }
+                            }
+                        }
+                        &.upload {
+                            .panel {
+                                .img-group {
+                                    padding: 10px 0;
+                                    width: 100%;
+                                    min-height: 40px;
+                                    .cui-textBoxContainer{
+                                        width: 500px;
+                                    }
+                                    .a {
+                                        display: inline-block;
+                                        width: 100%;
+                                        margin: 10px 0;
+                                        >span {
+                                            &.inline-block {
+                                                display: inline-block;
+                                                vertical-align: middle;
+                                                &:nth-of-type(1) {
+                                                    width: 440px;
+                                                    line-height: 28px;
+                                                    padding-right: 10px;
+                                                }
+                                                &:nth-of-type(2) {
+                                                    width: 50px;
+                                                    height: 56px;
+                                                    line-height: 56px;
+                                                }
+                                                >span {
+                                                    color: #888;
+                                                    &.name {
+                                                        display: inline-block;
+                                                        word-break: break-all;
+                                                    }
+                                                }
+                                                >img {
+                                                    width: 100%;
+                                                }
+                                            }
+                                        }
+                                        &:hover {
+                                            cursor: pointer;
+                                        }
+                                    }
+                                }
+                            }
+                            .score {
+                                >.full {
+                                    padding-right: 20px;
+                                }
+                                >.blue-color {
+                                    padding: 0 10px;
+                                }
+                                >.span-group {
+                                    .full {
+                                        padding-right: 20px;
+                                    }
+                                    .span {
+                                        display: inline-block;
+                                        padding-right: 20px;
+                                        .blue-color {
+                                            padding-left: 0px;
+                                        }
+                                    }
+                                }
+                            }
+                            .score-group {
+                                padding-bottom: 20px;
+                                .get-score {
+                                    color: #0082ca;
+                                }
+                                .addonLeft {
+                                    padding: 2% 0 0.5%;
+                                    text-align: center;
+                                    background: #9BD0ED;
+                                    font-size: 18px;
+                                    border-width: 0;
+                                    color: #fff;
+                                    font-size: 18px;
+                                    font-weight: bold;
+                                    text-align: center;
+                                    background: #9BD0ED;
+                                    vertical-align: middle;
+                                    width: 40px;
+                                    display: inline-block;
+                                    text-align: center;
+                                    font-size: 14px;
+                                    font-weight: thin;
+                                    position: relative;
+                                    top: -1px !important;
+                                }
+                                input {
+                                    width: 100px;
+                                    height: 26px;
+                                    border-left: 0;
+                                    margin-right: 20px;
+                                    border-color: #888;
+                                }
+                            }
+                        }
+                        &.single{
+                            .div-left{
+                                .panel{
+                                    .cui-textBoxContainer{
+                                        textarea{
+                                            max-width: 100%;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .erroe-page {
+                    width: 80%;
+                    margin: auto;
+                    text-align: center;
+                    color: #888;
+                    p {
+                        padding: 15% 0;
+                        font-size: 22px;
+                        color: #888;
+                    }
+                }
+            }
+        }
+        .pre-next {
+            text-align: center;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            .mr-10 {
+                margin-right: 10px;
+            }
+            .cui-button {
+                width: 180px;
+                padding: 6px 0;
+                font-size: 16px;
+                color: #27a4f2;
+                border-color: #27a4f2;
+                &.preset-blue {
+                    background: #27a4f2;
+                    color: #fff;
+                }
+            }
+        }
+        >.message {
+            color: #888;
+            text-align: center;
+            font-size: 26px;
+            padding: 20% 0;
+        }
+    }
+}
+
+#ex-footer {
+    min-width: 1366px;
+}
+
+.scores-container {
+    .cui-textBoxContainer {
+        input[readonly] {
+            background-color: #eee;
+        }
+    }
+}
+
+.cui-panel-content {
+    .del>p {
+        font-size: 15px !important;
+    }
+}

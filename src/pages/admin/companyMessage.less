@@ -1,0 +1,115 @@
+@import '../../components/commonStyle/common';
+@cell-width: 9.09%;
+html,
+body {
+    height: 100%;
+}
+
+.ex-content-right {
+    .company-wrap {
+        padding: 28px 50px 28px;
+        background: @c-gray-a;
+        font-size: @fs16;
+        // 模板导航部分
+        .cm-nav {
+            margin: 0px 8px 28px;
+            color: @fc-b;
+            span {
+                color: @fc-b;
+                &:not(.super) {
+                    color: @c-standard-a;
+                }
+            }
+        }
+        // 模板主要
+        .cm-main {
+            padding: 28px 26px;
+            background: #fff;
+            color: #212121;
+            .tc;
+            &>div {
+                margin: 28px 0;
+                .clearfix;
+                p {
+                    display: inline-block;
+                    width: 6em;
+                    line-height: 34px;
+                    padding: 0 8px 0 0;
+                    .tr;
+                }
+                .cui-textBoxContainer.inline {
+                    margin: 0;
+                    input {
+                        width: 388px;
+                        height: 34px;
+                        padding: 0 10px;
+                        color: #212121;
+                        border-color: #ccc;
+                        font-family: @font-family-yh;
+                        font-size: 14px;
+                        &.hold {
+                            border-color: #288add;
+                        }
+                        &.failure {
+                            border-color: #ff5252;
+                        }
+                    }
+                    .ie-placeholder {
+                        font-size: 14px;
+                        top: 8px !important;
+                        display: none;
+                    }
+                }
+                .cui-selectBoxContainer {
+                    width: 410px;
+                    text-align: left;
+                    font-size: 14px;
+                    &:before {
+                        -ms-transform: rotate(360deg);
+                    }
+                }
+                .item-upload {
+                    position: relative;
+                    display: inline-block;
+                    &>input {
+                        width: 400px;
+                        height: 32px;
+                        padding-left: 10px;
+                        border: 1px solid #ccc;
+                        border-radius: 1px;
+                        -webkit-border-radius: 1px;
+                        font-family: @font-family-yh;
+                    }
+                    .upload {
+                        position: absolute;
+                        top: 0;
+                        right: -124px;
+                        height: 34px;
+                        border-radius: 5px;
+                        color: #fff;
+                        input {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 108px;
+                            height: 34px;
+                            opacity: 0;
+                            cursor: pointer;
+                            z-index: 2;
+                            font-size: 22px;
+                        }
+                    }
+                }
+            }
+            .btns {
+                margin: 60px 0 0;
+                .cui-button {
+                    .fs16;
+                    padding: 0 73px;
+                    height: 44px;
+                    line-height: 44px;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,88 @@
+extends ../share/layout.base
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('exam.userInfo'))
+
+block content
+  .special-wrap
+    include ../share/component.header.out.jade
+    .wrap
+      .title 个人信息
+      .note 温馨提示：请认真填写您的个人信息，请勿代替或仿冒他人进行考试。
+      .contain-wrap
+        .contain
+
+          each v in r.fields
+            //-输入框
+            -if(v.type==1&&v.fieldKey!='password')
+              .item
+                span.field
+                  - if(v.ismandatory==1)
+                    span.must-color *
+                  span(title=v.fieldName)=v.fieldName
+
+                - if(v.fieldKey=='account')
+                  span.tl= v.fieldValue
+                - else
+                  -var dataRule = v.fieldKey=='email' ? 'email' : (v.fieldKey=='mobile'?'tel':(v.fieldKey=='identity_num'?'isIdCardNo':''))
+                  .cui-textBoxContainer.inline(data-rule=v.ismandatory==1?'required;#{dataRule}':'#{dataRule}',data-tips='请输入正确的#{v.fieldName}',data-isunique=v.isunique,data-ismandatory,maxlength=50)
+                    input(type='text', placeholder='',value=v.fieldValue ||'',name=v.fieldKey)
+            //-日历框
+            -if(v.type==2)
+              .item
+                span.field
+                  - if(v.ismandatory==1)
+                    span.must-color *
+                  span(title=v.fieldName)=v.fieldName
+
+                .cui-textBoxContainer.inline.date(data-rule=v.ismandatory==1?'required':'',data-tips='请选择#{v.fieldName}')
+                  input(type='text', name=v.fieldKey,placeholder='',readOnly,onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})",id=v.fieldKey,value=v.fieldValue)
+                  i.cpf-icon.cpf-icon-ic_calendar(onclick="WdatePicker({el:'#{v.fieldKey}',dateFmt:'yyyy-MM-dd'})")
+            //-下拉框-性别
+            -if(v.type==3)
+              -if(v.fieldKey=='gender')
+                .item
+                  span.field
+                    - if(v.ismandatory==1)
+                      span.must-color *
+                    span(title=v.fieldName)=v.fieldName
+
+                  .cui-radioGroupContainer.inline(data-ismandatory=v.ismandatory,name=v.fieldKey)
+                    .cui-radioContainer.inline
+                      -if(v.fieldValue=='男')
+                        input(type='radio', name='gender', value='男', checked='checked')
+                      -else
+                        input(type='radio',name='gender',value='男')
+                      label
+                        i
+                        span 男
+                    .cui-radioContainer.inline
+                      -if(v.fieldValue=='女')
+                        input(type='radio',name='gender',checked='true',value='女')
+                      -else
+                        input(type='radio',name='gender',value='女')
+                      label
+                        i
+                        span 女
+              -else
+                .item
+                  span.field
+                    - if(v.ismandatory==1)
+                      span.must-color *
+                    span(title=v.fieldName)=v.fieldName
+                  .cui-selectBoxContainer(data-ismandatory=v.ismandatory,data-options=pageHelper.formatter.toDic(v.select,'name','name'),data-name=v.fieldKey,data-fieldname=v.fieldName)
+                    span.result=v.fieldValue
+          .confirm
+            a.cui-button.preset-blue
+              -if(request.query.isEditUserInfo)
+                span 确定
+              -else
+                span 进入考场
+            -if(request.query.isEditUserInfo)
+              a.cui-button(href="/exam/taskList")
+                span 取消
+    include ../share/common.footer.default.jade
+
+block scriptSection
+  script(type="text/javascript", src= '/my97datePicker/WdatePicker.js')
+  script(type="text/javascript", src= pageHelper.setScript('exam.userInfo'))

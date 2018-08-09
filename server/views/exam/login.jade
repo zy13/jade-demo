@@ -1,0 +1,35 @@
+extends ../share/layout.base
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('exam.login'))
+
+block content
+  .special-wrap
+    -if(isToDownloadIE9>0)
+      a(href="/ie/download/IE11.exe",target="_blank").download 下载IE11浏览器
+    .login-wrap
+      .login
+        .title
+          img(src='/bzos/osadmin/company/downloadLogo')
+        .login-content
+          .item
+            .cui-textBoxContainer(data-rule='required;', data-tips='请输入用户名')
+              input(type='text', placeholder='请输入帐号',maxlength=50).loginName
+              i.cpf-icon.cpf-icon-person
+          .item
+            .cui-textBoxContainer(data-rule='required;shortest=6', data-tips='请输入正确的密码')
+              input(type='password', placeholder='请输入密码').loginPassWord
+              i.cpf-icon.cpf-icon-key
+          .item.code(style=isRequiredValidateCode?'':'display:none;').validateCode
+            .cui-textBoxContainer.inline(data-rule='required;', data-tips='请输入验证码')
+              input(type='text', placeholder='请输入验证码',maxlength=5).loginValidateCode
+            img(src="/common/captcha/getValidateCode")#vcode
+            a(href="javascript:void(0)",onclick="document.getElementById('vcode').src='/common/captcha/getValidateCode?r='+Math.random()").change 换一张
+          .item.forget
+          .item.confirm
+            a.cui-button.preset-blue
+              span 登录
+    include ../share/common.footer.default.jade
+
+block scriptSection
+  script(type="text/javascript", src= pageHelper.setScript('exam.login'))

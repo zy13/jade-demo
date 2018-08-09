@@ -1,0 +1,106 @@
+//-
+  @Author: Jet.Chan
+  @Date:   2016-12-29T14:48:27+08:00
+  @Email:  guanjie.chen@talebase.com
+  @Last modified by:   Jet.Chan
+  @Last modified time: 2017-03-09T11:09:34+08:00
+
+
+
+extends ../share/layout.base.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('admin.group'))
+
+block content
+      .ex-content-right
+        - var tabActive = 0
+        -var groupPermissionCode = 'c2_0'
+        include ../share/component.managementTab.jade
+        .m-wrap
+          //- 导航
+          p.m-nav
+            a(href='###') 管理员设置&nbsp;
+            i.cpf-icon.cpf-icon-ic_arrowright &nbsp;
+            span 分组管理
+          //- 主体
+          .m-main
+            //-删除
+            .m-main-action
+              -if(globalCustomer.permission.includes(groupPermissionCode))
+                a.del.cur(href='javascript:void(0)') 删除
+            //-列表
+            ul.m-list
+              li.m-title
+                    p.cui-checkboxContainer.inline
+                        -if(globalCustomer.permission.includes(groupPermissionCode))
+                          input.input-title(type='checkbox')
+                          label
+                            i
+                            span
+                    p 分组名称
+                    p 管理员数量
+                    p 操作
+              -for(var i=0;i<queryList.length;i++)
+                -var str = queryList[i].orgCode;
+                -var count = 0;
+                -for(var j=0;j<str.length;j++)
+                  -if(str[j]=='_')
+                    -count++
+                -if(queryList[i].hasSon)
+                  -var classStr = 'fz'+ count+' i'+i
+                  li.m-item.has-son(id='#{queryList[i].id}',class=classStr,data-code=queryList[i].orgCode)
+                    -if(i == 0)
+                      p
+                    -else
+                      p.cui-checkboxContainer.inline
+                        -if(globalCustomer.permission.includes(groupPermissionCode))
+                            input(type='checkbox')
+                            label
+                              i
+                              span
+                    p.cl
+                      a(href='javascript:void(0)')
+                        span.zh
+                          i.i.triangle-bottom-right
+                          i.ii.cpf-icon.cpf-icon-un-folder
+                        span.group-name #{queryList[i].name}
+                    p
+                      a.count(href='adminList/'+'?groupId='+queryList[i].id) #{queryList[i].memberNum}
+                    p
+                      -if(globalCustomer.permission.includes(groupPermissionCode))
+                        a.add(href='javascript:void(0)') 添加下级分组
+                        a.edit(href='javascript:void(0)') 修改
+                        -if(i == 0)
+                             span
+                        -else
+                          a.del(href='javascript:void(0)') 删除
+                -else
+                  li.m-item(id='#{queryList[i].id}',class='fz'+count,data-code=queryList[i].orgCode)
+                    p.cui-checkboxContainer.inline
+                      -if(globalCustomer.permission.includes(groupPermissionCode))
+                        input(type='checkbox')
+                        label
+                          i
+                          span
+                    p.cl
+                      a(href='javascript:void()')
+                        span.zh
+                          span.one
+                          i.cpf-icon.cpf-icon-sub-text
+                        span.group-name #{queryList[i].name}
+                    p
+                      a.count(href='adminList/'+'?groupId='+queryList[i].id) #{queryList[i].memberNum}
+                    p
+                      -if(globalCustomer.permission.includes(groupPermissionCode))
+                        a.add(href='javascript:void(0)') 添加下级分组
+                        a.edit(href='javascript:void(0)') 修改
+                        -if(i == 0)
+                             span
+                        -else
+                          a.del(href='javascript:void(0)') 删除
+          //-totalPage=queryList.total
+        include ../share/common.footer.default.jade
+
+block scriptSection
+  script(type="text/javascript", src= pageHelper.setScript('admin.group'))

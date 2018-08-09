@@ -1,0 +1,34 @@
+<div class="detailWrap message">
+    {@if mes.back}
+        <p class="back">
+            <a href="javascript:void(0)">返回编辑页</a>
+        </p>
+    {@/if}
+    {@if mes.type=='single'}
+        <p class="weight">短信：</p>
+        <div class="line"></div>
+        <div class="detailContent long">
+            <div>$${mes.content}</div>
+        </div>
+    {@else}
+        {@if mes.receiver}
+            <p class="weight">短信：</p>
+            {@if mes.date}
+                <p class="light">时间：${mes.date}</p>
+            {@/if}
+            <p class="light">收件人：${mes.receiver}</p>
+            <div class="line"></div>
+            <div class="detailContent">
+                <div>$${mes.content}</div>
+            </div>
+        {@/if}
+        <div class="btns">
+            {@if mes.hasPrevious}
+                <a href="javascript:void(0)" class="cui-button prev">上一个</a>
+            {@/if}
+            {@if mes.hasNext}
+                <a href="javascript:void(0)" class="cui-button preset-blue next">下一个</a>
+            {@/if}
+        </div>
+    {@/if}
+</div>

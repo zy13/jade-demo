@@ -1,0 +1,88 @@
+extends ../share/layout.base.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('template.message'))
+
+block content
+  .ex-content-right
+    - var tabType = 1,tabActive = 2
+    include ../share/component.commonTab.jade
+    .temple-wrap
+      //- 模板导航部分
+      p.tpl-nav
+        a(href='###') 项目管理&nbsp;
+          i.cpf-icon-ic_arrowright.fs &nbsp;
+        span 通知模板
+      //- 模板种类
+      .tpl-type
+        a.cui-button(href='./email')
+          span 邮件模板
+        a.cui-button.preset-blue(href='javascript:void(0)')
+          span 短信模板
+      //- 模板主要
+      .tpl-main
+        //- 新建-删除按钮
+        .tpl-main-action
+          a#addTemplate(href='javascript:void(0)') 创建模板
+          a#delTemplate(href='javascript:void(0)') 删除
+        //- 模板列表
+        ul.tpl-list
+          li.tpl-title
+            p
+              span.cui-checkboxContainer.inline.selectAll
+                input(type='checkbox')
+                label
+                  i
+                  span
+            p 模板名称
+            p 默认模板
+            p 创建人
+            p 创建日期
+            p 状态
+            p 状态
+          - if(response&&response.results)
+            - for(var i=0;i<response.results.length;i++)
+              li.tpl-item
+                p
+                  - if(response.results[i].type==1 && response.results[i].creator == globalCustomer.account)
+                    span.cui-checkboxContainer.inline(data-id= response.results[i].id)
+                      input(type='checkbox')
+                      label
+                        i
+                        span
+                  - else
+                    span
+                p.name= response.results[i].name
+                - if(response.results[i].whetherDefault == 1)
+                  p.whetherDefault(data-whetherdefault=1) 是
+                - else
+                  p.whetherDefault(data-whetherdefault=0) 否
+                p= response.results[i].creator
+                p= pageHelper.date.format(response.results[i].createdDate,'YYYY-MM-DD')
+                //- 自定义模板
+                - if(response.results[i].type == 1 && response.results[i].creator == globalCustomer.account)
+                  - if(response.results[i].status == 1)
+                    p
+                      i.slideBtn.active(data-id= response.results[i].id)
+                  - else
+                    p
+                      i.slideBtn(data-id= response.results[i].id)
+                  p
+                    a.edit(href='javascript:void(0)',data-id= response.results[i].id,data-content= response.results[i].content,data-companyid= response.results[i].companyId) 修改
+                    a.del(href='javascript:void(0)',data-id= response.results[i].id) 删除
+                - else
+                  - if(response.results[i].status == 1)
+                    p 启用
+                  - else
+                    p 禁用
+                  p
+                    a.detail(href='javascript:void(0)',data-content= response.results[i].content) 查看
+
+        -  pagesize = response.limit
+        -  totalCount = response.total
+      include ../share/component.pagination.jade
+    include ../share/common.footer.default.jade
+
+block scriptSection
+  include ../share/common.script.ueditor.jade
+  script(type="text/javascript", src= pageHelper.setScript('template.message'))

@@ -1,0 +1,28 @@
+<div id="warmTip">
+    {@if !neverShow}
+    <div class="tip">
+        <p>$${tip}</p>
+        <div class="cui-checkboxContainer inline">
+            <input type="checkbox"/>
+            <label>
+                <i></i>
+                <span>不再提示</span>
+            </label>
+        </div>
+    </div>
+    {@else}
+    <div class="tip">
+        <p>您已关闭提醒服务，<br>如需查看使用记录，请到【使用统计】中查阅。</p>
+    </div>
+    {@/if}
+    <div class="btns">
+        <a class="cui-button preset-blue sure">
+            <span>确定</span>
+        </a>
+        {@if !neverShow}
+        <a class="cui-button cancle">
+            <span>取消</span>
+        </a>
+        {@/if}
+    </div>
+</div>

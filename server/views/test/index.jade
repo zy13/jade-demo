@@ -1,0 +1,14 @@
+extends ../share/layout.base
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('test.index'))
+
+block content
+    asdasdasd
+    div(id='testdiv')
+    -console.log(appConfig);
+    p= __("locales.zh-CN")
+      
+block scriptSection
+  include ../share/common.script.ueditor.jade
+  script(type="text/javascript", src= pageHelper.setScript('test.index'))

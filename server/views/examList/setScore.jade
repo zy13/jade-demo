@@ -1,0 +1,317 @@
+extends ../share/layout.base.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('examList.setScore'))
+
+
+block content
+  .ex-content-right
+    - var tabType=3,tabActive = 0
+    include ../share/component.commonTab.jade
+    .setting-wrap
+      //-面包屑
+      p.common-nav
+        a(href='/customer/examList/list') 考试库&nbsp;
+        i.cpf-icon-ic_arrowright.fs &nbsp;
+        span 试卷管理&nbsp;
+        i.cpf-icon-ic_arrowright.fs &nbsp;
+        - if(mode==1)
+          span 创建试卷
+        - else
+          span 修改试卷
+      .setting-main.common-main
+        //- 步骤
+        .sp-step
+          a(href='###')
+            strong 1
+            | 设置试卷信息
+          a(href='###')
+            strong 2
+            | 设置题目
+          a(href='###').active
+            strong 3
+            | 设置分数
+          a(href='###')
+            strong 4
+            | 设置结束语
+          a(href='###')
+            strong 5
+            | 设置完成
+        //- 主体部分
+        .sp-main
+          //- 内容区
+          .sp-content
+            .sp-paper-title
+              span.name= response&&response.name?response.name:''
+              span.score 试卷总分：
+                span#totalScore 0
+                | 分
+              .checkScore
+                a#checkScore.cui-button 检查分数
+            .sp-question
+              - if(response)
+                //each v,i in response.pages
+                - var index = 0,pindex=0
+                each k,j in response.items
+                  - if(k.type==2)
+                    //- 分页
+                    .sp-paging
+                      .paging-num 分页符（
+                        span.num= ++pindex
+                        | ）
+                      .paging-sort
+                        span.mgr10 本页
+                        span 题目规则：
+                        span.sort= k.dPageStyleSetting&&k.dPageStyleSetting.subjectOrder==1?'随机顺序':'固定顺序'
+                        span 选项排序：
+                        span.sort= k.dPageStyleSetting&&k.dPageStyleSetting.optionOrder==1?'随机顺序':'固定顺序'
+                  - if(k.type==4)
+                    //- 单选题
+                    .preview-question.single(data-code= k.unicode)
+                      .preview-content
+                        .order-num
+                          p Q
+                           = ++index
+                        .content
+                          .top
+                            p.ques-type 【单选题】
+                          .ques-subject!= k.dOptionStemSetting&&k.dOptionStemSetting.question?k.dOptionStemSetting.question:''
+                          .note 设置答案：
+                          - if(k.dOptionStemSetting.options)
+                            .preview-options.cui-radioGroupContainer
+                              each n in k.dOptionStemSetting.options
+                                .preview-option
+                                  //-单选框
+                                  .cui-radioContainer.inline
+                                    - if(n.answer)
+                                      input(type="radio",name="options"+k.unicode,value=n.maskCode?n.maskCode:'',checked='checked')
+                                    - else
+                                      input(type="radio",name="options"+k.unicode,value= n.maskCode?n.maskCode:'')
+                                    label
+                                      i
+                                  .option-content!= n.label?n.label:''
+
+                      .setting-score
+                        .title 【单选题】
+                        .content
+                          .item
+                            span 本题分数
+                            .cui-textBoxContainer.inline.score.score_type
+                              input(type="text",onpaste="return false;" value= k.dOptionScoreSetting&&k.dOptionScoreSetting.score?k.dOptionScoreSetting.score:'')
+                  - if(k.type==5)
+                    //- 多选题-预览
+                    .preview-question.multiple(data-code= k.unicode)
+                      .preview-content
+                        .order-num
+                          p Q
+                           = ++index
+                        .content
+                          .top
+                            p.ques-type 【多选题】
+                          .ques-subject!= k.dOptionStemSetting&&k.dOptionStemSetting.question?k.dOptionStemSetting.question:''
+                          .note 设置答案：
+                          - if(k.dOptionStemSetting.options)
+                            .preview-options
+                              each n in k.dOptionStemSetting.options
+                                .preview-option
+                                  //-多选框
+                                  .cui-checkboxContainer.inline()
+                                    - if(n.answer)
+                                      input(type='checkbox',checked='checked',value= n.maskCode?n.maskCode:'')
+                                    - else
+                                      input(type='checkbox',value= n.maskCode?n.maskCode:'')
+                                    label
+                                      i
+                                  .option-content!= n.label?n.label:''
+
+                      .setting-score
+                        .title 【多选题】
+                        .content
+                          .item
+                            span 本题分数
+                            .cui-textBoxContainer.inline.score.score_type
+                              input.total(type="text",onpaste="return false;",value= k.dOptionScoreSetting&&k.dOptionScoreSetting.score?k.dOptionScoreSetting.score:'')
+                          .item
+                            .cui-selectBoxContainer.mgr10(data-options=[{value:0, text:"全部答对才给分"}, {value:2, text:"少选按比例分给分"}, {value:1, text:"少选统一给分"}])
+                              - if(k.dOptionScoreSetting&&k.dOptionScoreSetting.scoreRule&&k.dOptionScoreSetting.scoreRule==2)
+                                span.result 少选按比例分给分
+                              - else if(k.dOptionScoreSetting&&k.dOptionScoreSetting.scoreRule&&k.dOptionScoreSetting.scoreRule==1)
+                                span.result 少选统一给分
+                              - else
+                                span.result 全部答对才给分
+                          .item(class= k.dOptionScoreSetting&&k.dOptionScoreSetting.scoreRule&&k.dOptionScoreSetting.scoreRule==1?'':'dis')
+                            .cui-textBoxContainer.inline.long.score_type
+                              input.sub(type="text",onpaste="return false;",value= k.dOptionScoreSetting&&k.dOptionScoreSetting.subScore?k.dOptionScoreSetting.subScore:'')
+                  - if(k.type==3)
+                    //- 说明-预览
+                    .preview-explain!= k.comment?k.comment:''
+                  - if(k.type==6&&k.dBlankStemSetting&&k.dBlankStemSetting.type==1)
+                    //- 客观填空题-预览
+                    .preview-question.obj-completion(data-code= k.unicode)
+                      .preview-content
+                        .order-num
+                          p Q
+                            = ++index
+                        .content
+                          .top
+                            p.ques-type 【客观填空题】
+                          .ques-subject!= k.dBlankStemSetting&&k.dBlankStemSetting.question?k.dBlankStemSetting.question:''
+                          .setting
+                            | 题目中共有
+                            span.num= k.dBlankStemSetting&&k.dBlankStemSetting.numbers?k.dBlankStemSetting.numbers:''
+                            | 处填空，考生答案与参考答案必须：
+                            .cui-radioGroupContainer.inline
+                              .cui-radioContainer.inline
+                                - if(k.dBlankScoreSetting&&k.dBlankScoreSetting.scoreRule&&k.dBlankScoreSetting.scoreRule==1)
+                                  input(type='radio', name='type'+k.unicode, value='0')
+                                - else
+                                  input(type='radio', name='type'+k.unicode, value='0', checked='checked')
+                                label
+                                  i
+                                  span 完全一致
+                              .cui-radioContainer.inline
+                                - if(k.dBlankScoreSetting&&k.dBlankScoreSetting.scoreRule&&k.dBlankScoreSetting.scoreRule==1)
+                                  input(type='radio', name='type'+k.unicode, value='1', checked='checked')
+                                - else
+                                  input(type='radio', name='type'+k.unicode, value='1')
+                                label
+                                  i
+                                  span 仅顺序不一致
+                            .obj-completion-tip
+                              i.cpf-icon.cpf-icon-ic_help.help-icon
+                              .tips
+                                i.cpf-icon.cpf-icon-ic_triangle
+                                i.cpf-icon.cpf-icon-ic_triangle
+                                p  完全一致
+                                p  可自动判卷，答题者的答案必须与题目提供的答案完全一致，包括顺序
+                                br
+                                p  仅顺序不一致
+                                p  可自动判卷，答题者的答案需在提供的答案列表中，但顺序无关紧要。
+                          .tip 本题答案（若一个空中有多个参考答案，每个答案间需用 || 分隔，考生答案匹配任意一个都算正确）
+                          - if(k.dBlankStemSetting&&k.dBlankStemSetting.numbers)
+                            .preview-options
+                              - for(var n=0;n<k.dBlankStemSetting.numbers;n++)
+                                .preview-option
+                                  //-序号框
+                                  p.option-index= n+1
+                                  //-输入区
+                                  .option-content
+                                    textarea(data-code= k.dBlankScoreSetting&&k.dBlankScoreSetting.dBlankScoreDetails&&k.dBlankScoreSetting.dBlankScoreDetails[n]?k.dBlankScoreSetting.dBlankScoreDetails[n].seqNo:n)= k.dBlankScoreSetting&&k.dBlankScoreSetting.dBlankScoreDetails&&k.dBlankScoreSetting.dBlankScoreDetails[n]?k.dBlankScoreSetting.dBlankScoreDetails[n].answer:''
+                          //-.analysis
+                            .tip 题目解析（考生查看答案时可显示该信息，达到学习的目的；选填）
+                            .analysis-content
+                              textarea(maxlength=10000)= k.dBlankScoreSetting&&k.dBlankScoreSetting.explanation?k.dBlankScoreSetting.explanation:''
+                      .setting-score
+                        .title 【客观填空题】
+                        .content
+                          .item
+                            span 本题分数
+                          - if(k.dBlankStemSetting&&k.dBlankStemSetting.numbers)
+                            .preview-options
+                            - for(var n=0;n<k.dBlankStemSetting.numbers;n++)
+                              .item
+                                .cui-textBoxContainer.score.score_type
+                                  input(type="text",onpaste="return false;",value= k.dBlankScoreSetting&&k.dBlankScoreSetting.dBlankScoreDetails&&k.dBlankScoreSetting.dBlankScoreDetails[n]?k.dBlankScoreSetting.dBlankScoreDetails[n].score:'')
+                                  i= n+1
+                  - if(k.type==6&&k.dBlankStemSetting&&k.dBlankStemSetting.type==0)
+                    //- 主观填空题-预览
+                    .preview-question.sub-completion(data-code= k.unicode)
+                      .preview-content
+                        .order-num
+                          p Q
+                            = ++index
+                        .content
+                          .top
+                            p.ques-type 【主观填空题】
+                          .ques-subject!= k.dBlankStemSetting&&k.dBlankStemSetting.question?k.dBlankStemSetting.question:''
+                          .setting
+                            | 题目中共有
+                            span.num= k.dBlankStemSetting&&k.dBlankStemSetting.numbers?k.dBlankStemSetting.numbers:''
+                            | 处填空
+                            //- 考生答案与参考答案必须：
+                            //-.cui-radioGroupContainer.inline
+                              .cui-radioContainer.inline
+                                input(type='radio', name='type'+k.unicode, value='2', checked='checked')
+                                label
+                                  i
+                                  span 仅供参考
+                            //-.obj-completion-tip
+                              i.cpf-icon.cpf-icon-ic_help.help-icon
+                              .tips
+                                i.cpf-icon.cpf-icon-ic_triangle
+                                i.cpf-icon.cpf-icon-ic_triangle
+                                p 仅供参考
+                                p 需手工判卷，提供的答案仅作为手工判卷的参考答案。
+                          .tip
+                          //-本题答案（若一个空中有多个参考答案，每个答案间需用 || 分隔，考生答案匹配任意一个都算正确）
+                          //- if(k.dBlankStemSetting&&k.dBlankStemSetting.numbers)
+                            .preview-options
+                              - for(var n=0;n<k.dBlankStemSetting.numbers;n++)
+                                .preview-option
+                                  //-序号框
+                                  p.option-index= n+1
+                                  //-输入区
+                                  .option-content
+                                    textarea(data-code= k.dBlankScoreSetting&&k.dBlankScoreSetting.dBlankScoreDetails&&k.dBlankScoreSetting.dBlankScoreDetails[n]?k.dBlankScoreSetting.dBlankScoreDetails[n].seqNo:n)= k.dBlankScoreSetting&&k.dBlankScoreSetting.dBlankScoreDetails&&k.dBlankScoreSetting.dBlankScoreDetails[n]?k.dBlankScoreSetting.dBlankScoreDetails[n].answer:''
+                          .analysis
+                            .tip 评分标准（此内容评卷人评卷时可见。）
+                            .analysis-content
+                              textarea= k.dBlankScoreSetting&&k.dBlankScoreSetting.explanation?k.dBlankScoreSetting.explanation:''
+                      .setting-score
+                        .title 【主观填空题】
+                        .content
+                          .item
+                            span 本题分数
+                          - if(k.dBlankStemSetting&&k.dBlankStemSetting.numbers)
+                            .preview-options
+                            - for(var n=0;n<k.dBlankStemSetting.numbers;n++)
+                              .item
+                                .cui-textBoxContainer.score.score_type
+                                  input(type="text",onpaste="return false;",value= k.dBlankScoreSetting&&k.dBlankScoreSetting.dBlankScoreDetails&&k.dBlankScoreSetting.dBlankScoreDetails[n]?k.dBlankScoreSetting.dBlankScoreDetails[n].score:'',data-code= k.dBlankScoreSetting&&k.dBlankScoreSetting.dBlankScoreDetails&&k.dBlankScoreSetting.dBlankScoreDetails[n]?k.dBlankScoreSetting.dBlankScoreDetails[n].seqNo:n)
+                                  i= n+1
+                  - if(k.type==7)
+                    //- 上传题-预览
+                    .preview-question.preview-upload-question(data-code= k.unicode)
+                      .preview-content
+                        .order-num.operating
+                          p Q
+                            = ++index
+                        .content
+                          .top
+                            p.ques-type 【上传题】
+                          .ques-subject!= k.dAttachmentStemSetting&&k.dAttachmentStemSetting.question?k.dAttachmentStemSetting.question:''
+                          .upload-content 上&nbsp;传&nbsp;文&nbsp;件&nbsp;显&nbsp;示&nbsp;区
+                          .analysis
+                            .tip 评分标准（此内容评卷人评卷时可见。）
+                            .analysis-content
+                              textarea(rows='6',maxlength=10000)= k.dAttachmentScoreSetting&&k.dAttachmentScoreSetting.scoreRule?k.dAttachmentScoreSetting.scoreRule:''
+                      .setting-score
+                        .title 【上传题】
+                        .content
+                          .item
+                            span 本题分数
+                            .cui-textBoxContainer.inline.score.score_type
+                              input(type="text",onpaste="return false;",value= k.dAttachmentScoreSetting&&k.dAttachmentScoreSetting.score?k.dAttachmentScoreSetting.score:'')
+                          //-.item
+                            span 评分标准
+                            .cui-textBoxContainer
+                              textarea(rows='6',maxlength=10000)= k.dAttachmentScoreSetting&&k.dAttachmentScoreSetting.scoreRule?k.dAttachmentScoreSetting.scoreRule:''
+
+      //- 下一步
+      .setting-action.tc
+        a(href=`/customer/examList/setPaper/${paperUnicode}?mode=${mode}&paperId=${paperId}`).cui-button.prev
+          span 上一步
+        a(href='javascript:void(0)').cui-button.preset-blue.next
+          span 下一步
+        - if(response.mode != 1)
+          a(href='javascript:void(0)').cui-button.preset-blue.save
+            span 完成
+    input#mode(type="hidden",value= mode)
+    input#paperId(type="hidden",value= paperId)
+    input#paperUnicode(type="hidden",value= paperUnicode)
+    include ../share/common.footer.default.jade
+
+block scriptSection
+  include ../share/common.script.ueditor.jade
+  script(type="text/javascript", src= '/my97datePicker/WdatePicker.js')
+  script(type="text/javascript", src= pageHelper.setScript('examList.setScore'))

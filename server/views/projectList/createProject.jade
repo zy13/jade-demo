@@ -1,0 +1,166 @@
+//-
+  @Author: Jet.Chan
+  @Date:   2016-12-29T14:48:27+08:00
+  @Email:  guanjie.chen@talebase.com
+  @Last modified by:   Jet.Chan
+  @Last modified time: 2017-03-13T17:20:49+08:00
+
+
+
+extends ../share/layout.base.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('projectList.createProject'))
+
+
+block content
+  .ex-content-right
+    - var tabActive = 0
+    include ../share/component.commonTab.jade
+    .create-wrap
+      p.common-nav
+        span 项目管理&nbsp;
+        i.cpf-icon-ic_arrowright.fs &nbsp;
+        a(href='/customer/projectList/index/') 项目列表&nbsp;
+        i.cpf-icon-ic_arrowright.fs &nbsp;
+        - if(createOredit=='create')
+          span 创建项目
+        - else
+          span 修改项目
+      //- 创建项目（第一步）主要
+      .create-main.common-main
+        //- 步骤显示
+        .create-step
+          div.img
+            img(src=pageHelper.setPageImgPath('/images/createProStep1.png'))
+            div.a-group
+              a.active(href='###')
+                strong 1
+                span 设置项目信息
+              a(href='###')
+                strong 2
+                span 选择试卷
+              a(href='###')
+                strong 3
+                span 设置完成
+        //- 输入部分
+        .create-input
+          ul
+            li.create-input-item
+              span.name.must 项目名称：
+              .right
+                .cui-textBoxContainer.inline(data-rule='required;', data-tips='请输入项目名称')
+                  input(type='text', placeholder='请输入项目名称',maxlength=100,value= response?response.name:'')
+
+            li.create-input-item
+              span.name 项目说明：
+              input(type='hidden',value= response?response.description:'')#projectCon
+              .right
+                script#projectContent(type="text/plain")
+
+            li.create-input-item
+              span.name 项目起始时间：
+              script.
+                function minDate(){
+                  WdatePicker({
+                    dateFmt:'yyyy-MM-dd HH:mm:ss',
+                    maxDate:'#F{$dp.$D(\'endDateL\')}'
+                  })
+                }
+                function maxDate(){
+                  WdatePicker({
+                    dateFmt:'yyyy-MM-dd HH:mm:ss',
+                    minDate:'#F{$dp.$D(\'startDateL\')}'
+                  })
+                }
+              .right
+                span.date
+                  input#startDateL.Wdate(type="text",readonly,value= response&&response.startDateL?pageHelper.date.format(response.startDateL,'YYYY-MM-DD HH:mm:ss'):'',data-value= response&&response.startDateL?pageHelper.date.format(response.startDateL,'YYYY-MM-DD HH:mm:ss'):'',onfocus="minDate()")
+                  i.cui-icon.cpf-icon-ic_calendar(onclick="document.getElementById('startDateL').click()")
+                em &nbsp;--&nbsp;
+                span.date
+                  input#endDateL.Wdate(type='text',readonly,value= response&&response.endDateL?pageHelper.date.format(response.endDateL,'YYYY-MM-DD HH:mm:ss'):'',data-value= response&&response.endDateL?pageHelper.date.format(response.endDateL,'YYYY-MM-DD HH:mm:ss'):'',onfocus="maxDate()")
+                  i.cui-icon.cpf-icon-ic_calendar(onclick="document.getElementById('endDateL').click()")
+            li.create-input-item
+              span.name 创建人：
+              .right
+                p.creator(data-account= response&&response.adminAccount?response.adminAccount:'')= response&&response.adminName?response.adminName:customer&&customer.name?customer.name:'未知用户'
+            li.create-input-item
+              span.name 管理员：
+              .create-admin.right
+                - if(response&&response.admins)
+                  - for(var i=0;i<response.admins.length;i++)
+                    a.account.cui-button.c-preset-green(data-id= response.admins[i].account,data-name= response.admins[i].name)
+                      span= response.admins[i].name
+                      i.cpf-icon.cpf-icon-thin-close
+                a.cui-button.preset-green.selectAccount
+                  span 请选择...
+
+        //- 扫码部分
+        .create-scan
+          ul
+            li.create-scan-item
+              .name
+                .cui-checkboxContainer.inline.scanEnable
+                  - if(response&&response.scanEnable)
+                    input(type='checkbox',checked="checked")
+                  - else
+                    input(type='checkbox')
+                  label
+                    i
+                    span 启用考试扫码
+              .right
+                p.remain
+                  | 剩余总T币数：
+                  span.coin= account.pointBalance
+                  | ，剩余短信总条数：
+                  span.message= account.smsBalance
+                  | ，当前可扫码人次上限：
+                  span.person= parseInt(account.pointBalance/account.pointCost)
+            li.create-scan-item
+              span.name 扫码人次上限：
+              .right
+                .cui-textBoxContainer.digits.inline(data-rule='digits;min=1', data-tips='请输入正整数')
+                  input(type='text', placeholder='填写正整数，不填则默认为平台可扫码人次上限',value= response?response.scanMax:'',onpaste="return false;")
+                  - if((response&&!response.scanEnable)||createOredit=='create')
+                    div.mask
+
+            li.create-scan-item
+              span.name 二维码有效期：
+              .right
+                span.date
+                  input#scanStartDateL.Wdate(type='text',readonly, name='',value= response&&response.scanStartDateL?pageHelper.date.format(response.scanStartDateL,'YYYY-MM-DD HH:mm:ss'):'',data-value= response&&response.scanStartDateL?pageHelper.date.format(response.scanStartDateL,'YYYY-MM-DD HH:mm:ss'):'')
+                  - if((response&&!response.scanEnable)||createOredit=='create')
+                    div.mask
+                  i.cui-icon.cpf-icon-ic_calendar(onclick="document.getElementById('scanStartDateL').click()")
+                em &nbsp;--&nbsp;
+                span.date
+                  input#scanEndDateL(type='text', readonly,name='',value= response&&response.scanEndDateL?pageHelper.date.format(response.scanEndDateL,'YYYY-MM-DD HH:mm:ss'):'',data-value= response&&response.scanEndDateL?pageHelper.date.format(response.scanEndDateL,'YYYY-MM-DD HH:mm:ss'):'')
+                  - if((response&&!response.scanEnable)||createOredit=='create')
+                    div.mask
+                  i.cui-icon.cpf-icon-ic_calendar(onclick="document.getElementById('scanEndDateL').click()")
+            li.create-scan-item
+              - if(response&&response.scanEnable)
+                span.name
+                  a(href="javascript:void(0)")#downloadScan 下载到本地：
+                .right
+                    img(style="width:180px;height:180px;cursor: pointer;" ,src= 'data:image/png;base64,'+response.scanImage)#scanImg
+              - else
+                .note
+                  i.cpf-icon.cpf-icon-ic_warming
+                  span 启动扫码后，点击【下一步】会生成二维码，可返回此页查看或下载。
+                  img(src=pageHelper.setPageImgPath("/images/scan-talebase.jpg")).scan-demo
+        //- 下一步
+        .create-action.tc
+          a.cui-button.preset-blue.sure
+            span 下一步
+    input#createOredit(type="hidden",value= createOredit)
+    input#projectId(type="hidden",value= projectId)
+    input#maxStartDate(type="hidden",value= response&&response.taskStartDateL?response.taskStartDateL:'')
+    input#minEndDate(type="hidden",value= response&&response.taskEndDateL?response.taskEndDateL:'')
+    include ../share/common.footer.default.jade
+
+block scriptSection
+  include ../share/common.script.ueditor.jade
+  script(type="text/javascript", src= '/my97datePicker/WdatePicker.js')
+  script(type="text/javascript", src= pageHelper.setScript('projectList.createProject'))

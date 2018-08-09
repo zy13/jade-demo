@@ -1,0 +1,172 @@
+extends ../share/layout.base.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('admin.adminList'))
+
+block content
+  .ex-content-right
+    - var tabActive = 1
+    -var adminListPermissionCode = 'c2_1'
+    include ../share/component.managementTab.jade
+    .m-wrap
+      //- 导航
+      p.m-nav
+        a(href='###') 管理员设置&nbsp;
+        i.cpf-icon.cpf-icon-ic_arrowright &nbsp;
+        span 管理员列表
+      .m-search
+        .search-filter
+          .search-detail
+            span 搜索：&nbsp;
+            input(type='hidden',name='searchType',value=request.query.searchType?request.query.searchType:'account')
+            input(type='hidden',name='groupId',value=request.query.groupId?request.query.groupId:'')
+            .cui-selectBoxContainer(data-options=[{value:"account",text:'帐号'},{value:"name",text:'姓名'},{value:"email",text:'邮箱'},{value:"mobile",text:'手机'}])
+              span.placeholder 帐号
+            input.txt(type='text',placeholder='请输入关键字',name="key",value=request.query.key,autocomplete='off')
+            button.btn 搜索
+          .search-grouping
+            span 分组：&nbsp;
+            .cui-selectBoxContainer(data-options=pageHelper.formatter.toDic(response.param.dGroupAndRole.groupList,"name","id",{text:"全部",value:""}))
+              -var groupName = '';
+              each k in response.param.dGroupAndRole.groupList
+                -if(request.query.groupId && k.groupId==request.query.groupId)
+                  -groupName=k.name
+              span.placeholder.results=groupName?groupName: '全部'
+          .search-role
+            a 角色：&nbsp;
+            .role
+              - if(!request.query.roleId) request.query.roleId=''
+              a(href='/customer/admin/adminList' + pageHelper.querySet({roleId:'',p:1},request.query),class=request.query.roleId==''?'cur':'',data-value='') 全部
+              each val,index in response.param.dGroupAndRole.roleList
+                a(href=pageHelper.querySet({roleId:(val.id==request.query.roleId?'':val.id),p:1},request.query),class=val.id==request.query.roleId?'cur':'',title=val.name.length>10?val.name:'',data-value=val.id)=pageHelper.formatter.strCut(val.name,13)
+          .search-status
+            a 状态：&nbsp;
+            .status
+              - var status= [{value:'',text:'全部'},{value:'1',text:'已启用'},{value:'0',text:'已禁用'}]
+              - if(!request.query.status) request.query.status=''
+              each v,i in status
+                a(href='/customer/admin/adminList' + pageHelper.querySet({status:v.value,p:1},request.query),class=request.query.status==v.value?'cur':'',data-value=v.value)=v.text
+      //- 主体
+      .m-main
+        //-删除
+        -if(globalCustomer.permission.includes(adminListPermissionCode))
+          .m-main-action
+            a.create-account(href='javascript:void(0)') 创建帐号
+            a.btn-export(href='javascript:void(0)') 导出
+            a.btn-resetpwd(href='javascript:void(0)') 重置密码
+            a.btn-status(href='javascript:void(0)',data-status=1) 启用
+            a.btn-status(href='javascript:void(0)',data-status=0) 禁用
+        //-列表
+        ul.m-list
+          li.m-title
+            -if(globalCustomer.permission.includes(adminListPermissionCode))
+              p.cui-checkboxContainer.inline.selectAll
+                input(type='checkbox')
+                label
+                  i
+                  span
+            p 帐号
+            p 姓名/邮箱/手机
+            p 角色名
+            p 分组
+            p 创建人
+            p 创建时间
+            p 状态
+            -if(globalCustomer.permission.includes(adminListPermissionCode))
+              p 操作
+            each  val,index in response.results
+              li.m-item
+                -if(globalCustomer.permission.includes(adminListPermissionCode))
+                  p.cui-checkboxContainer.inline
+                    input(type='checkbox',data-id=val.id)
+                    label
+                      i
+                      span
+                p.account=val.account
+                p
+                  -if(val.name)
+                    -var arrn = val.name.length>10 ?pageHelper.formatter.strCut(val.name,13):val.name
+                      span(title=val.name.length>10?val.name:'')=arrn
+                    br
+                  -if(val.email)
+                    span=val.email
+                    br
+                  -if(val.mobile)
+                    span=val.mobile
+                p.role-name=val.roleName||''
+                p.groupName=val.groupName||''
+                p=val.creater||''
+                p=val.createDate||''
+                p
+                  -if(globalCustomer.permission.includes(adminListPermissionCode))
+                    i.slideBtn(class=val.status && val.status ==1 ?"active":"",data-id=val.id)
+                  -else
+                    =val.status && val.status ==1 ?"启用":"禁用"
+                -if(globalCustomer.permission.includes(adminListPermissionCode))
+                  p
+                    a.edit(href='javascript:void(0)',data-id=val.id) 修改
+          //- li.m-item
+          //-   p.cui-checkboxContainer.inline
+          //-     input(type='checkbox')
+          //-     label
+          //-       i
+          //-       span
+          //-   p admin
+          //-   p
+          //-     span 张三<br/>
+          //-     span 15521057777<br/>
+          //-     span 123456789@qq.com
+          //-   p 超级管理员[]
+          //-   p 集团总部
+          //-   p admin
+          //-   p 2016-11-01 12:00:00
+          //-   p
+          //-     i.slideBtn.active
+          //-   p
+          //-     a.edit(href='javascript:void(0)') 修改
+          //-
+          //- li.m-item
+          //-   p.cui-checkboxContainer.inline
+          //-     input(type='checkbox')
+          //-     label
+          //-       i
+          //-       span
+          //-   p admin
+          //-   p
+          //-     span 王考官<br/>
+          //-     span 15521057777<br/>
+          //-     span 123456789@qq.com
+          //-   p 考官
+          //-   p 集团总部
+          //-   p admin
+          //-   p 2016-11-01 12:00:00
+          //-   p
+          //-     i.slideBtn
+          //-   p
+          //-     a.edit(href='javascript:void(0)') 修改
+          //- li.m-item
+          //-   p.cui-checkboxContainer.inline
+          //-     input(type='checkbox')
+          //-     label
+          //-       i
+          //-       span
+          //-   p admin
+          //-   p
+          //-     span 王考官<br/>
+          //-     span 15521057777<br/>
+          //-     span 123456789@qq.com
+          //-   p 考官
+          //-   p 集团总部
+          //-   p admin
+          //-   p 2016-11-01 12:00:00
+          //-   p
+          //-     i.slideBtn
+          //-   p
+          //-     a.edit(href='javascript:void(0)') 修改
+        - totalCount = response.total
+        - pagesize = response.limit
+        include ../share/component.pagination.jade
+    include ../share/common.footer.default.jade
+
+block scriptSection
+  script(type="text/javascript", src= pageHelper.setScript('admin.adminList'))

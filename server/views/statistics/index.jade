@@ -1,0 +1,131 @@
+//-
+  @Author: Jet.Chan
+  @Date:   2017-01-05T09:46:57+08:00
+  @Email:  guanjie.chen@talebase.com
+  @Last modified by:   Jet.Chan
+  @Last modified time: 2017-01-23T15:27:34+08:00
+
+
+
+extends ../share/layout.base.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('statistics.index'))
+
+block content
+  .ex-content-right
+    - var tabType = 1,tabActive = 3
+    include ../share/component.commonTab.jade
+    .wrap
+      .nav
+        a(href='###') 项目管理&nbsp;
+          i.cpf-icon-ic_arrowright.fs &nbsp;
+        span 使用统计
+      .type
+        -var searchType = request.query.searchType || 1
+        a(href=`/customer/statistics/index?searchType=1`,class=searchType==2 ? 'cui-button':'cui-button preset-blue' )
+          span 消费统计
+        a.cui-button(href=`/customer/statistics/index?searchType=2`,class=searchType==2 ? 'preset-blue cui-button':'cui-button' )
+          span 购买记录
+      //-消费记录
+      -if(searchType==1 || !searchType)
+        .search-filter
+          -var projectId = request.query.projectId || ''
+          -var taskId = request.query.taskId || ''
+          -var key = request.query.key ? request.query.key : defaultaccount
+          input#projectId(type='hidden',name='projectId',value=projectId)
+          input#taskId(type='hidden',name='taskId',value=taskId)
+          input#key(type='hidden',name='key',value=key)
+          input#searchType(type='hidden',name='key',value=searchType)
+          .search-f
+            span 筛选：&nbsp;
+            -var temp = -1, projectName='', taskName='', dataOpts = [], taskOpts = [];
+            -var proSelect = getConsumesQuery.param.dProjectSelectList
+            -if(proSelect)
+              each i,v in proSelect
+                -if(projectId && i.id==projectId)
+                  - temp = v, projectName = i.name
+                    each m,n in i.tasks
+                      -if(taskId && m.id==taskId)
+                        - taskName = m.name
+                -dataOpts.push({'text': i.name,'value':i.id})
+            -if(projectName)
+              -dataOpts.unshift({'text':'-------全部项目-------','value':''})
+            .cui-selectBoxContainer(data-options=dataOpts,id='project')
+              span.placeholder=projectName ? projectName : '请选择项目'
+            -if(temp!=-1 && proSelect && proSelect[temp] && proSelect[temp].tasks.length)
+              each x,y in proSelect[temp].tasks
+                -if(x.projectId==proSelect[temp].id)
+                  -taskOpts.push({'text':x.name,'value':x.id})
+            .cui-selectBoxContainer(data-options=taskOpts,id='task')
+              span.placeholder=taskName?taskName:'请选择试卷'
+          .search-ent
+            span 管理员帐号：&nbsp;
+            .cui-textBoxContainer.inline
+              input.txt(type='text',placeholder='请输入关键字',name="key",value=request.query.key?request.query.key:'')
+            button.btn 搜索
+        .main
+          .main-action
+            a.pay(href='javascript:void(0)') 导出全部日志
+            -var pointCount = getConsumesQuery.param.pointCount,smsCount = getConsumesQuery.param.smsCount;
+            span 剩余总T币数量：
+            span.red-color=pointCount
+            span ，剩余总短信条数：
+            span.red-color=smsCount
+          ul.list
+            li.title
+              div 管理员帐号
+              div 开通项目
+              div 试卷
+              div 开通人次
+              div 使用人次
+              div 扣除T币数
+              div 短信使用条数
+            -if(getConsumesQuery)
+              each i in getConsumesQuery.results
+                -var  itemClass = i.taskName!=null && i.taskName=='扫描短信数'?'bgtable':''
+                li(class='item #{itemClass}')
+                  div=i.account
+                  div=i.projectName
+                  div=i.taskName
+                  -if(itemClass!='')
+                    div=i.dredgeCount==0?'-':i.dredgeCount
+                    div=i.usedCount==0?'-':i.dredgeCount
+                    div=i.pointUsed==0?'-':i.dredgeCount
+                  -else
+                    div=i.dredgeCount
+                    div=i.usedCount
+                    div=i.pointUsed
+                  div=i.smsUsed
+      //-充值记录
+      -if(searchType==2)
+        .search-filter
+          input#key(type='hidden',name='key',value=key)
+          input#searchType(type='hidden',name='key',value=searchType)
+          .search-ent
+            span 管理员帐号：&nbsp;
+            .cui-textBoxContainer.inline
+              input.txt(type='text',placeholder='请输入关键字',name="",value=request.query.key?request.query.key:'')
+            button.btn 搜索
+        .main
+          .main-action
+            a.consume(href='javascript:void(0)') 导出全部日志
+          ul.list
+            li.title
+              div 管理员帐号
+              div 购买类型
+              div 数量
+              div 购买时间
+            -if(getPayQuery)
+              each i in getPayQuery.results
+                  li.item
+                    div=i.account
+                    div=i.type
+                    div=i.val
+                    div=pageHelper.date.format(i.modifiedDate,'YYYY-MM-DD HH:mm:ss')
+      -totalCount=request.query.searchType==2 ? (getPayQuery?getPayQuery.total:0) : (getConsumesQuery?getConsumesQuery.total:0)
+      include ../share/component.pagination.jade
+    include ../share/common.footer.default.jade
+
+block scriptSection
+  script(type="text/javascript", src= pageHelper.setScript('statistics.index'))

@@ -1,0 +1,50 @@
+//-
+  @Author: Jet.Chan
+  @Date:   2017-01-13T15:48:19+08:00
+  @Email:  guanjie.chen@talebase.com
+  @Last modified by:   Jet.Chan
+  @Last modified time: 2017-02-22T11:18:50+08:00
+
+
+
+extends ../share/layout.baseM.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href=pageHelper.setStyle('common.error'))
+
+block content
+  .div-content
+    .div-group
+      .bg-img
+        img(src=pageHelper.setPageImgPath('/images/error1.png'))
+        .img
+          img(src=pageHelper.setPageImgPath('/images/error2.png'))
+          -if (code >1000)
+            span=code.indexOf('29000')>-1?'403':'500'
+          -else
+            span=code
+      .p-group
+        p.sorry
+          img(src=pageHelper.setPageImgPath('/images/Sorry.png'))
+          |...
+        - if(code <1000 )
+          p.p2 页面没有找到！
+          -if(code == '403')
+            p.p3 您没有权限访问此页面
+          - else if(code == '500')
+            p.p3 服务器忙，请稍后重试
+          - else if(code == '502')
+            p.p3 服务器网络错误，请稍后重试
+          -else
+            p.p3 您要的信息服务器没有找到
+        - else if(lastErrorData && lastErrorData.code >1000 && lastErrorData.message)
+          p.p2=lastErrorData.message
+          - if(code == '29000001')
+            p.p4='您的帐号于'+lastErrorData.message+'在其他设备登录，如果这不是您的操作，请及时修改您的登录密码。'
+            //- p.p3
+            //-   a(style='text-decoration: underline;',href='')点击重新登录
+        - else
+          p.p2 页面没有找到！
+          p.p3 您要的信息服务器没有找到
+block scriptSection
+  script(type="text/javascript", src=pageHelper.setScript('common.error'))

@@ -1,0 +1,132 @@
+@import '../../components/commonStyle/common';
+@cell-width: 9.09%;
+html,
+body {
+    height: 100%;
+}
+
+.temple-wrap {
+    padding: 28px 58px 100px;
+    background: @c-gray-a;
+    font-size: @fs16;
+    // 模板导航部分
+    .tpl-nav {
+        margin: 0;
+        color: @fc-b;
+        a {
+            color: @fc-b;
+        }
+        span {
+            color: @c-standard-a;
+        }
+    }
+    // 模板种类
+    .tpl-type {
+        margin: 25px 0;
+        a {
+            .fs16;
+            padding: 0 57px;
+            height: 40px;
+            line-height: 40px;
+            &:first-child {
+                margin-right: 10px;
+            }
+        }
+    }
+    // 模板主要
+    .tpl-main {
+        background: #fff;
+        padding: 28px 26px;
+        // 新建-删除按钮
+        .tpl-main-action {
+            padding: 16px 30px;
+            background: @c-gray-c;
+            a {
+                display: inline-block;
+                line-height: 28px;
+                border: 1px solid @c-standard-b;
+                border-radius: 2px;
+                .tc;
+                .fs14;
+                margin: 0 10px 0 0;
+                width: 108px;
+                background: #fff;
+                color: @c-standard-b;
+                &:hover {
+                    cursor: pointer;
+                    background: @c-standard-b;
+                    color: #fff;
+                }
+            }
+        }
+        // 模板列表
+        .tpl-list {
+            display: table;
+            width: 100%;
+            .tc;
+            // 标题
+            .tpl-title {
+                display: table-row;
+                p {
+                    display: table-cell;
+                    width: @cell-width;
+                    line-height: 45px;
+                    padding: 15px 0 0 0;
+                    border-bottom: 1px solid @fc-a;
+                    vertical-align: middle;
+                    .fw;
+                    color: @fc-a;
+                    &:nth-of-type(2){
+                        width: 2*@cell-width;
+                        word-break:break-all;
+                    }
+                    // &:nth-of-type(3){
+                    //     width:3*@cell-width;
+                    // }
+                }
+            }
+            // 真正列表
+            .tpl-item {
+                display: table-row;
+                p {
+                    .fs14;
+                    display: table-cell;
+                    width: @cell-width;
+                    padding: 15px 0 8px;
+                    border-bottom: 1px dashed @c-gray-c;
+                    vertical-align: middle;
+                    color: @fc-b;
+                    word-break:break-all;
+                    // &:nth-of-type(3){
+                    //     width:3*@cell-width;
+                    //     .tl;
+                    // }
+                    &:last-of-type {
+                        a {
+                            display: inline-block;
+                            padding: 0 8px;
+                            text-decoration: underline;
+                            color: #0084FF;
+                        }
+                        .edit {
+                            color: #0084FF;
+                        }
+                        .del {
+                            color: #ff4539
+                        }
+                    }
+                }
+                &:last-of-type{
+                    p{
+                        border-bottom: 1px solid @fc-a;
+                    }
+                }
+            }
+        }
+        .cui-checkboxContainer.inline {
+            width: auto;
+            height: 20px;
+            vertical-align: middle;
+        }
+    }
+}

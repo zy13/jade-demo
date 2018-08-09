@@ -1,0 +1,99 @@
+<!--
+@Author: Jet.Chan
+@Date:   2016-12-23T18:15:44+08:00
+@Email:  guanjie.chen@talebase.com
+@Last modified by:   Jet.Chan
+@Last modified time: 2017-03-07T17:47:43+08:00
+-->
+
+
+
+<div class="set-question ${dBlankStemSetting.type=='1'?'obj-completion':'sub-completion'}  sortableitem" data-value='${dataString}' data-type='${type}'>
+    <input type="hidden" name="id" value="${unicode}">
+    <input type="hidden" name="type" value="${dBlankStemSetting.type}">
+    <div class="ques-content">
+        <div class="operating">
+            <p data-sortNum='${sortNum}'>Q${sortNum}</p>
+        </div>
+        <div class="content">
+            <div class="top">
+                <p class="ques-type">${dBlankStemSetting.type=='1'?'【客观填空题】':'【主观填空题】'}</p>
+                <a class="cui-button save" data-id='${unicode}' data-type="${dBlankStemSetting.type}">
+                    <span>保存</span>
+                </a>
+            </div>
+            <div class="ques-subject">
+                <script id="objComSubject${unicode}" type="text/plain" data-placeholder="请填写题目">$${dBlankStemSetting.question}</script>
+            </div>
+            <p>填空项</p>
+            <div class="options" data-width="${setWidth}" data-height="${setHeight}">
+              {@each options as item}
+              {@if setHeight>70}
+              <div class="options-item" {@if setHeight>-1}style="padding-left:70px"{@else}style="padding-left:70px"{@/if}>
+                  <p class="option-index" {@if setHeight>-1} style="width:70px"{@else} style="width:70px"{@/if}>${item}</p>
+                  <div class="option-wrap" {@if setHeight>-1} style="width:${setWidth}"{@else} style="width:${setWidth}"{@/if}>
+                      <div class="option-content" {@if setHeight>-1} style="height:${setHeight}px"{@else} style="height:${setHeight}px"{@/if}></div>
+                      <i class="cpf-icon cpf-icon-thin-close del-option"></i>
+                  </div>
+              </div>
+              {@else}
+              <div class="options-item" {@if setHeight>-1}style="padding-left:${setHeight}px"{@else}style="padding-left:${setHeight}px"{@/if}>
+                  <p class="option-index" {@if setHeight>-1}style="width:${setHeight}px"{@else}style="width:${setHeight}px"{@/if}>${item}</p>
+                  <div class="option-wrap" {@if setHeight>-1}style="width:${setWidth}"{@else}style="width:${setWidth}"{@/if}>
+                      <div class="option-content" {@if setHeight>-1} style="height:${setHeight}px"{@else} style="height:${setHeight}px"{@/if}></div>
+                      <i class="cpf-icon cpf-icon-thin-close del-option"></i>
+                  </div>
+              </div>
+              {@/if} {@/each}
+            </div>
+            <div class="add-option"><a class="cui-button">添加选项</a></div>
+        </div>
+    </div>
+    <div class="ques-setting">
+        <div class="title">题目设置<i class="cpf-icon cpf-icon-thin-close del-setting"></i></div>
+        <div class="setting">
+            <p class="title">题型转换</p>
+            <div class="change">
+                <a href="javascript:void(0)" class="button changeOptionsTypes ${dBlankStemSetting.type=='1'?'active':''}" data-type="1">客观填空题</a>
+                <a href="javascript:void(0)" class="button changeOptionsTypes ${dBlankStemSetting.type=='0'?'active':''}" data-type="0">主观填空题</a>
+                <div class="cui-checkboxContainer">
+                    <input type="checkbox" />
+                    <label>
+                        <i></i>
+                        <span>应用到同类的题目</span>
+                    </label>
+                </div>
+            </div>
+            <p class="title">PC端布局转换</p>
+            <div class="layout">
+                <div class="row"><span>输入框高度</span>
+                    <div class="cui-textBoxContainer height">
+                        <input type="txt" value="${dBlankStyleSetting.height}" maxlength="4" placeholder="40-1000" />
+                    </div>
+                </div>
+                <div class="row"><span>输入框宽度</span>
+                    <div class="cui-textBoxContainer width">
+                        <input type="txt" value="${dBlankStyleSetting.width}" maxlength="3" placeholder="150-820" />
+                    </div>
+                </div>
+            </div>
+            <div class="layout strict">
+                <div class="row"><span>字数上限</span>
+                    <div class="cui-textBoxContainer limit">
+                        <input type="txt" value="${dBlankStyleSetting.limit}" maxlength="5" />
+                    </div>
+                </div>
+                <div class="cui-checkboxContainer">
+                    <input type="checkbox" />
+                    <label>
+                        <i></i>
+                        <span>应用到同类的题目</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="tc">
+            <a class="cui-button preset-blue" data-type="${dBlankStemSetting.type}">保存</a>
+        </div>
+    </div>
+</div>

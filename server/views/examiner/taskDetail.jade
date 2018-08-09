@@ -1,0 +1,61 @@
+extends ../share/layout.base
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('examiner.taskDetail'))
+
+block content
+  .special-wrap
+    include ../share/component.header.out.jade
+    .wrap
+      .wrap-detail
+        input(type='hidden',id='loadm',data-value=request.query.pagesize||100)
+        input(type='hidden',id='taskId',data-value=request.query.taskId)
+        .words 任务：全部
+          span.blue-color=queryList.taskMarked.totalTaskNum
+          span 个考试任务待评卷，共
+          span.blue-color=queryList.taskMarked.totalPaperNum
+          span 份试卷。当前已完成
+          span.blue-color=queryList.taskMarked.doneTaskNum
+          span 个考试任务，已完成
+          span.blue-color=queryList.taskMarked.donePaperNum
+          span 份试卷评卷。
+          a.cui-button.preset-blue.back(href='/customer/examiner/taskList')
+            span 返回列表
+        .content
+          .base-style
+            .title-state
+              span=queryList.taskName
+            .area-ts
+                .p 请选择任意考生序号开始评卷
+                .div
+                  -var len = queryList.examinees.results.length
+                  .span-group
+                    each i,v in queryList.examinees.results
+                      -if(i.subScore==0 || i.subScore)
+                        a.done(href=`/customer/examiner/evaluate1?paperId=${queryList.paperId}&taskId=${request.query.taskId}&number=${i.serialNo}&showType=2&userId=${i.userId}`,id=i.userId)
+                            span!=i.serialNo
+                            img(src=pageHelper.setPageImgPath('/images/done.png'))
+                        -if((v+1)%5==0&& (v+1)%15!=0)
+                          .pr30
+                        -if((v+1)%15==0)
+                          br
+                        -if((v+1)%30==0)
+                          .pb30
+                      -else
+                        a(href=`/customer/examiner/evaluate1?paperId=${queryList.paperId}&taskId=${request.query.taskId}&number=${i.serialNo}&showType=1&userId=${i.userId}`,id=i.userId)
+                          span!=i.serialNo
+                        -if((v+1)%5==0&& (v+1)%15!=0)
+                          .pr30
+                        -if((v+1)%15==0)
+                          br
+                        -if((v+1)%30==0)
+                          .pb30
+            -if(totalCount>100 && len<totalCount )
+              .div-loadm
+                a(href='javascript:void(0)')
+                  span 加载更多
+          //- include ../share/component.pagination.jade
+    include ../share/common.footer.default.jade
+
+block scriptSection
+  script(type="text/javascript", src= pageHelper.setScript('examiner.taskDetail'))

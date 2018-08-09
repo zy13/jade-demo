@@ -1,0 +1,41 @@
+extends ../share/layout.base.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('admin.companyMessage'))
+
+block content
+  .ex-content-right
+    - var tabType = 2,tabActive = 0
+    include ../share/component.commonTab.jade
+    .company-wrap
+      //- 企业信息导航部分
+      p.cm-nav
+        span.super 信息设置&nbsp;
+        i.cpf-icon-ic_arrowright.fs &nbsp;
+        span 企业信息
+      //- 企业信息主要
+      .cm-main
+        div
+          p 企业名称：
+          .cui-textBoxContainer.inline(data-rule='required;', data-tips='请输入企业名称')
+            input(type='tel', placeholder='请输入企业名称', value= response.dCompany.name || '',maxlength=100)
+        div
+          p 所属行业：
+          .cui-selectBoxContainer(data-options= response.industryArr)
+            span.result= response.dCompany.industryName
+            | &nbsp;
+        div
+          p 企业LOGO：
+          .item-upload
+            input.file-name(type='text', name='', readonly='readonly',placeholder="请选择企业LOGO")
+            label.upload
+              a.cui-button.preset-blue
+                span 选择文件
+              input.file(type='file', name='companyLogo', accept='image/png,image/x-png,image/jpeg,image/jpg,image/gif,image/bmp')#companyLogo
+        .btns
+          a.cui-button.preset-blue.sure(data-id= response.dCompany.industryId,data-name= response.dCompany.industryName)
+            span 确定
+    include ../share/common.footer.default.jade
+
+block scriptSection
+  script(type="text/javascript", src= pageHelper.setScript('admin.companyMessage'))

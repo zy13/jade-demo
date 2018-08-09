@@ -1,0 +1,22 @@
+extends ../share/layout.baseM.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href=pageHelper.setStyle('examM.finish'))
+
+block content
+  .exam-content
+    .div-group
+      .div-body
+        .p-group
+          p
+            i.cpf-icon.cpf-icon-ic_like
+          .p
+            -if(request.query.score && request.query.score.length>0)
+              p!=request.query.score
+            -else
+              p 由于网络原因，考试关闭前未能及时保存，部分题目可能保存失败
+        .a-button
+          a.cui-button.preset-blue(href='/exam/taskList')
+            span 返回任务列表
+block scriptSection
+   script(type="text/javascript", src=pageHelper.setScript('examM.finish'))

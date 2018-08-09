@@ -1,0 +1,75 @@
+extends ../share/layout.base.jade
+
+block styleSection
+  link(rel="stylesheet", type="text/css", href= pageHelper.setStyle('examList.createPaper'))
+
+
+block content
+  .ex-content-right
+    - var tabType=3,tabActive = 0
+    include ../share/component.commonTab.jade
+    .create-wrap
+      p.common-nav
+        a(href='/customer/examList/list') 考试库&nbsp;
+        i.cpf-icon-ic_arrowright.fs &nbsp;
+        span 试卷管理&nbsp;
+        i.cpf-icon-ic_arrowright.fs &nbsp;
+        - if(mode==1)
+          span 创建试卷
+        - else
+          span 修改试卷
+      //- 创建试卷（第一步
+      .create-main.common-main
+        //- 步骤显示
+        .cp1-step
+          a(href='###').active
+            strong 1
+            | 设置试卷信息
+          a(href='###')
+            strong 2
+            | 设置题目
+          a(href='###')
+            strong 3
+            | 设置分数
+          a(href='###')
+            strong 4
+            | 设置结束语
+          a(href='###')
+            strong 5
+            | 设置完成
+        //- 输入部分
+        .create-input
+          ul
+            li.create-input-item
+              span.name.must 试卷名称：
+              .right
+                .cui-textBoxContainer.inline(data-rule='required;', data-tips='请输入试卷名称')
+                  input(type='text', name="paperName" placeholder='请输入试卷名称',maxlength=100,value= response?response.name:'')
+
+            li.create-input-item
+              span.name 试卷备注：
+              input(type='hidden',maxlength=1000,value= response?response.comment:'')#examRem
+              .right
+                script#examRemark(type="text/plain")
+            li.create-input-item
+              span.name 考试参考时长：
+              .right
+                .cui-textBoxContainer.inline.time(data-rule='')
+                  input(type='text',value= response?response.duration:'',maxlength=3)
+                span 分钟
+        //- 下一步
+        .create-action.tc
+          a(href="javascript:void(0)").cui-button.preset-blue.next
+            span 下一步
+          - if(mode==2)
+            a(href="javascript:void(0)").cui-button.save
+              span 完成
+    input#mode(type="hidden",value= mode)
+    input#paperId(type="hidden",value= paperId)
+    input#paperUnicode(type="hidden",value= paperUnicode)
+    include ../share/common.footer.default.jade
+
+block scriptSection
+  include ../share/common.script.ueditor.jade
+  script(type="text/javascript", src= '/my97datePicker/WdatePicker.js')
+  script(type="text/javascript", src= pageHelper.setScript('examList.createPaper'))
